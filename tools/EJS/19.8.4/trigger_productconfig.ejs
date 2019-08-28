@@ -1,0 +1,238 @@
+/**
+ * ForeSee Trigger Configuration *****************************************************
+ */
+var triggerconfig = {
+  /**
+   * These are specified in client_properties.js. (DO NOT MODIFY)
+   */
+  id: "<%=combinedconfig.trigger.config.id%>",
+  site_id: "<%=combinedconfig.trigger.config.site_id%>",
+  site_key: "<%=combinedconfig.trigger.config.site_key%>",
+
+  /**
+   * Where the survey is located
+   */
+  surveyAsyncCurl: "<%=combinedconfig.trigger.config.surveyAsyncCurl%>",
+
+  /**
+   * Is recording turned on? THIS IS AUTO-POPULATED.
+   */
+  hasReplay: "<%=combinedconfig.trigger.config.hasReplay%>",
+
+  /**
+   * How many milliseconds (1000/sec) to wait after the page first appears to initiate trigger
+   */
+  triggerDelay: <%=combinedconfig.trigger.config.triggerDelay%>,
+
+  /**
+   * How many milliseconds (1000/sec) to wait after the page first appears to show the invite
+   */
+  inviteDelay: <%=combinedconfig.trigger.config.inviteDelay%>,
+
+  /**
+   * If the page changes the URL programmatically within this many milliseconds of initial
+   * page load, then ignore the URL change and do not restart the SDK.
+   */
+  pageLoadUrlChangeBlackout: <%=combinedconfig.trigger.config.pageLoadUrlChangeBlackout%>,
+
+  /**
+   * This is the number of times the invite will appear on mobile (Comment out unless client says otherwise)
+   * example: If 3 it will apear the intial time and then two more times
+   */
+   <% if (!combinedconfig.trigger.config.pagesInviteAvailable) { %> // <% } %>  pagesInviteAvailable: <%=combinedconfig.trigger.config.pagesInviteAvailable%>,
+
+  /**
+   * We only show the invite
+   */
+  repeatDays: {
+    decline: <%=combinedconfig.trigger.config.repeatDays.decline%>,
+    accept: <%=combinedconfig.trigger.config.repeatDays.accept%>,
+  },
+
+  /**
+   * Time in milliseconds to reset page views in storage. If undefined, defaults to 24 hours
+   */
+   <% if (!combinedconfig.trigger.config.pageViewsResetTimeout) { %> // <% } %> pageViewsResetTimeout: <%=combinedconfig.trigger.config.pageViewsResetTimeout%>,
+
+  /**
+   * Time in milliseconds to reset CPPS. If undefined, defaults to 24 hours
+   */
+   <% if (!combinedconfig.trigger.config.cppsResetTimeout) { %> // <% } %> cppsResetTimeout: <%=combinedconfig.trigger.config.cppsResetTimeout%>,
+
+  /**
+   * Time in milliseconds to reset surveyDef expiration. If undefined, defaults to 24 hours
+   */
+  surveyDefResetTimeout: <%=combinedconfig.trigger.config.surveyDefResetTimeout%>,
+
+  /**
+   * How many milliseconds (1000/sec) to wait before converting the tracker
+   */
+  trackerConvertsAfter: <%=combinedconfig.trigger.config.trackerConvertsAfter%>,
+
+  /**
+   * Ping time between the main window and the tracker window. (in milliseconds)
+   * It is used as a base to detect when to convert the tracker to a survey under normal circumstances
+   */
+  trackerHeartbeatTimeout: <%=combinedconfig.trigger.config.trackerHeartbeatTimeout%>,
+
+  /**
+   * Ping time between the main window and the tracker window. (in milliseconds)
+   * Applied right before the main window "unloads" (closes, navigate to another URL)  so the Tracker will know to wait longer than a normal heartbeat before assuming the window is closed for real.
+   */
+  trackerHeartbeatLongTimeout: <%=combinedconfig.trigger.config.trackerHeartbeatLongTimeout%>,
+
+  /**
+   * For SMS and email on-exit measures, how long do we delay between heartbeats?
+   */
+  onExitMobileHeartbeatInterval: <%=combinedconfig.trigger.config.onExitMobileHeartbeatInterval%>,
+
+  /**
+   * How many milliseconds to wait before possibly re-inviting someone after abandoning the invite
+   */
+  reinviteDelayAfterInviteAbandon: <%=combinedconfig.trigger.config.reinviteDelayAfterInviteAbandon%>,
+
+  /**
+   * Center the tracker popup window on the browser window. Otherwise the tracker
+   * pops near 50,50. Note that this is just a suggestion and the OS/Browser may
+   * ignore it. Not all browsers implement this feature.
+   */
+  centerTrackerPopup: <%=combinedconfig.trigger.config.centerTrackerPopup%>,
+
+  /**
+   * Do we allow things to run if we're not in the top frame? Default: 'dontRunOtherIframes'
+   * Three options:
+   *  - 'runAllIframes': Allow ability to Trigger and Record on all iFrames.
+   *  - 'runRecordOnly': won't run Trigger but runs Record on Iframes.
+   *  - 'dontRunOtherIframes': Won't allow Trigger or Record to work in other iFrames.
+   */
+  workInIframes: "<%=combinedconfig.trigger.config.workInIframes%>",
+
+  /**
+   * A/B Test the Survey Type (modern vs legacy)
+   */
+  abSurveyType: {
+    /**
+     * Specify the percentage of modern surveys presented for each survey def.
+     */
+    defs: <%-JSON.stringify(combinedconfig.trigger.config.abSurveyType.defs)%>,
+
+    /**
+     * Enable A/B testing with above percentages.
+     */
+    shouldTest: <%=combinedconfig.trigger.config.abSurveyType.shouldTest%>,
+  },
+
+  /**
+   * Turn on Modern Survey Only. This will override A/B testing.
+   */
+  onlyModernSurvey: <%=combinedconfig.trigger.config.onlyModernSurvey%>,
+
+  /**
+   * Should we ignore HTML5 navigation events? Default: false
+   */
+  ignoreNavigationEvents: <%=combinedconfig.trigger.config.ignoreNavigationEvents%>,
+
+  /**
+   * Public API name override. If undefined, defaults to "FSR"
+   */
+  publicApiName: "<%=combinedconfig.trigger.config.publicApiName%>",
+
+  /**
+   * Global exclude. These override anything else. Once a user has been excluded, that's it.
+   * They don't have another opportunity to be re-included until the repeat days pass.
+   */
+  globalExclude: {
+    urls: <%-JSON.stringify(combinedconfig.trigger.config.globalExclude.urls)%>,
+    referrers: <%-JSON.stringify(combinedconfig.trigger.config.globalExclude.referrers)%>,
+    userAgents: <%-JSON.stringify(combinedconfig.trigger.config.globalExclude.referrers)%>,
+    browsers: <%-JSON.stringify(combinedconfig.trigger.config.globalExclude.referrers)%>,
+    cookies: <%-JSON.stringify(combinedconfig.trigger.config.globalExclude.cookies)%>,
+    variables: <%-JSON.stringify(combinedconfig.trigger.config.globalExclude.variables)%>,
+  },
+
+  /**
+   * These items exclude inviting on a page. They don't prevent a definition from being selected,
+   * but we won't actually invite if they meet these conditions.
+   */
+  inviteExclude: {
+	  urls: <%-JSON.stringify(combinedconfig.trigger.config.inviteExclude.urls)%>,
+    referrers: <%-JSON.stringify(combinedconfig.trigger.config.inviteExclude.referrers)%>,
+    userAgents: <%-JSON.stringify(combinedconfig.trigger.config.inviteExclude.userAgents)%>,
+    browsers: <%-JSON.stringify(combinedconfig.trigger.config.inviteExclude.browsers)%>,
+    cookies: <%-JSON.stringify(combinedconfig.trigger.config.inviteExclude.cookies)%>,
+    // common default variable to check to suppress the invite
+    variables: <%-JSON.stringify(combinedconfig.trigger.config.inviteExclude.variables)%>,
+  },
+
+  /**
+   * List of unsupported browsers and platforms supported
+   * Note: IE 𝓍 means we support 𝓍 and above
+   */
+  browser_cutoff: {
+    Edge: <%=combinedconfig.trigger.config.browser_cutoff.Edge%>,
+    IE: <%=combinedconfig.trigger.config.browser_cutoff.IE%>,
+    Safari: <%=combinedconfig.trigger.config.browser_cutoff.Safari%>,
+    Firefox: <%=combinedconfig.trigger.config.browser_cutoff.Firefox%>,
+    Chrome: <%=combinedconfig.trigger.config.browser_cutoff.Chrome%>,
+    Opera: <%=combinedconfig.trigger.config.browser_cutoff.Opera%>,
+  },
+
+  /**
+   * List of unsupported platforms
+   * Note: Android 4 means we support 4 and above
+   */
+  platform_cutoff: {
+    Android: <%=combinedconfig.trigger.config.platform_cutoff.Android%>,
+    Winphone: <%=combinedconfig.trigger.config.platform_cutoff.Winphone%>,
+    iPod: <%=combinedconfig.trigger.config.platform_cutoff.iPod%>,
+    iPhone: <%=combinedconfig.trigger.config.platform_cutoff.iPhone%>,
+    iPad: <%=combinedconfig.trigger.config.platform_cutoff.iPad%>,
+  },
+
+  /**
+   * Name of device and the token to look for in the user agent string. Not case sensitive
+   */
+  device_blacklist: <%-JSON.stringify(combinedconfig.trigger.config.device_blacklist)%>,
+
+  /**
+   * Replay pools. This is the random dice throw that occurs on the first page. If it passes (and replay
+   * is turned on) then we proceed normally. If it does not pass then we will not record AND we will not trigger
+   * invitations for anybody either.
+   *
+   * This is an array of objects. Each object contains a URL path match and an "sp" value which is the sampling
+   * percentage. 100 is always-in, and 0 is always-out.
+   */
+  replay_pools: <%-JSON.stringify(combinedconfig.trigger.config.replay_pools)%>,
+
+  /**
+   * Re-pools are parts of the site where we might want to undo to cxReplay pooling result
+   * and potentially re-include someone into cxReplay recording.
+   */
+  replay_repools: <%-JSON.stringify(combinedconfig.trigger.config.replay_repools)%>,
+
+  /**
+   * The list of CPPS that the customer may want to set
+   */
+  cpps: <%-JSON.stringify(combinedconfig.trigger.config.cpps)%>
+};
+
+/**
+ * The Survey Definition(s) *****************************************************
+ * Note: you do not have to re-specify all parameters in each subsequent definition,
+ * only the ones that have changed. Properties are copied from earlier definitions down
+ * to later ones when they haven't been specified.
+ */
+/**
+ * @preserve
+ * @@SVCONFIG_GOES_HERE@@
+ */
+
+/**
+ * A generic configuration module that other modules may include
+ */
+_fsDefine("triggerconfig", function() {
+  /**
+   * Export all the config
+   */
+  return { config: triggerconfig, surveydefs: surveydefs };
+});

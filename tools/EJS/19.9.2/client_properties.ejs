@@ -1,0 +1,92 @@
+module.exports = {
+  /**
+   * Variables that go into the build that apply to this client in particular
+   */
+  client: {
+    /**
+     * Most commonly edited values
+     */
+    id: "<%=combinedconfig.global.customerId%>",
+
+    /**
+     * FCP info
+     */
+    clientid: <%=combinedconfig.global.customerKey%>,
+    sitekey: "<%=combinedconfig.global.siteKey%>",
+
+    replayid: "<%=combinedconfig.record.clientId%>",
+    siteid: "<%=combinedconfig.trigger.config.site_id%>",
+    
+    /**
+     * Products to build. Used mostly for testing
+     * trigger, feedback, record
+     */
+    productsToBuild: [
+      <% if (!combinedconfig.global.products.trigger) { %> // <% } %> "trigger",
+      <% if (!combinedconfig.global.products.record) { %> // <% } %> "record",
+      // <% if (!combinedconfig.global.products.feedback) { %> // <% } %> "feedback",
+    ],
+
+    
+    /**
+     * Omniture ID provided by client to capture OMTR_VID CPP. If undefined, the CPP will not be captured.
+     */
+    <% if (combinedconfig.global.adobeRsid === "") { %>// adobersid: 'fsekevin.reportsuite',<% } else { %> adobersid: '<%=combinedconfig.global.adobeRsid%>', <% } %>
+
+    /**
+     * Tells us what type of persistent storage to use for state. In order of preference:
+     *  1. 'COOKIE': Traditional. No server-side tracking. 1st and 3rd party cookies only.
+     *  2. 'MICROCOOKIE': Preferred. A very small cookie is set (~38 bytes). Server tracking keeps most of the state.
+     *  3. 'DOMSTORAGE': Should rarely be used. Only use this if: No cross-subdomain changes, No http->https changes, No inPrivate browsing.
+     */
+    persistence: "<%=combinedconfig.global.storage%>",
+
+    /**
+     * true to create the cookie with the secure flag (HTTPS).
+     * /!\ A secure cookie will only be created if the website is itself on HTTPS.
+     */
+    cookieSecure: <%=Boolean(combinedconfig.global.cookieSecure)%>,
+
+    /**
+     * Cookies' domain.
+     * Set our cookie on a specific domain for certain URLs.
+     * Note: keep this commented or delete it to have the same behavior as pre 19.5.0
+     *  (e.g. the domain used will always be the root domain)
+     * Note: the URL (path) can use wildcards.
+     * Note: the first match will be used, starting from the top.
+     */
+    cookieDomain: <%-JSON.stringify(combinedconfig.global.cookieDomain)%>,
+
+    /**
+     * Configuration for which journey events we want to send to the
+     * analytics (big data) endpoint.
+     */
+    journeyEvents: {
+      /**
+       * In "never" mode, we never transmit the listed events. To transmit all
+       * events, set transmit to "never" and have an empty list.
+       *
+       * In "only" mode, we only transmit the listed events and no others. To
+       * transmit no events, set transmit to "only" and have an empty list.
+       */
+      transmit: "<%=combinedconfig.global.journeyEvents.transmit%>", // "never" or "only"
+
+      /**
+       * The list of event names.
+       * eg. ["fs_pageView", "fs_mouseoff", "fs_inviteShown", "fs_inviteAccepted"]
+       */
+      list: <%-JSON.stringify(combinedconfig.global.journeyEvents.list)%>,
+    },
+
+    /**
+     * List of CPPs to disable. These will be disabled in trigger, feedback,
+     * in the tracker window and in feedback popups.
+     *
+     * Examples of CPPS
+     * url, browser, os, referrer, site, code, GA_ID, OMTR_VID, OMTR_BEACON
+     *
+     * If commented out or empty, nothing will be disabled
+     */
+    disable_cpps: <%-JSON.stringify(combinedconfig.global.disable_cpps)%>,
+  },
+};
