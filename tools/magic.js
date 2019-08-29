@@ -327,5 +327,7 @@ module.exports = {
   assetsClear,
   assetsCopy,
   prettify,
-  test
+  test,
+  pushStg,
+  pushProd
 };

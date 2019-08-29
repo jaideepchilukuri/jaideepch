@@ -157,7 +157,7 @@ module.exports = {
       * to the server, but the viewer will not see it. Useful for profile images and the like.
       */
      pii: {
-      <% if !(combinedconfig.record.advancedSettings.pii.maskCharacters) { %> // <% } %> maskCharacters: "<%-JSON.stringify(combinedconfig.record.advancedSettings.pii)%>",
+      <% if (!combinedconfig.record.advancedSettings.pii.maskCharacters) { %> // <% } %> maskCharacters: "<%-JSON.stringify(combinedconfig.record.advancedSettings.pii)%>",
       selectiveUnMaskZones: <%-JSON.stringify(combinedconfig.record.advancedSettings.pii.selectiveUnMaskZones)%>,
        pagesToSelectiveMask: <%-JSON.stringify(combinedconfig.record.advancedSettings.pii.pagesToSelectiveMask)%>,
        selectiveMaskZones: <%-JSON.stringify(combinedconfig.record.advancedSettings.pii.selectiveMaskZones)%>,

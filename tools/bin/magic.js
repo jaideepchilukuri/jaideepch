@@ -2,17 +2,18 @@
 
 const program = require("commander");
 const magic = require("../magic");
+const spotcheck = require("../spotcheck");
 const git = require("simple-git/promise")();
 const fs = require('fs');
-const ccpath = process.cwd();
+const path = process.cwd();
 
 var cconfig;
 
 //{assumption that this tool is added to path already, figure out what modules are needed}
 
 program
-  .command("summon <sitekey>")
-  .alias("s")
+  .command("get <sitekey>")
+  .alias("g")
   .description("Check out a sitekey's existing config")
   .action(wrap(getSitekey))
   
@@ -30,13 +31,13 @@ program
 
 program
   .command("pushstg")
-  .alias("st")
+  .alias("s")
   .description("Push to staging")
   .action(wrap(pushStg))
 
 program
   .command("pushprod")
-  .alias("pd")
+  .alias("p")
   .description("Push to production")
   .action(wrap(pushProd))
   
@@ -74,14 +75,14 @@ async function getSitekey(sitekey) {
 
 
 async function prepCode() {
-  let cleared = await magic.ccClear(ccpath);
-  if (cleared == "done") {
+  let cleared = await magic.ccClear(path);
+  if (cleared) {
     console.log("CC cleared");
-    let copied = await magic.ccCopy('config.json', ccpath);
-    if (copied == "done") {
+    let copied = await magic.ccCopy('config.json', path);
+    if (copied) {
       console.log("empty config copied");
-      let renamed = await magic.ccRename('config.json', ccpath);
-      if (renamed == "done"){
+      let renamed = await magic.ccRename('config.json', path);
+      if (renamed){
         console.log(renamed);
         return renamed;
       }
@@ -91,16 +92,17 @@ async function prepCode() {
 
 async function build() {
   let prep = await prepCode();
-  await magic.ccNpm(ccpath);
+  await magic.ccNpm(path);
   if (prep) {
-    let assetsclear = await magic.assetsClear(ccpath);
+    let assetsclear = await magic.assetsClear(path);
     if (assetsclear) {
-      let assetscopy = await magic.assetsCopy(ccpath);
+      let assetscopy = await magic.assetsCopy(path);
       if (assetscopy) {
-        let rebuild = await magic.configRebuild('config.json',ccpath);
+        let rebuild = await magic.configRebuild('config.json', path);
         if (rebuild) {
-          await magic.prettify(ccpath);
-          console.log("built and prettied");
+          await magic.prettify(path);
+          console.log("Done building client code package");
+          await spotcheck.checkUID('config.json');
         }
       }
     }
@@ -108,13 +110,19 @@ async function build() {
 }
 
 async function test() {
-  await magic.test(ccpath);
+  await magic.test(path);
 }
 
 async function pushStg() {
-  await magic.pushStg(ccpath);
+  let pushedstg = await magic.pushStg(path);
+  if (pushedstg) {
+    console.log("Pushed to staging");
+  }
 }
 
 async function pushProd() {
-  await magic.pushProd(ccpath);
+  let pushedprod = await magic.pushProd(path);
+  if (pushedprod) {
+    console.log("Pushed to production");
+  }
 }
