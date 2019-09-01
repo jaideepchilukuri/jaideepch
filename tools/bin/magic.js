@@ -5,46 +5,45 @@ const magic = require("../magic");
 const spotcheck = require("../spotcheck");
 const git = require("simple-git/promise")();
 const fs = require('fs');
-const path = process.cwd();
+const path = process.cwd()+'\\tools\\clientconfigs\\';
 
 var cconfig;
 
-//{assumption that this tool is added to path already, figure out what modules are needed}
+//obliterate, banish, vanish, vanquish, enchant, cast, exile
 
 program
-  .command("get <sitekey>")
-  .alias("g")
+  .command("summon <sitekey>")
+  .alias("s")
   .description("Check out a sitekey's existing config")
   .action(wrap(getSitekey))
   
 program   
-  .command("build")
-  .alias("b")
-  .description("Build client code package")
+  .command("enchant <sitekey>")
+  .alias("e")
+  .description("Build client code package for sitekey")
+  .option("-c --conjure", "Start localhost test")
   .action(wrap(build))
 
 program
-  .command("test")
-  .alias("t")
-  .description("Start localhost server to test")
+  .command("conjure <sitekey>")
+  .alias("c")
+  .description("Start localhost test")
   .action(wrap(test))
 
 program
-  .command("pushstg")
+  .command("pushstg <sitekey>")
   .alias("s")
   .description("Push to staging")
   .action(wrap(pushStg))
 
 program
-  .command("pushprod")
+  .command("pushprod <sitekey>")
   .alias("p")
   .description("Push to production")
   .action(wrap(pushProd))
   
 program.parse(process.argv);
 
-
-// //the thing here that wraps functions with async
 function wrap(fn) {
   return function(...args) {
     return fn(...args).catch(err => {
@@ -56,72 +55,47 @@ function wrap(fn) {
 }
 
 async function getSitekey(sitekey) {
-  //look at all branches in websdk-client-configs
-  //if any branch==sitekey, checkout branch
-  //otherwise create new branch named sitekey 
-  const branches = await git.branchLocal();
-  const hasLocalBranch = branches.branches[sitekey];
-  if (hasLocalBranch) {
-      // use existing branch for the sitekey
-      console.log("Checking out existing branch for", sitekey);
-      await git.checkout(sitekey);
-  } else {
-      // create a new branch for the sitekey
-      console.log("Creating branch for", sitekey);
-      await git.checkout(["-b", sitekey]);
-  }
-  console.log("Checked out websdk-client-configs branch for sitekey ", sitekey);
+  await magic.skClear(path+sitekey);
+  await magic.skCopy(sitekey);
 }
 
 
-async function prepCode() {
-  let cleared = await magic.ccClear(path);
-  if (cleared) {
-    console.log("CC cleared");
-    let copied = await magic.ccCopy('config.json', path);
-    if (copied) {
-      console.log("empty config copied");
-      let renamed = await magic.ccRename('config.json', path);
-      if (renamed){
-        console.log(renamed);
-        return renamed;
-      }
-    }
+async function prepCode(sitekey) {
+  await magic.ccClear(path+sitekey);
+  console.log("CC cleared");
+  await magic.ccCopy(path+sitekey);
+  console.log("empty config copied");
+  await magic.ccRename(path+sitekey);
+  console.log("empty config renamed");
+}
+
+async function build(sitekey, cmd) {
+  console.log(cmd.conjure);
+  await prepCode(sitekey);
+  await magic.assetsClear(path+sitekey);
+  await magic.assetsCopy(path+sitekey);
+  await magic.configRebuild(path+sitekey);
+  await magic.prettify(path+sitekey);
+  await magic.ccNpm(path+sitekey);
+  console.log("Done building client code package");
+  if (cmd.conjure) {
+    await test(sitekey);
   }
 }
 
-async function build() {
-  let prep = await prepCode();
-  await magic.ccNpm(path);
-  if (prep) {
-    let assetsclear = await magic.assetsClear(path);
-    if (assetsclear) {
-      let assetscopy = await magic.assetsCopy(path);
-      if (assetscopy) {
-        let rebuild = await magic.configRebuild('config.json', path);
-        if (rebuild) {
-          await magic.prettify(path);
-          console.log("Done building client code package");
-          await spotcheck.checkUID('config.json');
-        }
-      }
-    }
-  }
+async function test(sitekey) {
+  await magic.test(path+sitekey);
 }
 
-async function test() {
-  await magic.test(path);
-}
-
-async function pushStg() {
-  let pushedstg = await magic.pushStg(path);
+async function pushStg(sitekey) {
+  let pushedstg = await magic.pushStg(path+sitekey);
   if (pushedstg) {
     console.log("Pushed to staging");
   }
 }
 
-async function pushProd() {
-  let pushedprod = await magic.pushProd(path);
+async function pushProd(sitekey) {
+  let pushedprod = await magic.pushProd(path+sitekey);
   if (pushedprod) {
     console.log("Pushed to production");
   }
