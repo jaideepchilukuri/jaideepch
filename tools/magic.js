@@ -396,61 +396,66 @@ var gulp = require('gulp'),
       fs.readFile(filename, function read(err, data) {
         /* If an error exists, show it, otherwise show the file */
         if (err) {
-          throw err;
+          return reject(err);
         }  
         data = JSON.parse(data);
         return resolve(data);
       });
     });
   }
-
+  
+  function spawnProcess(command, args, options) {
+    // *** Return the promise
+    return new Promise(function (resolve, reject) {
+      const process = spawn(command, args, options);
+      process.on('exit', function (code) { 
+        return resolve(code);
+      });
+      process.on('error', function (err) {
+        return reject(err);
+      });
+    });
+  }
 
   async function gitCheckout(sitekey) {
-    spawn('git', [`checkout --track origin/${sitekey}`], { cwd: process.cwd()+'\\tools\\clientconfigs\\'+sitekey, stdio: 'inherit', shell: true });
+    return spawnProcess('git', [`checkout --track origin/${sitekey}`], { cwd: process.cwd()+'\\tools\\clientconfigs\\'+sitekey, stdio: 'inherit', shell: true });
   }
   
   async function gitCreate(sitekey) {
-    spawn('git', [`checkout -b ${sitekey}`], { cwd: process.cwd()+'\\tools\\clientconfigs\\'+sitekey, stdio: 'inherit', shell: true });
+    return spawnProcess('git', [`checkout -b ${sitekey}`], { cwd: process.cwd()+'\\tools\\clientconfigs\\'+sitekey, stdio: 'inherit', shell: true });
   }
 
   async function ccNpm(path) {
-    spawn('npm', ['install'], { cwd: path+'/CC/', stdio: 'inherit', shell: true });
+    return spawnProcess('npm', ['install'], { cwd: path+'/CC/', stdio: 'inherit', shell: true });
   }
   
+
   async function ccPrettify(path) {
-    console.log(path);
-    spawn('npx', ['prettier --write client_properties.js'], { cwd: path+'/CC/clientconfig/', stdio: 'inherit', shell: true })
-    .on('error', function( err ){ throw err });
+    return spawnProcess('npx', ['prettier --write client_properties.js'], { cwd: path+'/CC/clientconfig/', stdio: 'inherit', shell: true });
   }
   
   async function rpcPrettify(path) {
-    spawn('npx', ['prettier --write productconfig/record/product_config.js'], { cwd: path+'/CC/clientconfig/', stdio: 'inherit', shell: true })
-    .on('error', function( err ){ throw err });
+    return spawnProcess('npx', ['prettier --write productconfig/record/product_config.js'], { cwd: path+'/CC/clientconfig/', stdio: 'inherit', shell: true });
   }
   
   async function tpcPrettify(path) {
-    spawn('npx', ['prettier --write productconfig/trigger/product_config.js'], { cwd: path+'/CC/clientconfig/', stdio: 'inherit', shell: true })
-    .on('error', function( err ){ throw err });
+    return spawnProcess('npx', ['prettier --write productconfig/trigger/product_config.js'], { cwd: path+'/CC/clientconfig/', stdio: 'inherit', shell: true });
   }
   
   async function sdPrettify(path) {
-    spawn('npx', ['prettier --write productconfig/trigger/surveydef/*'], { cwd: path+'/CC/clientconfig/', stdio: 'inherit', shell: true })
-    .on('error', function( err ){ throw err });
+    return spawnProcess('npx', ['prettier --write productconfig/trigger/surveydef/*'], { cwd: path+'/CC/clientconfig/', stdio: 'inherit', shell: true });
   }
   
   async function test(path) {
-    spawn('gulp', ['test_debug'], { cwd: path+'/CC/', stdio: 'inherit', shell: true })
-      .on('error', function( err ){ throw err });
+    return spawnProcess('gulp', ['test_debug'], { cwd: path+'/CC/', stdio: 'inherit', shell: true });
   }
   
   async function pushStg(path) {
-    spawn('gulp', ['push_stg'], { cwd: path+'/CC/', stdio: 'inherit', shell: true })
-      .on('error', function( err ){ throw err });
+    return spawnProcess('gulp', ['push_stg'], { cwd: path+'/CC/', stdio: 'inherit', shell: true });
   }
   
   async function pushProd(path) {
-    spawn('gulp', ['push_prod'], { cwd: 'CC/', stdio: 'inherit', shell: true })
-      .on('error', function( err ){ throw err });
+    return spawnProcess('gulp', ['push_prod'], { cwd: 'CC/', stdio: 'inherit', shell: true });
   }
   
   
@@ -474,5 +479,7 @@ var gulp = require('gulp'),
     assetsClear,
     assetsCopy,
     prettify,
-    test
+    test,
+    pushStg,
+    pushProd
   };

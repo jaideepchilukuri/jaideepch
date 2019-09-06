@@ -57,7 +57,7 @@ module.exports = {
      * this is 4.5 megabytes for session storage and 10 megabytes for window
      * storage.
      */
-    <% if !(combinedconfig.record.advancedSettings.maxStorageMB) { %> // <% } %> maxStorageMB: "<%=combinedconfig.record.advancedSettings.maxStorageMB%>",
+    <% if (!combinedconfig.record.advancedSettings.maxStorageMB) { %> // <% } %> maxStorageMB: "<%=combinedconfig.record.advancedSettings.maxStorageMB%>",
 
     /**
      * Set up cxReplay pools, which apply before cxR is activated. This is a sticky state and once

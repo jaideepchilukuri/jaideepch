@@ -28,11 +28,6 @@ module.exports = {
     ],
 
     /**
-     * Turn on the new 19.7+ record code. Otherwise the old pre-19.7 record runs.
-     */
-    modernRecord: <%=combinedconfig.global.modernRecord%>,
-
-    /**
      * Omniture ID provided by client to capture OMTR_VID CPP. If undefined, the CPP will not be captured.
      */
     <% if (combinedconfig.global.adobeRsid === "") { %>// adobersid: 'fsekevin.reportsuite',<% } else { %> adobersid: '<%=combinedconfig.global.adobeRsid%>', <% } %>

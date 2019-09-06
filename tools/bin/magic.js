@@ -70,7 +70,6 @@ async function prepCode(sitekey) {
 }
 
 async function build(sitekey, cmd) {
-  console.log(cmd.conjure);
   await prepCode(sitekey);
   await magic.assetsClear(path+sitekey);
   await magic.assetsCopy(path+sitekey);
