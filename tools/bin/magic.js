@@ -3,6 +3,8 @@
 const program = require("commander");
 const magic = require("../magic");
 const spotcheck = require("../spotcheck");
+const git = require("simple-git/promise")();
+const fs = require('fs');
 const path = process.cwd()+'\\tools\\clientconfigs\\';
 
 program
