@@ -1,7 +1,7 @@
 /**
  * Record Configuration *****************************************************
  */
- module.exports = {
+module.exports = {
   /**
    * Disable record on pages under specific conditions.
    *
@@ -37,9 +37,8 @@
     variables: <%-JSON.stringify(combinedconfig.record.whitelist.variables)%>,
     cookies: <%-JSON.stringify(combinedconfig.record.whitelist.cookies)%>,
   },
-
+  
   // clientId is now client.replayid in client_properties
-
   /**
    * Other settings
    */

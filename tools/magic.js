@@ -13,6 +13,21 @@ var gulp = require('gulp'),
   ejs = require('ejs');
   const git = require("simple-git/promise")();
 
+  async function updateCodeVersion(path, codeVersion) {
+    jconfig = await readFile(path+'\\config.json');
+    return new Promise(function(resolve, reject) {
+      if(jconfig && jconfig.global && jconfig.global.codeVer)
+        jconfig.global.codeVer = codeVersion;
+        jconfig = JSON.stringify(jconfig);
+        fs.writeFileSync(path+'\\config.json',jconfig,function (err) {
+          if (err) {
+            return reject(err);
+          }
+        });  
+      return resolve();
+    });
+  }
+  
   async function returnCodeVersion() {
     return new Promise(function(resolve, reject) {
       let codeVersion = null;
@@ -210,7 +225,7 @@ var gulp = require('gulp'),
   }
   
   async function ccCopy(path) {
-    jconfig = await readFile(path+'\\config.json');
+    jconfig = await readFile(path+'\\config.json'); 
     return new Promise(function(resolve, reject) {
       process.nextTick(async function () {
         let codeVersion = await returnCodeVersion();
@@ -322,8 +337,7 @@ var gulp = require('gulp'),
     });
     return;
   }
-  
-  
+
   async function configRebuild(path) {
     jconfig = await readFile(path+'\\config.json')
     let codeVersion = await returnCodeVersion();
@@ -390,6 +404,14 @@ var gulp = require('gulp'),
     return ("done");
   }
   
+  async function deleteBranch(path) {
+    if(fs.existsSync(path)) {
+      console.log("Deleting branch for sitekey");
+      rimraf.sync(path);
+      return;
+    } else console.log("No folder existed at "+path);
+  }
+
   async function readFile(filename) {
     /* Read File */
     return new Promise(function(resolve, reject) {
@@ -458,7 +480,6 @@ var gulp = require('gulp'),
     return spawnProcess('gulp', ['push_prod'], { cwd: 'CC/', stdio: 'inherit', shell: true });
   }
   
-  
   async function prettify(path){
     ccPrettify(path);
     rpcPrettify(path);
@@ -466,8 +487,8 @@ var gulp = require('gulp'),
     sdPrettify(path);
   }
   
-  
   module.exports = {
+    updateCodeVersion,
     skClear,
     skCopy,
     readFile,
@@ -481,5 +502,6 @@ var gulp = require('gulp'),
     prettify,
     test,
     pushStg,
-    pushProd
+    pushProd,
+    deleteBranch
   };
