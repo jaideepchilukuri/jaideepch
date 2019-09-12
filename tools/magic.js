@@ -16,14 +16,16 @@ var gulp = require('gulp'),
   async function updateCodeVersion(path, codeVersion) {
     jconfig = await readFile(path+'\\config.json');
     return new Promise(function(resolve, reject) {
-      if(jconfig && jconfig.global && jconfig.global.codeVer)
+      if(jconfig && jconfig.global && jconfig.global.codeVer) {
         jconfig.global.codeVer = codeVersion;
         jconfig = JSON.stringify(jconfig);
         fs.writeFileSync(path+'\\config.json',jconfig,function (err) {
           if (err) {
             return reject(err);
           }
+          console.log("Updated code version in config.json to "+codeVersion);
         });  
+      }
       return resolve();
     });
   }
@@ -171,7 +173,7 @@ var gulp = require('gulp'),
         console.log("Deleting the folder at "+path);
         rimraf(path, function(err) {
           if (err) {return reject(err);}
-          console.log("Deleted sitekey folder");
+          console.log("Deleted the folder at "+path);
           return resolve();
         });
       } else {

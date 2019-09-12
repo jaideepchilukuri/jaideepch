@@ -5,6 +5,7 @@ const magic = require("../magic");
 const spotcheck = require("../spotcheck");
 const git = require("simple-git/promise")();
 const fs = require('fs');
+
 const path = process.cwd()+'\\tools\\clientconfigs\\';
 
 program
@@ -16,7 +17,7 @@ program
 program   
   .command("enchant <sitekey> [codeVer]")
   .alias("e")
-  .description("Build client code package for sitekey")
+  .description("Build client code package for sitekey, optional argugment to specify code version")
   .option("-c --conjure", "Start localhost test")
   .action(wrap(build))
 
@@ -27,7 +28,7 @@ program
   .action(wrap(test))
 
 program 
-  .command("rebuild <sitekey>")
+  .command("reanimate <sitekey>")
   .alias("r")
   .description("Rebuild config files in CC package after making changes to config.json")
   .action(wrap(rebulidConfig))
@@ -116,17 +117,18 @@ async function test(sitekey) {
 async function pushStg(sitekey) {
   let pushedstg = await magic.pushStg(path+sitekey);
   if (pushedstg) {
-    console.log("Pushed to staging");
+    console.log("Pushed to staging on sitekey "+sitekey);
   }
 }
 
 async function pushProd(sitekey) {
   let pushedprod = await magic.pushProd(path+sitekey);
   if (pushedprod) {
-    console.log("Pushed to production");
+    console.log("Pushed to production on sitekey "+sitekey);
   }
 }
 
 async function vanquish(sitekey) {
   await magic.deleteBranch(path+sitekey);
+  console.log("Branch "+sitekey+"deleted");
 }
