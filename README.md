@@ -9,8 +9,8 @@ Open a command prompt/bash window, navigate to System Properties > Environment V
 Under 'System Variables', select 'Path', edit, and add a new environment variable containing the path to \websdk-config-tools\tools\bin
 (i.e. C:\Users\firstname.lastname\Documents\websdk-config-tools\tools\bin)
 
-Open a command prompt and cd to ~\websdk-config-tools\tools and run npm install -g 
+Open a command prompt and cd to ~\websdk-config-tools\tools, run npm install -g 
 
-Now you can restart the command prompt and use 'magic' commands. 
+Now you can start a new git bash window, cd to ~\websdk-config-tools and use 'magic' commands. 
 
 Type 'magic --help' for a list of commands and their descriptions 
