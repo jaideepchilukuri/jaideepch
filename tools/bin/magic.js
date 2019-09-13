@@ -70,11 +70,7 @@ async function getSitekey(sitekey) {
 
 async function prepCode(sitekey) {
   await magic.ccClear(path+sitekey);
-  console.log("CC cleared");
   await magic.ccCopy(path+sitekey);
-  console.log("empty config copied");
-  // await magic.ccRename(path+sitekey);
-  // console.log("empty config renamed");
 }
 
 async function build(sitekey, codeVer, cmd) {
