@@ -53,7 +53,7 @@ var GITSync = function(obj, cb) {
     };
 
   // Decide where this goes
-  var fullqualifiedplace = obj.dest + "/" + obj.branch,
+  var fullqualifiedplace = obj.dest + "\\CC", // + obj.branch,
     needToSync = false;
 
   fullqualifiedplace = fullqualifiedplace.replace(/\/\//g, "/");
@@ -70,20 +70,20 @@ var GITSync = function(obj, cb) {
 
   isDirEmpty(fullqualifiedplace, function(err, isempty) {
     if (isempty || needToSync) {
-      var client = new simpleGit(obj.dest);
+      var client = new simpleGit(fullqualifiedplace);
       console.info(
-        "gitsync".yellow +
-          ": ".grey +
+        "gitsync" +
+          ": "+
           "Wait a moment, pulling repo " +
-          obj.repo.magenta +
+          obj.repo +
           " branch " +
-          obj.branch.magenta +
+          obj.branch +
           " to " +
-          fullqualifiedplace.magenta +
+          fullqualifiedplace +
           "..."
       );
 
-      client.raw(["clone", "-b", obj.branch, obj.repo, obj.branch], function(err, result) {
+      client.raw(["clone", "-b", obj.branch, obj.repo, fullqualifiedplace], function(err, result) {
         if (err) {
           rimraf(fullqualifiedplace, function() {
             cb(err);

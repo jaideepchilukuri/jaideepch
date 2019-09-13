@@ -310,22 +310,6 @@ async function ccCopy(path) {
   });
 };
 
-async function ccRename(path) {
-  jconfig = await readFile(path + '\\config.json')
-  let codeVersion = await returnCodeVersion();
-  return new Promise(function (resolve, reject) {
-    if (codeVersion == null)
-      err = "Code Version not defined in config.json > global > codeVer";
-    fs.rename(path + '/' + codeVersion, path + '/CC', function (err) {
-      if (err) {
-        return reject(err);
-      }
-      return resolve();
-    });
-  });
-};
-
-
 /**
  * Delete assets folder if it exists
  */
@@ -506,7 +490,6 @@ module.exports = {
   readFile,
   ccClear,
   ccCopy,
-  ccRename,
   ccNpm,
   configRebuild,
   assetsClear,

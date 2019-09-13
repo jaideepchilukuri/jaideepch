@@ -73,8 +73,8 @@ async function prepCode(sitekey) {
   console.log("CC cleared");
   await magic.ccCopy(path+sitekey);
   console.log("empty config copied");
-  await magic.ccRename(path+sitekey);
-  console.log("empty config renamed");
+  // await magic.ccRename(path+sitekey);
+  // console.log("empty config renamed");
 }
 
 async function build(sitekey, codeVer, cmd) {
