@@ -5,16 +5,16 @@
     "magic": "./bin/magic.js"
   },
   "dependencies": {
+    "await-spawn": "*",
     "commander": "^2.15.1",
     "copy-dir": "^1.1.0",
     "ejs": "^2.6.2",
     "gulp": "^4.0.2",
     "gulp-cli": "^2.2.0",
-    "lodash.isequal": "^4.5.0",
+    "lodash.isequal": "^4.4.0",
     "node-gitsync": "^1.0.5",
     "prettier": "^1.17.1",
     "request": "^2.88.0",
-    "sync-request": "^6.1.0",
-    "await-spawn": "*"
+    "sync-request": "^6.1.0"
   }
 }

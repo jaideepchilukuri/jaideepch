@@ -85,8 +85,8 @@ async function build(sitekey, codeVer, cmd) {
   await magic.assetsClear(path+sitekey);
   await magic.assetsCopy(path+sitekey);
   await magic.configRebuild(path+sitekey);
-  await magic.prettify(path+sitekey);
-  await magic.ccNpm(path+sitekey);
+  //await magic.prettify(path+sitekey);
+  //await magic.ccNpm(path+sitekey);
   console.log("Done building client code package");
   if (cmd.conjure) {
     await test(sitekey);
