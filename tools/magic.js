@@ -340,7 +340,6 @@ async function configRebuild(path) {
 
   //console.log("EmptyConfig:",econfig);
   let combinedconfig = await returnCombinedConfig(jconfig, econfig, false);
-  console.log(combinedconfig.trigger);
   // then the logic to rebuild from that into the actual files
 
   let cptemplate = fs.readFileSync(`./tools/EJS/${codeVersion}/client_properties.ejs`, "utf-8");/*,function (err) {
