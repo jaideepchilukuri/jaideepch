@@ -126,5 +126,5 @@ async function pushProd(sitekey) {
 
 async function vanquish(sitekey) {
   await magic.deleteBranch(path+sitekey);
-  console.log("Branch "+sitekey+"deleted");
+  console.log("Branch "+sitekey+" deleted");
 }

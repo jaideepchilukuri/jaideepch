@@ -221,8 +221,7 @@ async function skCopy(sitekey) {
 async function ccClear(path) {
   return new Promise(function (resolve, reject) {
     if (fs.existsSync(path + '/CC')) {
-      console.log("Deleting the CC folder");
-      console.log(path);
+      console.log("Deleting the CC folder", path);
       rimraf(path + '/CC', function (err) {
         if (err) { return reject(err); }
         console.log("Deleted CC folder");
