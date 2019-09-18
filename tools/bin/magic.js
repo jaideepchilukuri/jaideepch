@@ -12,6 +12,8 @@ program
   .command("summon <sitekey>")
   .alias("s")
   .description("Check out a sitekey's existing config")
+  .option("-s --staging", "Get custom config from staging")
+  .option("-p --production", "Get custom config from production")
   .action(wrap(getSitekey))
   
 program   
@@ -46,6 +48,13 @@ program
   .action(wrap(pushProd))
   
 program
+  .command("commit <sitekey> <message>")
+  .alias("g")
+  .description("Commit back to git")
+  .option("-p --push", "Push changes after commit")
+  .action(wrap(commit))
+
+program
   .command("vanquish <sitekey>")
   .alias("v")
   .description("Delete branch for sitekey")
@@ -63,9 +72,15 @@ function wrap(fn) {
   };
 }
 
-async function getSitekey(sitekey) {
+async function getSitekey(sitekey, cmd) {
   await magic.skClear(path+sitekey);
   await magic.skCopy(sitekey);
+  if (cmd.staging) {
+    await magic.getCustom(path, sitekey, "staging");
+  }
+  if (cmd.production) {
+    await magic.getCustom(path, sitekey, "production");
+  }
 }
 
 async function prepCode(sitekey) {
@@ -76,6 +91,7 @@ async function prepCode(sitekey) {
 async function build(sitekey, codeVer, cmd) {
   if (codeVer) {
     await magic.updateCodeVersion(path+sitekey,codeVer);
+    await magic.customPrettify(path, sitekey, path+`\\`+sitekey+`\\config.json`);
   }
   await prepCode(sitekey);
   await magic.assetsClear(path+sitekey);
@@ -95,6 +111,8 @@ async function rebulidConfig(sitekey) {
   if(packagejson && packagejson.version && config && config.global && config.global.codeVer) {
     if(packagejson.version == config.global.codeVer) {
       console.log("Rebuilding configs for client code package");
+      await magic.assetsClear(path+sitekey);
+      await magic.assetsCopy(path+sitekey);
       await magic.configRebuild(path+sitekey);
       await magic.prettify(path+sitekey);
       await magic.ccNpm(path+sitekey);
@@ -121,6 +139,17 @@ async function pushProd(sitekey) {
   let pushedprod = await magic.pushProd(path+sitekey);
   if (pushedprod) {
     console.log("Pushed to production on sitekey "+sitekey);
+  }
+}
+
+async function commit(sitekey, message, cmd) {
+  await magic.gitAdd(sitekey);
+  let committed = await magic.gitCommit(sitekey, message);
+  if (committed) {
+    console.log("Committed changes on " + sitekey + " back to repo");
+  }
+  if (cmd.push){
+    await magic.gitPush(sitekey);
   }
 }
 

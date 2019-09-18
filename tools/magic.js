@@ -203,19 +203,32 @@ async function skCopy(sitekey) {
     }
   });
   try {
-    let done = await git.branch(["--list", `${sitekey}`], function (err, result) { if (err) { console.log("test: " + err); } });
-    if (done && done.all && done.all[0]) {
+    let done = await gitPull(sitekey);
+    if (done == 1) {
+      await gitCreate(sitekey);
+      await gitPublish(sitekey);
+      console.log('Created new branch ' + sitekey);
+    }
+    else {
       await gitCheckout(sitekey);
       console.log('Checked out existing branch ' + sitekey);
     }
-    else {
-      await gitCreate(sitekey);
-      console.log('Created new branch ' + sitekey);
-    }
-  } catch (err) {
+  } catch(err) {
     console.log(err);
   }
   console.log("Checked out websdk-client-configs branch for sitekey", sitekey);
+}
+
+async function getCustom(path, sitekey, env) {
+  let customConfigUrl = `https://fsrsupport.foresee.com/api/JSON/custom?sitekey=${sitekey}&container=${env}`;
+  //make the call to the url to retrieve the empty config
+  let resp = syncrequest('GET', customConfigUrl);
+  let respbody = resp.getBody('utf8');
+  respbody = JSON.parse(respbody);
+  fs.writeFileSync(path+sitekey+`/config_`+env+`.json`, JSON.stringify(respbody), function (err) {
+    if (err) throw err;
+  });
+  return customPrettify(path, sitekey, `config_${env}.json`);
 }
 
 async function ccClear(path) {
@@ -332,10 +345,35 @@ async function assetsCopy(path) {
   return;
 }
 
+// async function legacyCheck(jconfig, econfig) {
+//   return new Promise(function (resolve, reject) {
+//     if (jconfig && jconfig.trigger && jconfig.trigger.surveydefs) {
+//       for (def in jconfig.trigger.surveydefs) {
+//         if (def.display && def.display.desktop && def.display.desktop[0].dialog) {
+//           for (obj in econfig.display.desktop[0].dialog) {
+//             if (def.display.desktop[0].dialog.obj) {
+//               console.log(def.display.desktop[0].dialog.obj);
+//             }
+//           }
+//         }
+//       }
+//       jconfig = JSON.stringify(jconfig);
+//       fs.writeFileSync(path + '\\config.json', jconfig, function (err) {
+//         if (err) {
+//           return reject(err);
+//         }
+//       });
+//     }
+//     return resolve();
+//   });
+// }
+
 async function configRebuild(path) {
   jconfig = await readFile(path + '\\config.json')
   let codeVersion = await returnCodeVersion();
   let econfig = await returnEmptyConfig(codeVersion);
+
+  //jconfig = await legacyCheck(jconfig, econfig);
 
   //console.log("EmptyConfig:",econfig);
   let combinedconfig = await returnCombinedConfig(jconfig, econfig, false);
@@ -395,6 +433,12 @@ async function configRebuild(path) {
       if (err) console.log(err);
     });
   } else console.log("No def1 existed at " + path + '\\CC\\clientconfig\\productconfig\\trigger\\surveydef');
+  if (fs.existsSync(path + '/CC/clientconfig/globalconfig/local.js')) {
+    let prodfile = fs.readFileSync(path + '/CC/clientconfig/globalconfig/prod.js', "utf-8");
+    fs.writeFileSync(path + `/CC/clientconfig/globalconfig/local.js`, prodfile, function (err) {
+      if (err) throw err;
+    });
+  }
   return ("done");
 }
 
@@ -433,6 +477,10 @@ function spawnProcess(command, args, options) {
   });
 }
 
+async function gitPull(sitekey) {
+  return spawnProcess('git', [`pull origin ${sitekey}`], { cwd: process.cwd() + '\\tools\\clientconfigs\\' + sitekey, stdio: 'inherit', shell: true });
+}
+
 async function gitCheckout(sitekey) {
   return spawnProcess('git', [`checkout --track origin/${sitekey}`], { cwd: process.cwd() + '\\tools\\clientconfigs\\' + sitekey, stdio: 'inherit', shell: true });
 }
@@ -441,10 +489,29 @@ async function gitCreate(sitekey) {
   return spawnProcess('git', [`checkout -b ${sitekey}`], { cwd: process.cwd() + '\\tools\\clientconfigs\\' + sitekey, stdio: 'inherit', shell: true });
 }
 
+async function gitPublish(sitekey) {
+  return spawnProcess('git', [`push -u origin ${sitekey}`], { cwd: process.cwd() + '\\tools\\clientconfigs\\' + sitekey, stdio: 'inherit', shell: true });
+}
+
+async function gitAdd(sitekey) {
+  return spawnProcess('git', [`add .`], { cwd: process.cwd() + '\\tools\\clientconfigs\\' + sitekey, stdio: 'inherit', shell: true });
+}
+
+async function gitCommit(sitekey, message) {
+  return spawnProcess('git', [`commit -m ${message}`], { cwd: process.cwd() + '\\tools\\clientconfigs\\' + sitekey, stdio: 'inherit', shell: true });
+}
+
+async function gitPush(sitekey) {
+  return spawnProcess('git', [`push`], { cwd: process.cwd() + '\\tools\\clientconfigs\\' + sitekey, stdio: 'inherit', shell: true });
+}
+
 async function ccNpm(path) {
   return spawnProcess('npm', ['install'], { cwd: path + '/CC/', stdio: 'inherit', shell: true });
 }
 
+async function customPrettify(path, sitekey, filename) {
+  return spawnProcess('npx', [`prettier --write ${filename}`], {cwd: path + '/' + sitekey, stdio: 'inherit', shell: true });
+}
 
 async function ccPrettify(path) {
   return spawnProcess('npx', ['prettier --write client_properties.js'], { cwd: path + '/CC/clientconfig/', stdio: 'inherit', shell: true });
@@ -485,6 +552,7 @@ module.exports = {
   updateCodeVersion,
   skClear,
   skCopy,
+  getCustom,
   readFile,
   ccClear,
   ccCopy,
@@ -493,8 +561,12 @@ module.exports = {
   assetsClear,
   assetsCopy,
   prettify,
+  customPrettify,
   test,
   pushStg,
   pushProd,
+  gitAdd,
+  gitCommit,
+  gitPush,
   deleteBranch
 };
