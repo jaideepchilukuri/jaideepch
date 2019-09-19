@@ -86,6 +86,7 @@ async function getSitekey(sitekey, cmd) {
 async function prepCode(sitekey) {
   await magic.ccClear(path+sitekey);
   await magic.ccCopy(path+sitekey);
+  //await spotcheck.checkUID(path+`\\`+sitekey+`\\config.json`)
 }
 
 async function build(sitekey, codeVer, cmd) {
@@ -96,7 +97,7 @@ async function build(sitekey, codeVer, cmd) {
   await prepCode(sitekey);
   await magic.assetsClear(path+sitekey);
   await magic.assetsCopy(path+sitekey);
-  await magic.configRebuild(path+sitekey);
+  await magic.configRebuild(path+sitekey, sitekey);
   await magic.prettify(path+sitekey);
   await magic.ccNpm(path+sitekey);
   console.log("Done building client code package");
@@ -113,7 +114,7 @@ async function rebulidConfig(sitekey) {
       console.log("Rebuilding configs for client code package");
       await magic.assetsClear(path+sitekey);
       await magic.assetsCopy(path+sitekey);
-      await magic.configRebuild(path+sitekey);
+      await magic.configRebuild(path+sitekey, sitekey);
       await magic.prettify(path+sitekey);
       await magic.ccNpm(path+sitekey);
     }
