@@ -227,7 +227,7 @@ async function getCustom(path, sitekey, env) {
   fs.writeFileSync(path+sitekey+`/config_`+env+`.json`, JSON.stringify(respbody), function (err) {
     if (err) throw err;
   });
-  return customPrettify(path+'/'+sitekey, `config_${env}.json`);
+  return customPrettify(path+sitekey, `config_${env}.json`);
 }
 
 async function ccClear(path) {
@@ -344,94 +344,10 @@ async function assetsCopy(path) {
   return;
 }
 
-async function legacyCheck(jconfig, econfig, path, sitekey) {
-  let stgConfigUrl = `http://gateway-elb.foresee.com/sites/${sitekey}/staging/config.json`;
-  let resp = syncrequest('GET', stgConfigUrl);
-  let respbody = resp.getBody('utf8');
-  respbody = JSON.parse(respbody);
-  let codeVersion = await returnCodeVersion(respbody);
-  return new Promise(function (resolve, reject) {
-    if (
-      codeVersion == '19.3.0'
-      || codeVersion == '19.3.1'
-      || codeVersion == '19.3.2'
-      || codeVersion == '19.3.2-v.2'
-      || codeVersion == '19.3.2-v.3'
-      || codeVersion == '19.3.3'
-      || codeVersion == '19.3.3-v.2'
-      || codeVersion == '19.3.3-v.3'
-      || codeVersion == '19.3.4'
-      || codeVersion == '19.3.5'
-      || codeVersion == '19.3.6'
-      || codeVersion == '19.3.7'
-      || codeVersion == '19.3.7-hf.1'
-      || codeVersion == '19.4.0'
-      || codeVersion == '19.4.1'
-      || codeVersion == '19.4.2'
-      || codeVersion == '19.4.3'
-      || codeVersion == '19.4.4'
-      || codeVersion == '19.5.0'
-      || codeVersion == '19.5.1'
-      || codeVersion == '19.5.2'
-      || codeVersion == '19.6.0'
-      || codeVersion == '19.6.1'
-      || codeVersion == '19.6.2'
-      || codeVersion == '19.6.3'
-      || codeVersion == '19.6.4'
-      || codeVersion == '19.6.5'
-      || codeVersion == '19.6.6'
-      || codeVersion == '19.6.7'
-      || codeVersion == '19.6.8'
-    ) {
-      if (jconfig && jconfig.trigger && jconfig.trigger.surveydefs) {
-        for (var def of jconfig.trigger.surveydefs) {
-          if (def.display && def.display.desktop && def.display.desktop[0]) {
-            def.display.desktop[0].displayname = "default";
-            def.display.desktop[0].template = "classicdesktop";
-            if (def.display.desktop[0].vendorTitleText == null) {
-              def.display.desktop[0].vendorTitleText = "ForeSee";
-            }
-            if (def.display.desktop[0].vendorAltText == null) {
-              def.display.desktop[0].vendorAltText = "ForeSee";
-            }
-            if (def.display.desktop[0].hideForeSeeLogoDesktop == null) {
-              def.display.desktop[0].hideForeSeeLogoDesktop = "false";
-            }
-            if (def.display.desktop[0].dialog){
-              let newDialog = {};
-              for (obj in econfig.trigger.surveydefs[0].display.desktop[0].dialog) {
-                if (!def.display.desktop[0].dialog[obj]) {
-                  newDialog[obj] = econfig.trigger.surveydefs[0].display.desktop[0].dialog[obj];
-                }
-              }
-              for (obj in def.display.desktop[0].dialog) {
-                if (!newDialog[obj]) {
-                  newDialog[obj] = def.display.desktop[0].dialog[obj];
-                }
-              }
-              def.display.desktop[0].dialog=newDialog;
-            }
-          }
-        }
-        jconfigFile = JSON.stringify(jconfig);
-        fs.writeFileSync(path + '\\config.json', jconfigFile, function (err) {
-          if (err) {
-            return reject(err);
-          }
-        });
-        customPrettify(path, `config.json`);
-      }
-    }
-    return resolve(jconfig);
-  });
-}
-
 async function configRebuild(path, sitekey) {
   jconfig = await readFile(path + '\\config.json')
   let codeVersion = await returnCodeVersion(jconfig);
   let econfig = await returnEmptyConfig(codeVersion);
-  
-  jconfig = await legacyCheck(jconfig, econfig, path, sitekey);
 
   //console.log("EmptyConfig:",econfig);
   let combinedconfig = await returnCombinedConfig(jconfig, econfig, false);
@@ -568,6 +484,7 @@ async function ccNpm(path) {
 }
 
 async function customPrettify(path, filename) {
+  console.log(path, filename);
   return spawnProcess('npx', [`prettier --write ${filename}`], {cwd: path, stdio: 'inherit', shell: true });
 }
 

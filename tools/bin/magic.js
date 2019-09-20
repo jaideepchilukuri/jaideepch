@@ -86,21 +86,24 @@ async function getSitekey(sitekey, cmd) {
 async function prepCode(sitekey) {
   await magic.ccClear(path+sitekey);
   await magic.ccCopy(path+sitekey);
-  //await spotcheck.checkUID(path+`\\`+sitekey+`\\config.json`)
 }
 
 async function build(sitekey, codeVer, cmd) {
   if (codeVer) {
+    await spotcheck.checkCPP(path+sitekey+`\\config.json`);
+    await spotcheck.checkUID(path+sitekey+`\\config.json`);
+    await spotcheck.checkLegacyDisplay(path+sitekey+`\\config.json`);
     await magic.updateCodeVersion(path+sitekey,codeVer);
-    await magic.customPrettify(path, sitekey, path+`\\`+sitekey+`\\config.json`);
   }
   await prepCode(sitekey);
   await magic.assetsClear(path+sitekey);
   await magic.assetsCopy(path+sitekey);
   await magic.configRebuild(path+sitekey, sitekey);
   await magic.prettify(path+sitekey);
+  await magic.customPrettify(path+sitekey, `config.json`);
   await magic.ccNpm(path+sitekey);
   console.log("Done building client code package");
+  await spotcheck.checkTemplates(path+sitekey+`\\config.json`);
   if (cmd.conjure) {
     await test(sitekey);
   }
