@@ -14,7 +14,7 @@ ejs = require('ejs');
 const git = require("simple-git/promise")();
 
 async function fullDefection(path) {
-  jconfig = await readFile(path + '\\config.json');
+  jconfig = await readFile(path + '/config.json');
   return new Promise(function (resolve, reject) {
     if (jconfig && jconfig.trigger && jconfig.trigger.surveydefs && jconfig.trigger.surveydefs.length>0) {
       for (let counter=0;counter<jconfig.trigger.surveydefs.length;counter++) {
@@ -34,7 +34,7 @@ async function fullDefection(path) {
         jconfig.trigger.surveydefs[counter].criteria.sp.reg="-1";
       }
       jconfig = JSON.stringify(jconfig);
-      fs.writeFileSync(path + '\\config.json', jconfig, function (err) {
+      fs.writeFileSync(path + '/config.json', jconfig, function (err) {
         if (err) {
           return reject(err);
         }
@@ -46,7 +46,7 @@ async function fullDefection(path) {
 }
 
 async function updateToModernInvite(path) {
-  jconfig = await readFile(path + '\\config.json');
+  jconfig = await readFile(path + '/config.json');
   return new Promise(function (resolve, reject) {
     if (jconfig && jconfig.trigger && jconfig.trigger.surveydefs && jconfig.trigger.surveydefs.length > 0) {
       for (var def of jconfig.trigger.surveydefs) {
@@ -115,7 +115,7 @@ async function updateToModernInvite(path) {
         }
       }
       jconfig = JSON.stringify(jconfig);
-      fs.writeFileSync(path + '\\config.json', jconfig, function (err) {
+      fs.writeFileSync(path + '/config.json', jconfig, function (err) {
         if (err) {
           return reject(err);
         }
@@ -126,7 +126,7 @@ async function updateToModernInvite(path) {
 }
 
 async function updateCodeVersion(path, codeVersion) {
-  jconfig = await readFile(path + '\\config.json');
+  jconfig = await readFile(path + '/config.json');
   return new Promise(function (resolve, reject) {
     if (jconfig) {
       if(!jconfig.global) {
@@ -134,7 +134,7 @@ async function updateCodeVersion(path, codeVersion) {
       }
       jconfig.global.codeVer = codeVersion;
       jconfig = JSON.stringify(jconfig);
-      fs.writeFileSync(path + '\\config.json', jconfig, function (err) {
+      fs.writeFileSync(path + '/config.json', jconfig, function (err) {
         if (err) {
           return reject(err);
         }
@@ -295,6 +295,7 @@ async function returnCombinedConfig(customObj,emptyObj,isSpecialArray) {
 
 async function skClear(path) {
   return new Promise(function (resolve, reject) {
+    console.log('got here 1',path)
     if (fs.existsSync(path)) {
       console.log("Deleting the folder at " + path);
       rimraf(path, function (err) {
@@ -394,14 +395,14 @@ async function ccClear(path) {
         return resolve();
       });
     } else {
-      console.log("No folder existed at " + path + '\\CC');
+      console.log("No folder existed at " + path + '/CC');
       return resolve();
     }
   });
 }
 
 async function ccCopy(path) {
-  jconfig = await readFile(path + '\\config.json');
+  jconfig = await readFile(path + '/config.json');
   return new Promise(function (resolve, reject) {
     process.nextTick(async function () {
       let codeVersion = await returnCodeVersion(jconfig);
@@ -489,7 +490,7 @@ async function ccCopy(path) {
 };
 
 async function ccStash(path) {
-  jconfig = await readFile(path + '\\config.json')
+  jconfig = await readFile(path + '/config.json')
   let codeVersion = await returnCodeVersion(jconfig);
   if (!fs.existsSync(`./tools/CCT/${codeVersion}`)) {
     console.log(`Going to stash client code folder for ${codeVersion} because you don't have it. This will save you time in the future, but may take a moment...`)
@@ -510,7 +511,7 @@ async function assetsClear(path) {
     console.log("Clearing the trigger assets folder");
     rimraf.sync(path + '/CC/clientconfig/productconfig/trigger/assets/*');
     return;
-  } else console.log("No folder existed at " + path + "\\CC\\clientconfig\\productconfig\\trigger\\assets");
+  } else console.log("No folder existed at " + path + "/CC/clientconfig/productconfig/trigger/assets");
 }
 
 /**
@@ -526,7 +527,7 @@ async function assetsCopy(path) {
 }
 
 async function configRebuild(path, sitekey) {
-  jconfig = await readFile(path + '\\config.json')
+  jconfig = await readFile(path + '/config.json')
   let codeVersion = await returnCodeVersion(jconfig);
   let econfig = await returnEmptyConfig(codeVersion);
 
@@ -581,14 +582,14 @@ async function configRebuild(path, sitekey) {
     rimraf(path + '/CC/clientconfig/productconfig/trigger/surveydef/def0.js', function (err) {
       if (err) console.log(err);
     });
-  } else console.log("No def0 existed at " + path + '\\CC\\clientconfig\\productconfig\\trigger\\surveydef');
+  } else console.log("No def0 existed at " + path + '/CC/clientconfig/productconfig/trigger/surveydef');
 
   if (fs.existsSync(path + '/CC/clientconfig/productconfig/trigger/surveydef/def1.js')) {
     console.log("Deleting def1 from the surveydef folder");
     rimraf(path + '/CC/clientconfig/productconfig/trigger/surveydef/def1.js', function (err) {
       if (err) console.log(err);
     });
-  } else console.log("No def1 existed at " + path + '\\CC\\clientconfig\\productconfig\\trigger\\surveydef');
+  } else console.log("No def1 existed at " + path + '/CC/clientconfig/productconfig/trigger/surveydef');
   if (fs.existsSync(path + '/CC/clientconfig/globalconfig/local.js')) {
     let prodfile = fs.readFileSync(path + '/CC/clientconfig/globalconfig/prod.js', "utf-8");
     fs.writeFileSync(path + `/CC/clientconfig/globalconfig/local.js`, prodfile, function (err) {
@@ -599,7 +600,7 @@ async function configRebuild(path, sitekey) {
 }
 
 async function npmRebuild(path) {
-  jconfig = await readFile(path + '\\config.json')
+  jconfig = await readFile(path + '/config.json')
   let codeVersion = await returnCodeVersion(jconfig);
   if (fs.existsSync(`./tools/NPM/${codeVersion}`)) {
     console.log(`Have node modules folder for ${codeVersion} stashed, coping it over...`)
@@ -613,7 +614,7 @@ async function npmRebuild(path) {
 }
 
 async function npmStash(path) {
-  jconfig = await readFile(path + '\\config.json')
+  jconfig = await readFile(path + '/config.json')
   let codeVersion = await returnCodeVersion(jconfig);
   if (!fs.existsSync(`./tools/NPM/${codeVersion}`)) {
     console.log(`Going to stash node modules folder for ${codeVersion} because you don't have it. This will save you time in the future, but may take a moment...`)
@@ -662,31 +663,31 @@ function spawnProcess(command, args, options) {
 }
 
 async function gitPull(sitekey) {
-  return spawnProcess('git', [`pull origin ${sitekey}`], { cwd: process.cwd() + '\\tools\\clientconfigs\\' + sitekey, stdio: 'inherit', shell: true });
+  return spawnProcess('git', [`pull origin ${sitekey}`], { cwd: process.cwd() + '/tools/clientconfigs/' + sitekey, stdio: 'inherit', shell: true });
 }
 
 async function gitCheckout(sitekey) {
-  return spawnProcess('git', [`checkout --track origin/${sitekey}`], { cwd: process.cwd() + '\\tools\\clientconfigs\\' + sitekey, stdio: 'inherit', shell: true });
+  return spawnProcess('git', [`checkout --track origin/${sitekey}`], { cwd: process.cwd() + '/tools/clientconfigs/' + sitekey, stdio: 'inherit', shell: true });
 }
 
 async function gitCreate(sitekey) {
-  return spawnProcess('git', [`checkout -b ${sitekey}`], { cwd: process.cwd() + '\\tools\\clientconfigs\\' + sitekey, stdio: 'inherit', shell: true });
+  return spawnProcess('git', [`checkout -b ${sitekey}`], { cwd: process.cwd() + '/tools/clientconfigs/' + sitekey, stdio: 'inherit', shell: true });
 }
 
 async function gitPublish(sitekey) {
-  return spawnProcess('git', [`push -u origin ${sitekey}`], { cwd: process.cwd() + '\\tools\\clientconfigs\\' + sitekey, stdio: 'inherit', shell: true });
+  return spawnProcess('git', [`push -u origin ${sitekey}`], { cwd: process.cwd() + '/tools/clientconfigs/' + sitekey, stdio: 'inherit', shell: true });
 }
 
 async function gitAdd(sitekey) {
-  return spawnProcess('git', [`add .`], { cwd: process.cwd() + '\\tools\\clientconfigs\\' + sitekey, stdio: 'inherit', shell: true });
+  return spawnProcess('git', [`add .`], { cwd: process.cwd() + '/tools/clientconfigs/' + sitekey, stdio: 'inherit', shell: true });
 }
 
 async function gitCommit(sitekey, message) {
-  return spawnProcess('git', [`commit -m ${message}`], { cwd: process.cwd() + '\\tools\\clientconfigs\\' + sitekey, stdio: 'inherit', shell: true });
+  return spawnProcess('git', [`commit -m ${message}`], { cwd: process.cwd() + '/tools/clientconfigs/' + sitekey, stdio: 'inherit', shell: true });
 }
 
 async function gitPush(sitekey) {
-  return spawnProcess('git', [`push`], { cwd: process.cwd() + '\\tools\\clientconfigs\\' + sitekey, stdio: 'inherit', shell: true });
+  return spawnProcess('git', [`push`], { cwd: process.cwd() + '/tools/clientconfigs/' + sitekey, stdio: 'inherit', shell: true });
 }
 
 async function ccNpm(path) {
@@ -694,7 +695,7 @@ async function ccNpm(path) {
 }
 
 async function customPrettify(path, filename) {
-  console.log('Prettifying '+path+'\\'+filename);
+  console.log('Prettifying '+path+'/'+filename);
   return spawnProcess('npx', [`prettier --write ${filename}`], {cwd: path, stdio: 'inherit', shell: true });
 }
 

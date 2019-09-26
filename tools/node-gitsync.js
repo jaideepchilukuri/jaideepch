@@ -53,7 +53,7 @@ var GITSync = function(obj, cb) {
     };
 
   // Decide where this goes
-  var fullqualifiedplace = obj.dest + "\\CC", // + obj.branch,
+  var fullqualifiedplace = obj.dest + "/CC", // + obj.branch,
     needToSync = false;
 
   fullqualifiedplace = fullqualifiedplace.replace(/\/\//g, "/");

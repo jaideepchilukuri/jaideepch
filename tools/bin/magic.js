@@ -6,7 +6,7 @@ const spotcheck = require("../spotcheck");
 const git = require("simple-git/promise")();
 const fs = require('fs');
 
-const path = process.cwd()+'\\tools\\clientconfigs\\';
+const path = process.cwd()+'/tools/clientconfigs/';
 
 program
   .command("summon <sitekey> [sitekeys...]")
@@ -110,15 +110,15 @@ async function build(codeVer, sitekey, sitekeys, cmd) {
   }
   sitekeys.unshift(sitekey)
   for(let counter=0;counter<sitekeys.length;counter++) {
-    await spotcheck.checkCustomerKey(path+sitekeys[counter]+`\\config.json`);
+    await spotcheck.checkCustomerKey(path+sitekeys[counter]+`/config.json`);
     if (codeVer == null) {
-      await spotcheck.checkBlacklistFalse(path+sitekeys[counter]+`\\config.json`);
-      await spotcheck.checkCPP(path+sitekeys[counter]+`\\config.json`);
-      await spotcheck.checkUID(path+sitekeys[counter]+`\\config.json`);
-      await spotcheck.checkLegacyDisplay(path+sitekeys[counter]+`\\config.json`);
+      await spotcheck.checkBlacklistFalse(path+sitekeys[counter]+`/config.json`);
+      await spotcheck.checkCPP(path+sitekeys[counter]+`/config.json`);
+      await spotcheck.checkUID(path+sitekeys[counter]+`/config.json`);
+      await spotcheck.checkLegacyDisplay(path+sitekeys[counter]+`/config.json`);
       await magic.updateCodeVersion(path+sitekeys[counter],codeVer);
     }
-    await spotcheck.checkCodeVersion(path+sitekeys[counter]+`\\config.json`);
+    await spotcheck.checkCodeVersion(path+sitekeys[counter]+`/config.json`);
     await prepCode(sitekeys[counter]);
     await magic.assetsClear(path+sitekeys[counter]);
     await magic.assetsCopy(path+sitekeys[counter]);
@@ -132,7 +132,7 @@ async function build(codeVer, sitekey, sitekeys, cmd) {
     await magic.ccNpm(path+sitekeys[counter]);
     await magic.npmStash(path+sitekeys[counter]);
     console.log("Done building client code package");
-    await spotcheck.checkTemplates(path+sitekeys[counter]+`\\config.json`);
+    await spotcheck.checkTemplates(path+sitekeys[counter]+`/config.json`);
   }
   if (cmd.conjure) {
     await test(sitekey);
@@ -142,8 +142,8 @@ async function build(codeVer, sitekey, sitekeys, cmd) {
 async function rebulidConfig(sitekey, sitekeys) {
   sitekeys.unshift(sitekey)
   for(let counter=0;counter<sitekeys.length;counter++) {
-    packagejson = await magic.readFile(path+sitekeys[counter]+'\\CC\\package.json');
-    config = await magic.readFile(path+sitekeys[counter]+'\\config.json');
+    packagejson = await magic.readFile(path+sitekeys[counter]+'/CC/package.json');
+    config = await magic.readFile(path+sitekeys[counter]+'/config.json');
     if(packagejson && packagejson.version && config && config.global && config.global.codeVer) {
       if(packagejson.version == config.global.codeVer) {
         console.log("Rebuilding configs for client code package");
