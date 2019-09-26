@@ -295,7 +295,6 @@ async function returnCombinedConfig(customObj,emptyObj,isSpecialArray) {
 
 async function skClear(path) {
   return new Promise(function (resolve, reject) {
-    console.log('got here 1',path)
     if (fs.existsSync(path)) {
       console.log("Deleting the folder at " + path);
       rimraf(path, function (err) {
