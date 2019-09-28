@@ -106,12 +106,12 @@ async function prepCode(sitekey) {
 
 async function build(codeVer, sitekey, sitekeys, cmd) {
   if (codeVer == 0 || codeVer == null || codeVer == 'null' || codeVer == 'n' || !codeVer) {
-    codeVer == null;
+    codeVer = null;
   }
   sitekeys.unshift(sitekey)
   for(let counter=0;counter<sitekeys.length;counter++) {
     await spotcheck.checkCustomerKey(path+sitekeys[counter]+`/config.json`);
-    if (codeVer == null) {
+    if (codeVer != null) {
       await spotcheck.checkBlacklistFalse(path+sitekeys[counter]+`/config.json`);
       await spotcheck.checkCPP(path+sitekeys[counter]+`/config.json`);
       await spotcheck.checkUID(path+sitekeys[counter]+`/config.json`);
