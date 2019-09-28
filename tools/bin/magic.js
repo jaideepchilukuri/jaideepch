@@ -5,6 +5,7 @@ const magic = require("../magic");
 const spotcheck = require("../spotcheck");
 const git = require("simple-git/promise")();
 const fs = require('fs');
+const readline = require('readline-sync');
 
 const path = process.cwd()+'/tools/clientconfigs/';
 
@@ -17,9 +18,10 @@ program
   .action(wrap(getSitekey))
   
 program   
-  .command("enchant <codeVer> <sitekey> [sitekeys...]")
+  .command("enchant <sitekey> [sitekeys...]")
   .alias("e")
-  .description("Build code version client code package for sitekey(s), can use 0 or null or n for codeVer to build whatever versions sitekeys are already on")
+  .description("Build client code package for sitekey(s)")
+  .option("-u --upgrade", "Upgrade sitekey(s) to a version before building")
   .option("-c --conjure", "Start localhost test (for the first sitekey only)")
   .action(wrap(build))
 
@@ -104,8 +106,12 @@ async function prepCode(sitekey) {
   await magic.ccStash(path+sitekey);
 }
 
-async function build(codeVer, sitekey, sitekeys, cmd) {
-  if (codeVer == 0 || codeVer == null || codeVer == 'null' || codeVer == 'n' || !codeVer) {
+async function build(sitekey, sitekeys, cmd) {
+  let codeVer = null;
+  if(cmd.upgrade) {
+    codeVer = readline.question('What code version would you like to upgrade to? ');
+  }
+  if (codeVer == 0 || codeVer == 'null' || codeVer == 'n' || !codeVer) {
     codeVer = null;
   }
   sitekeys.unshift(sitekey)
@@ -166,7 +172,7 @@ async function test(sitekey) {
 }
 
 async function modernize(sitekey, sitekeys) {
-  sitekeys.unshift(sitekey)
+  sitekeys.unshift(sitekey);
   for(let counter=0;counter<sitekeys.length;counter++) {
     let modernized = await magic.updateToModernInvite(path+sitekeys[counter]);
     if (modernized) {
