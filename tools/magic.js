@@ -1,17 +1,16 @@
-var gulp = require('gulp'),
-  spawn = require('child_process').spawn,
-  request = require('request'),
+const spawn = require('child_process').spawn,
+  git = require("simple-git/promise")(),
   syncrequest = require('sync-request'),
-  isEqual = require('lodash.isequal'),
+  request = require('request'),
   atob = require('atob'),
   fs = require('fs'),
   rimraf = require('rimraf'),
   copydir = require('copy-dir'),
   unzip = require('unzip-stream'),
   gitsync = require('./node-gitsync.js'),
-  jconfig;
-ejs = require('ejs');
-const git = require("simple-git/promise")();
+  readline = require('readline-sync'),
+  ejs = require('ejs');
+let jconfig;
 
 async function fullDefection(path) {
   jconfig = await readFile(path + '/config.json');
@@ -595,6 +594,14 @@ async function configRebuild(path, sitekey) {
       if (err) throw err;
     });
   }
+  if (fs.existsSync(`./tools/FCP/${codeVersion}`)) {
+    if (fs.existsSync(`./tools/FCP/${codeVersion}/gulpfile.js`)) {
+      fs.copyFileSync(`./tools/FCP/${codeVersion}/gulpfile.js`, path+`/CC/gulpfile.js`);
+    }
+    if (fs.existsSync(`./tools/FCP/${codeVersion}/FCP.js`)) {
+      fs.copyFileSync(`./tools/FCP/${codeVersion}/FCP.js`, path+`/CC/scripts/FCP.js`);
+    }
+  }
   return ("done");
 }
 
@@ -651,14 +658,18 @@ async function readFile(filename) {
 function spawnProcess(command, args, options) {
   // *** Return the promise
   return new Promise(function (resolve, reject) {
-    const process = spawn(command, args, options);
-    process.on('exit', function (code) {
+    const child = spawn(command, args, options);
+    child.on('exit', function (code) {
       return resolve(code);
     });
-    process.on('error', function (err) {
+    child.on('error', function (err) {
       return reject(err);
     });
   });
+}
+
+async function gitLog(sitekey) {
+  return spawnProcess('git', [`log -1 --pretty=%h`], { cwd: process.cwd() + '/tools/clientconfigs/' + sitekey, stdio: 'inherit', shell: true });
 }
 
 async function gitPull(sitekey) {
@@ -674,7 +685,9 @@ async function gitCreate(sitekey) {
 }
 
 async function gitPublish(sitekey) {
-  return spawnProcess('git', [`push -u origin ${sitekey}`], { cwd: process.cwd() + '/tools/clientconfigs/' + sitekey, stdio: 'inherit', shell: true });
+  let un = readline.question('What is your username for github? ');
+  let pw = readline.question('What is your password for github? ', { hideEchoBack: true });
+  return spawnProcess('git', [`push -u https://${un}:${pw}@github.com/foreseecode/websdk-client-configs.git/ ${sitekey}`], { cwd: process.cwd() + '/tools/clientconfigs/' + sitekey, stdio: 'inherit', shell: true });
 }
 
 async function gitAdd(sitekey) {
@@ -686,7 +699,9 @@ async function gitCommit(sitekey, message) {
 }
 
 async function gitPush(sitekey) {
-  return spawnProcess('git', [`push`], { cwd: process.cwd() + '/tools/clientconfigs/' + sitekey, stdio: 'inherit', shell: true });
+  let un = readline.question('What is your username for github? ');
+  let pw = readline.question('What is your password for github? ', { hideEchoBack: true });
+  return spawnProcess('git', [`push https://${un}:${pw}@github.com/foreseecode/websdk-client-configs.git/`], { cwd: process.cwd() + '/tools/clientconfigs/' + sitekey, stdio: 'inherit', shell: true });
 }
 
 async function ccNpm(path) {
@@ -718,12 +733,101 @@ async function test(path) {
   return spawnProcess('gulp', ['test_debug'], { cwd: path + '/CC/', stdio: 'inherit', shell: true });
 }
 
+async function pushProducts(path) {
+  return spawnProcess('gulp', ['push_products'], { cwd: path + '/CC/', stdio: 'inherit', shell: true });
+}
+
 async function pushStg(path) {
   return spawnProcess('gulp', ['push_stg'], { cwd: path + '/CC/', stdio: 'inherit', shell: true });
 }
 
 async function pushProd(path) {
   return spawnProcess('gulp', ['push_prod'], { cwd: path + '/CC/', stdio: 'inherit', shell: true });
+}
+
+async function pushCxSuiteConfigsToDevContainer(path) {
+  let jconfig = await readFile(path + '/config.json');
+  return new Promise(function (resolve, reject) {
+    if(!jconfig) {
+      return reject(`Your path ${path} isn't valid...`)
+    }
+    if(!jconfig.global) {
+      return reject(`There is no global object in the config.json file at your path ${path}...`)
+    }
+    if(!jconfig.global.customerKey) {
+      return reject(`There is no customerKey object in the config.json file at your path ${path}...`)
+    }
+    if(!jconfig.global.siteKey) {
+      return reject(`There is no siteKey object in the config.json file at your path ${path}...`)
+    }
+    if(!jconfig.global.codeVer) {
+      return reject(`There is no codeVer object in the config.json file at your path ${path}...`)
+    }
+    if(!jconfig.global.customerId) {
+      return reject(`There is no customerId object in the config.json file at your path ${path}...`)
+    }
+    let cxsConfig = {
+      "clientId": jconfig.global.customerKey,
+      "siteKey": jconfig.global.siteKey,
+      "containerId": "development",
+      "codeVer": jconfig.global.codeVer,
+      "products": {
+          "trigger": true,
+          "feedback": true,
+          "record": true
+      },
+      "storage": "COOKIE",
+      "brainUrl": "https://brain.foresee.com",
+      "recUrl": "https://record.foresee.com/rec/",
+      "surveyUrl": "https://survey.foreseeresults.com/survey/display",
+      "modernSurveyUrl": "https://cxsurvey.foresee.com/sv",
+      "analyticsUrl": "https://analytics.foresee.com/ingest/events",
+      "staticUrl": "https://static.foresee.com",
+      "deferredLoading": false,
+      "customerId": jconfig.global.customerId,
+      "modernRecord": true,
+      "deviceDetectionUrl": "https://device.4seeresults.com",
+      "surveyAsyncCurl": "s.foresee.com",
+      "mobileOnExitUrl": "i.4see.mobi",
+      "alwaysOnLatest": 0,
+      "cookieSecure": false,
+      "cookieDomain": [],
+      "disable_cpps": [],
+      "adobeRsid": ""
+    };
+    cxsConfig = JSON.stringify(cxsConfig);
+    if (!fs.existsSync(`./tools/clientconfigs`)) {
+      console.log("Creating a folder at " + `./tools/clientconfigs`);
+      fs.mkdirSync(`./tools/clientconfigs`);
+    }
+    if (!fs.existsSync(`./tools/clientconfigs/_globalconfigs`)) {
+      console.log("Creating a folder at " + `./tools/clientconfigs/_globalconfigs`);
+      fs.mkdirSync(`./tools/clientconfigs/_globalconfigs`);
+    }
+    fs.writeFileSync(`./tools/clientconfigs/_globalconfigs` + `/${jconfig.global.siteKey}.js`, cxsConfig, function (err) {
+      if (err) {
+        return reject(err);
+      }
+    });
+    let formdata = {
+      notes: `Pushing cxSuite global config values to container develop of sitekey ${jconfig.global.siteKey} for testing`,
+      config: fs.createReadStream(`./tools/clientconfigs/_globalconfigs` + `/${jconfig.global.siteKey}.js`),
+    };
+    let un = readline.question('What is your username for fcp(aws)? ');
+    un += '@aws.foreseeresults.com';
+    let pw = readline.question('What is your password for fcp(aws)? ', { hideEchoBack: true });
+    request.post({url:`https://${un}:${pw}@fcp.foresee.com/sites/${jconfig.global.siteKey}/containers/development/configs`,
+      formData: formdata}, function optionalCallback(err, httpResponse, body) {
+      if (err) {
+        return console.error('upload failed:', err);
+      }
+      console.log('Contact successful... Server responded with:', body);
+      rimraf(`./tools/clientconfigs/_globalconfigs` + `/${jconfig.global.siteKey}.js`, function (err) {
+        if (err) { return reject(err); }
+      });
+    });
+    return resolve(true);
+  });
 }
 
 async function prettify(path) {
@@ -756,8 +860,11 @@ module.exports = {
   test,
   pushStg,
   pushProd,
+  pushProducts,
+  pushCxSuiteConfigsToDevContainer,
   gitAdd,
   gitCommit,
   gitPush,
+  gitLog,
   deleteBranch
 };

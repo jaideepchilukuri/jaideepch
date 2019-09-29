@@ -38,8 +38,8 @@ program
   .action(wrap(rebulidConfig))
 
 program
-  .command("zeena <sitekey> [sitekeys...]")
-  .alias("z")
+  .command("facelift <sitekey> [sitekeys...]")
+  .alias("f")
   .description("Move all desktop invites to modern invite")
   .action(wrap(modernize))
 
@@ -48,24 +48,14 @@ program
   .alias("w")
   .description("Turn the sp to -1 on all definitions for both regular and mouseoff")
   .action(wrap(turnOff))
-
-program
-  .command("pushstg <sitekey>")
-  .alias("s")
-  .description("Push to staging")
-  .action(wrap(pushStg))
-
-program
-  .command("pushprod <sitekey>")
-  .alias("p")
-  .description("Push to production")
-  .action(wrap(pushProd))
   
 program
-  .command("commit <sitekey> <message>")
+  .command("commit <sitekey>")
   .alias("g")
-  .description("Commit back to git")
-  .option("-p --push", "Push changes after commit")
+  .description("Commit and push changes back to git")
+  .option("-d --pushdev", "Push changes to development container in fcp")
+  .option("-s --pushstg", "Push changes to staging container in fcp")
+  .option("-p --pushprd", "Push changes to production container in fcp")
   .action(wrap(commit))
 
 program
@@ -197,28 +187,41 @@ async function turnOff(sitekey, sitekeys) {
   }
 }
 
-async function pushStg(sitekey) {
-  let pushedstg = await magic.pushStg(path+sitekey);
-  if (pushedstg) {
-    console.log("Pushed to staging on sitekey "+sitekey);
-  }
-}
-
-async function pushProd(sitekey) {
-  let pushedprod = await magic.pushProd(path+sitekey);
-  if (pushedprod) {
-    console.log("Pushed to production on sitekey "+sitekey);
-  }
-}
-
-async function commit(sitekey, message, cmd) {
+async function commit(sitekey, cmd) {
   await magic.gitAdd(sitekey);
-  let committed = await magic.gitCommit(sitekey, message);
+  let message = readline.question('What changes are you committing? ');
+  await magic.gitCommit(sitekey, message);
+  let committed = await magic.gitPush(sitekey);
   if (committed) {
     console.log("Committed changes on " + sitekey + " back to repo");
   }
-  if (cmd.push){
-    await magic.gitPush(sitekey);
+  await magic.gitLog(sitekey);
+  let commitnum = readline.question('What is the commit number that just printed? ');
+  message = readline.question('What ticket number in SalesForce is this for? ');
+  console.log(`Please paste this in as your fcp push comment: SF Ticket: ${message}  Git Commit#: ${commitnum}`);
+  if (cmd.pushdev){
+    let pusheddevconfig = await magic.pushCxSuiteConfigsToDevContainer(path+sitekey);
+    if (pusheddevconfig) {
+      let pusheddev = await magic.pushProducts(path+sitekey);
+      if (pusheddev) {
+        //console.log("Pushed to development on sitekey "+sitekey);
+        console.log('Dev: ',pusheddev)
+      }
+    }
+  }
+  if (cmd.pushstg){
+    let pushedstg = await magic.pushStg(path+sitekey);
+    if (pushedstg) {
+      //console.log("Pushed to staging on sitekey "+sitekey);
+      console.log('Stg: ',pushedstg)
+    }
+  }
+  if (cmd.pushprd){
+    let pushedprod = await magic.pushProd(path+sitekey);
+    if (pushedprod) {
+      //console.log("Pushed to production on sitekey "+sitekey);
+      console.log('Prd: ',pushedprod)
+    }
   }
 }
 
@@ -226,6 +229,6 @@ async function vanquish(sitekey, sitekeys) {
   sitekeys.unshift(sitekey)
   for(let counter=0;counter<sitekeys.length;counter++) {
     await magic.deleteBranch(path+sitekeys[counter]);
-    console.log("Branch "+sitekeys[counter]+" deleted");
+    console.log("Branch "+sitekeys[counter]+" deleted locally");
   }
 }
