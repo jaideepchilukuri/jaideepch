@@ -50,10 +50,10 @@ program
   .action(wrap(turnOff))
   
 program
-  .command("commit <sitekey>")
+  .command("trick <sitekey>")
   .alias("g")
-  .description("Commit and push changes back to git")
-  .option("-d --pushdev", "Push changes to development container in fcp")
+  .description("Commit/push changes somewhere (but only if you use flags)")
+  .option("-d --pushdev", "Push changes to development container in fcp, commit and push changes back to github repo")
   .option("-s --pushstg", "Push changes to staging container in fcp")
   .option("-p --pushprd", "Push changes to production container in fcp")
   .action(wrap(commit))
@@ -188,18 +188,21 @@ async function turnOff(sitekey, sitekeys) {
 }
 
 async function commit(sitekey, cmd) {
-  await magic.gitAdd(sitekey);
-  let message = readline.question('What changes are you committing? ');
-  await magic.gitCommit(sitekey, message);
-  let committed = await magic.gitPush(sitekey);
-  if (committed) {
-    console.log("Committed changes on " + sitekey + " back to repo");
+  if (!cmd) {
+    console.log("Now you see me, now you don't... (I did nothing, please try again with a flag if you wanted something done)");
   }
-  await magic.gitLog(sitekey);
-  let commitnum = readline.question('What is the commit number that just printed? ');
-  message = readline.question('What ticket number in SalesForce is this for? ');
-  console.log(`Please paste this in as your fcp push comment: SF Ticket: ${message}  Git Commit#: ${commitnum}`);
   if (cmd.pushdev){
+    await magic.gitAdd(sitekey);
+    let message = readline.question('What changes are you committing? ');
+    await magic.gitCommit(sitekey, message);
+    let committed = await magic.gitPush(sitekey);
+    if (committed) {
+      console.log("Committed changes on " + sitekey + " back to repo");
+    }
+    await magic.gitLog(sitekey);
+    let commitnum = readline.question('What is the commit number that just printed? ');
+    message = readline.question('What ticket number in SalesForce is this for? ');
+    console.log(`Please paste this in as your fcp push comment: SF Ticket: ${message}  Git Commit#: ${commitnum}`);
     let pusheddevconfig = await magic.pushCxSuiteConfigsToDevContainer(path+sitekey);
     if (pusheddevconfig) {
       let pusheddev = await magic.pushProducts(path+sitekey);
