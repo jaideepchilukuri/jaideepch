@@ -8,6 +8,54 @@ const fs = require("fs"),
   other = require("./scripts/other");
 let jconfig;
 
+const cctVersions = [
+  "19.3.0",
+  "19.3.1",
+  "19.3.2",
+  "19.3.2-v.2",
+  "19.3.2-v.3",
+  "19.3.3",
+  "19.3.3-v.2",
+  "19.3.3-v.3",
+  "19.3.4",
+  "19.3.5",
+  "19.3.6",
+  "19.3.7",
+  "19.3.7-hf.1",
+  "19.4.0",
+  "19.4.1",
+  "19.4.2",
+  "19.4.3",
+  "19.4.4",
+  "19.5.0",
+  "19.5.1",
+  "19.5.2",
+  "19.6.0",
+  "19.6.1",
+  "19.6.2",
+  "19.6.3",
+  "19.6.4",
+  "19.6.5",
+  "19.6.6",
+  "19.6.7",
+  "19.6.8",
+  "19.7.0",
+  "19.7.1",
+  "19.7.2",
+  "19.7.3",
+  "19.7.4",
+  "19.7.5",
+  "19.7.6",
+  "19.8.0",
+  "19.8.1",
+  "19.8.2",
+  "19.8.3",
+  "19.8.4",
+  "19.8.5",
+  "19.8.6",
+  "19.8.7"
+];
+
 async function fullDefection(path) {
   jconfig = await readFile(path + "/config.json");
   return new Promise(function(resolve, reject) {
@@ -266,53 +314,7 @@ async function returnEmptyConfig(codeVersion) {
   respbody = JSON.parse(respbody);
   respbody = await addEmptyDefs(jconfig, respbody);
   // should come back and fix this to use semVer https://www.npmjs.com/package/semver
-  if (
-    codeVersion == "19.3.0" ||
-    codeVersion == "19.3.1" ||
-    codeVersion == "19.3.2" ||
-    codeVersion == "19.3.2-v.2" ||
-    codeVersion == "19.3.2-v.3" ||
-    codeVersion == "19.3.3" ||
-    codeVersion == "19.3.3-v.2" ||
-    codeVersion == "19.3.3-v.3" ||
-    codeVersion == "19.3.4" ||
-    codeVersion == "19.3.5" ||
-    codeVersion == "19.3.6" ||
-    codeVersion == "19.3.7" ||
-    codeVersion == "19.3.7-hf.1" ||
-    codeVersion == "19.4.0" ||
-    codeVersion == "19.4.1" ||
-    codeVersion == "19.4.2" ||
-    codeVersion == "19.4.3" ||
-    codeVersion == "19.4.4" ||
-    codeVersion == "19.5.0" ||
-    codeVersion == "19.5.1" ||
-    codeVersion == "19.5.2" ||
-    codeVersion == "19.6.0" ||
-    codeVersion == "19.6.1" ||
-    codeVersion == "19.6.2" ||
-    codeVersion == "19.6.3" ||
-    codeVersion == "19.6.4" ||
-    codeVersion == "19.6.5" ||
-    codeVersion == "19.6.6" ||
-    codeVersion == "19.6.7" ||
-    codeVersion == "19.6.8" ||
-    codeVersion == "19.7.0" ||
-    codeVersion == "19.7.1" ||
-    codeVersion == "19.7.2" ||
-    codeVersion == "19.7.3" ||
-    codeVersion == "19.7.4" ||
-    codeVersion == "19.7.5" ||
-    codeVersion == "19.7.6" ||
-    codeVersion == "19.8.0" ||
-    codeVersion == "19.8.1" ||
-    codeVersion == "19.8.2" ||
-    codeVersion == "19.8.3" ||
-    codeVersion == "19.8.4" ||
-    codeVersion == "19.8.5" ||
-    codeVersion == "19.8.6" ||
-    codeVersion == "19.8.7"
-  ) {
+  if (cctVersions.includes(codeVersion)) {
     // unbase64 the surveydefs
     respbody = await unbaseDefs(respbody);
   }
@@ -532,54 +534,9 @@ async function ccCopy(path) {
       }
       let repoUrl = "https://github.com/foreseecode/client_code.git";
       // should come back and fix this to use semVer https://www.npmjs.com/package/semver
-      if (
-        codeVersion == "19.3.0" ||
-        codeVersion == "19.3.1" ||
-        codeVersion == "19.3.2" ||
-        codeVersion == "19.3.2-v.2" ||
-        codeVersion == "19.3.2-v.3" ||
-        codeVersion == "19.3.3" ||
-        codeVersion == "19.3.3-v.2" ||
-        codeVersion == "19.3.3-v.3" ||
-        codeVersion == "19.3.4" ||
-        codeVersion == "19.3.5" ||
-        codeVersion == "19.3.6" ||
-        codeVersion == "19.3.7" ||
-        codeVersion == "19.3.7-hf.1" ||
-        codeVersion == "19.4.0" ||
-        codeVersion == "19.4.1" ||
-        codeVersion == "19.4.2" ||
-        codeVersion == "19.4.3" ||
-        codeVersion == "19.4.4" ||
-        codeVersion == "19.5.0" ||
-        codeVersion == "19.5.1" ||
-        codeVersion == "19.5.2" ||
-        codeVersion == "19.6.0" ||
-        codeVersion == "19.6.1" ||
-        codeVersion == "19.6.2" ||
-        codeVersion == "19.6.3" ||
-        codeVersion == "19.6.4" ||
-        codeVersion == "19.6.5" ||
-        codeVersion == "19.6.6" ||
-        codeVersion == "19.6.7" ||
-        codeVersion == "19.6.8" ||
-        codeVersion == "19.7.0" ||
-        codeVersion == "19.7.1" ||
-        codeVersion == "19.7.2" ||
-        codeVersion == "19.7.3" ||
-        codeVersion == "19.7.4" ||
-        codeVersion == "19.7.5" ||
-        codeVersion == "19.7.6" ||
-        codeVersion == "19.8.0" ||
-        codeVersion == "19.8.1" ||
-        codeVersion == "19.8.2" ||
-        codeVersion == "19.8.3" ||
-        codeVersion == "19.8.4" ||
-        codeVersion == "19.8.5" ||
-        codeVersion == "19.8.6" ||
-        codeVersion == "19.8.7"
-      )
+      if (cctVersions.includes(codeVersion)) {
         repoUrl = "https://github.com/foreseecode/client_code_template.git";
+      }
       console.log(
         "Copying Code Version",
         codeVersion,
