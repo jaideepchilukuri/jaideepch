@@ -32,11 +32,13 @@
   /**
    * URL whitelisting, so you can enable record on pages you actually want it to run on.
    */
-  whitelist: {
-    text: <%-JSON.stringify(combinedconfig.record.whitelist.text)%>,
-    variables: <%-JSON.stringify(combinedconfig.record.whitelist.variables)%>,
-    cookies: <%-JSON.stringify(combinedconfig.record.whitelist.cookies)%>,
-  },
+   <% if (JSON.stringify(combinedconfig.record.whitelist) == '{"text":[],"variables":[],"cookies":[]}') { %> /*  <% } %>
+   whitelist: {
+     text: <%-JSON.stringify(combinedconfig.record.whitelist.text)%>,
+     variables: <%-JSON.stringify(combinedconfig.record.whitelist.variables)%>,
+     cookies: <%-JSON.stringify(combinedconfig.record.whitelist.cookies)%>,
+   },
+   <% if (JSON.stringify(combinedconfig.record.whitelist) == '{"text":[],"variables":[],"cookies":[]}') { %> */  <% } %>
   // clientId is now client.replayid in client_properties
 
   /**
