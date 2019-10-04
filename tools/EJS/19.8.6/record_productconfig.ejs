@@ -53,7 +53,7 @@ var config = {
      * no longer be able to follow the session between domains as a new
      * SessionStorage is created for each new domain.
      */
-    useSessionStorage: "<%=combinedconfig.record.advancedSettings.useSessionStorage%>",
+     useSessionStorage: <%=combinedconfig.record.advancedSettings.useSessionStorage%>,
 
     /**
      * Set up cxReplay pools, which apply before cxR is activated. This is a sticky state and once
