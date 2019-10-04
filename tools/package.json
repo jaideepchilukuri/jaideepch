@@ -5,11 +5,13 @@
     "magic": "./bin/magic.js"
   },
   "dependencies": {
+    "atob": "^2.1.2",
     "await-spawn": "*",
     "commander": "^2.15.1",
     "copy-dir": "^1.1.0",
     "ejs": "^2.6.2",
     "form-data": "^2.5.1",
+    "fs": "0.0.1-security",
     "gulp": "^4.0.2",
     "gulp-cli": "^2.2.0",
     "lodash.isequal": "^4.4.0",
@@ -17,6 +19,8 @@
     "prettier": "^1.17.1",
     "readline-sync": "^1.4.10",
     "request": "^2.88.0",
+    "rimraf": "^3.0.0",
+    "simple-git": "^1.126.0",
     "sync-request": "^6.1.0",
     "unzip-stream": "^0.3.0"
   }

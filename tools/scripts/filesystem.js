@@ -1,13 +1,10 @@
-const rimraf = require("rimraf"),
+const ejs = require("ejs"),
+  unzip = require("unzip-stream"),
+  rimraf = require("rimraf"),
   copydir = require("copy-dir"),
   fs = require("fs");
 
-//NEED TO REVISIT TWO THINGS TO COMPLETE EVERYTHING BEING HERE, both in tools/magic.js :
-// - getCustom
-// - readFile
-// also, node-gitsync.js is using some so if we can get rid of that and replace it with our own git call that would be good
-
-function checkIfFileOrDirExists(path, consoleMsg) {
+async function checkIfFileOrDirExists(path, consoleMsg) {
   if (fs.existsSync(path)) {
     if (consoleMsg) {
       console.log(consoleMsg);
@@ -17,13 +14,13 @@ function checkIfFileOrDirExists(path, consoleMsg) {
   return false;
 }
 
-function makeDirIfMissing(path, consoleMsg) {
+async function makeDirIfMissing(path, consoleMsg) {
   if (consoleMsg) {
     console.log(consoleMsg);
   }
   let folders = path.split("/");
   path = folders[0];
-  for (let counter = 1; counter < path.length; counter++) {
+  for (let counter = 1; counter < folders.length; counter++) {
     path += `/${folders[counter]}`;
     if (!fs.existsSync(path)) {
       fs.mkdirSync(path);
@@ -32,33 +29,42 @@ function makeDirIfMissing(path, consoleMsg) {
   return true;
 }
 
-function deleteFileOrDirIfExists(path, consoleMsg) {
-  if (fs.existsSync(path)) {
-    if (consoleMsg) {
-      console.log(consoleMsg);
-    }
-    rimraf.sync(path);
-    return true;
+async function deleteFileOrDirIfExists(path, consoleMsg) {
+  if (fs.existsSync(path) && consoleMsg) {
+    console.log(consoleMsg);
   }
-  return false;
+  rimraf.sync(path + "/");
+  return;
 }
 
-function copyFrom2ToIfFromExists(from, to, consoleMsg) {
-  if (fs.existsSync(from)) {
-    if (consoleMsg) {
-      console.log(consoleMsg);
+async function copyFrom2ToIfFromExists(from, to, consoleMsg) {
+  return new Promise(function(resolve, reject) {
+    if (fs.existsSync(from)) {
+      if (consoleMsg) {
+        console.log(consoleMsg);
+      }
+      deleteFileOrDirIfExists(to /*, "deleted a folder to copy " + from + " to " + to*/);
+      copydir.sync(
+        from,
+        to,
+        {
+          utimes: true,
+          mode: true,
+          cover: true,
+        },
+        function(err) {
+          if (err) {
+            return reject(err);
+          }
+          return resolve(true);
+        }
+      );
     }
-    copydir.sync(from, to, {
-      utimes: false,
-      mode: false,
-      cover: false
-    });
-    return true;
-  }
-  return false;
+    return resolve(false);
+  });
 }
 
-function copyFrom2ToIfToMissing(from, to, consoleMsg) {
+async function copyFrom2ToIfToMissing(from, to, consoleMsg) {
   if (!fs.existsSync(to)) {
     if (consoleMsg) {
       console.log(consoleMsg);
@@ -66,25 +72,48 @@ function copyFrom2ToIfToMissing(from, to, consoleMsg) {
     copydir.sync(from, to, {
       utimes: false,
       mode: false,
-      cover: false
+      cover: false,
     });
     return true;
   }
   return false;
 }
 
-function readFileToStringIfExists(path, consoleMsg) {
+async function readFileToStringIfExists(path, consoleMsg) {
   if (consoleMsg) {
     console.log(consoleMsg);
   }
   let string;
   if (fs.existsSync(path)) {
-    string = readFileSync(path);
+    string = fs.readFileSync(path, "utf8");
   }
   return string;
 }
 
-function writeToFile(path, fileContents, consoleMsg) {
+async function readFileToObjectIfExists(path, consoleMsg) {
+  return JSON.parse(await readFileToStringIfExists(path, consoleMsg));
+}
+
+async function readFileToReadStream(path) {
+  return fs.createReadStream(path);
+}
+
+async function writeToFile(path, fileContents, consoleMsg) {
+  if (consoleMsg) {
+    console.log(consoleMsg);
+  }
+  if (typeof fileContents == "object") {
+    fileContents = JSON.stringify(fileContents);
+  }
+  fs.writeFileSync(path, fileContents, function(err) {
+    if (err) {
+      return reject(err);
+    }
+  });
+  return true;
+}
+
+async function writeZip(path, fileContents, consoleMsg) {
   if (consoleMsg) {
     console.log(consoleMsg);
   }
@@ -96,6 +125,34 @@ function writeToFile(path, fileContents, consoleMsg) {
   return true;
 }
 
+async function unzipAssets(path) {
+  await makeDirIfMissing(`${path}/`);
+  fs.createReadStream(`${path}.zip`)
+    .pipe(unzip.Parse())
+    .on("entry", function(entry) {
+      if (
+        entry.path !== "trigger/" &&
+        entry.path.substr(0, 8) === "trigger/" &&
+        entry.path.substr(0, 18) !== "trigger/templates/"
+      ) {
+        if (entry.type == "Directory") {
+          filesystem.makeDirIfMissing(`${path}/${entry.path}`);
+        } else {
+          entry.pipe(fs.createWriteStream(`${path}/${entry.path.substr(8)}`));
+        }
+      } else {
+        entry.autodrain();
+      }
+    });
+}
+
+async function buildFileContentsFromTemplateFile(filename, data, delimiter) {
+  if (!delimiter) {
+    delimiter = "%";
+  }
+  return await ejs.renderFile(filename, data, { delimiter: delimiter });
+}
+
 module.exports = {
   checkIfFileOrDirExists,
   makeDirIfMissing,
@@ -103,5 +160,11 @@ module.exports = {
   copyFrom2ToIfFromExists,
   copyFrom2ToIfToMissing,
   readFileToStringIfExists,
-  writeToFile
+  readFileToObjectIfExists,
+  readFileToReadStream,
+  writeToFile,
+  writeZip,
+  unzipAssets,
+  buildFileContentsFromTemplateFile,
+  rimraf,
 };
