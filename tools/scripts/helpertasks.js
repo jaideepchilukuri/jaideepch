@@ -233,14 +233,23 @@ async function skCopy(path) {
   let sitekey = path.split("/");
   sitekey = sitekey[sitekey.length - 1];
   await filesystem.deleteFileOrDirIfExists(path /*, `Found a folder at path, deleting it.`*/);
-  await other.doAGit(["clone", "https://github.com/foreseecode/websdk-client-configs.git", path]);
   try {
-    let done = await other.spawnProcess("git", [`pull origin ${sitekey}`], {
-      cwd: path,
-      stdio: "inherit",
-      shell: true,
-    });
-    if (done == 1) {
+    let done = await other.doAGit([
+      "ls-remote",
+      "--heads",
+      "https://github.com/foreseecode/websdk-client-configs.git",
+      sitekey,
+    ]);
+    // if branch exists (returned value is not null) clone it, else clone master and create new branch
+    if (done) {
+      await other.doAGit(["clone", "-b", sitekey, "https://github.com/foreseecode/websdk-client-configs.git", path]);
+    } else {
+      await other.doAGit(["clone", "https://github.com/foreseecode/websdk-client-configs.git", path]);
+      /*await other.spawnProcess("git", [`pull origin ${sitekey}`], {
+        cwd: path,
+        stdio: "inherit",
+        shell: true,
+      });*/
       await other.doAGit([`--git-dir=${path}/.git`, "checkout", "-b", sitekey]);
       await other.doAGit([
         `--git-dir=${path}/.git`,
@@ -249,18 +258,16 @@ async function skCopy(path) {
         `https://github.com/foreseecode/websdk-client-configs.git/`,
         sitekey,
       ]);
-    } else {
-      await other.doAGit([`--git-dir=${path}/.git`, "checkout", "--track", `origin/${sitekey}`]);
     }
     console.log("Checked out websdk-client-configs branch for sitekey", sitekey);
   } catch (err) {
     console.log("This error is from the try catch in the skCopy function in the helpertask.js file", err);
   }
+  //rewrite .gitignore file for the new location
+  await filesystem.writeToFile(`${path}/.gitignore`, gitigcontents);
 }
 
 async function getCustom(path, sitekey, env) {
-  //rewrite .gitignore file for the new location
-  filesystem.writeToFile(`${path}${sitekey}/.gitignore`, gitigcontents);
   //make the call to the url to retrieve the empty config
   let respbody = await other.httpRequest(
     "GET",

@@ -3,6 +3,7 @@ const spawn = require("child_process").spawn,
   syncrequest = require("sync-request"),
   request = require("request"),
   readline = require("readline-sync"),
+  inquirer = require("inquirer"),
   atob = require("atob");
 const filesystem = require("./filesystem");
 
@@ -34,7 +35,7 @@ async function spawnProcess(command, args, options) {
 
 async function doAGit(args /*errLogic*/) {
   let argString = JSON.stringify(args);
-  if (argString.includes("https://github.com") && args[0] != "clone") {
+  if (argString.includes("https://github.com") && args[0] != "clone" && args[0] != "ls-remote") {
     // using this as the search because so far only using the url when getting errors because we need a un/pw to get access
     let unpw = await getUnPw("What is your username for github?", "What is your password for github?");
     for (let counter = 0; counter < args.length; counter++) {
