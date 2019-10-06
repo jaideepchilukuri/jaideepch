@@ -73,7 +73,13 @@ async function checkCustomerKey(path) {
       }
     }
     if (!ckey) {
-      ckey = other.askQuestion("Customer key is missing. What is the customer key for this sitekey? ");
+      ckey = other.askQuestion([
+        {
+          type: "input",
+          name: "customerkey",
+          message: "Customer key is missing. What is the customer key for this sitekey?",
+        },
+      ]).customerkey;
     }
     // console.log(ckey)
     jconfig.global.customerKey = ckey;
@@ -100,9 +106,14 @@ async function checkCodeVersion(path) {
       }
     }
     while (!jconfig.global.codeVer || !filesystem.checkIfFileOrDirExists(`${ejspath}/${jconfig.global.codeVer}`)) {
-      let cVer = other.askQuestion(
-        `Code version is missing or there's no template to build it. What other code version do you want to build? `
-      );
+      let cVer = other.askQuestion([
+        {
+          type: "input",
+          name: "codeVer",
+          message:
+            "Code version is missing or there's no template to build it. What other code version do you want to build?",
+        },
+      ]).codeVer;
       if (!cVer || cVer == null || cVer == "") {
         return reject(
           "Code Version " +
@@ -163,9 +174,10 @@ async function checkCustomerId(path) {
       }
     }
     if (!cid) {
-      cid = other.askQuestion("Customer key is missing. What is the customer key for this sitekey? ");
+      cid = other.askQuestion([
+        { type: "input", name: "cid", message: "Customer key is missing. What is the customer key for this sitekey?" },
+      ]).cid;
     }
-    // console.log(cid)
     jconfig.global.customerKey = cid;
     jconfig = JSON.stringify(jconfig);
     filesystem.writeToFile(path, jconfig);

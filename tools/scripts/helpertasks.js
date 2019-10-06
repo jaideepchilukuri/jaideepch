@@ -291,6 +291,18 @@ async function getCustom(path, sitekey, env) {
   return true;
 }
 
+async function copyCustom(path, sitekey, container) {
+  sitekey = sitekey[0];
+  container = container.toLowerCase();
+  await filesystem.deleteFileOrDirIfExists(`${path}${sitekey}/_FCP/${container}`);
+  await getCustom(path, sitekey, container);
+  await filesystem.copyFrom2ToIfFromExists(
+    `${path}${sitekey}/_FCP/${container}/config.json`,
+    `${path}${sitekey}/config.json`
+  );
+  await filesystem.copyFrom2ToIfFromExists(`${path}${sitekey}/_FCP/${container}/assets`, `${path}${sitekey}/assets`);
+}
+
 async function ccCopy(path) {
   let sitekey = path.split("/");
   sitekey = sitekey[sitekey.length - 1];
@@ -434,11 +446,11 @@ async function pushCxSuiteConfigsToDevContainer(path) {
   await filesystem.makeDirIfMissing(clientconfigspath);
   await filesystem.makeDirIfMissing(`${clientconfigspath}_globalconfigs`);
   await filesystem.writeToFile(`${clientconfigspath}_globalconfigs/${jconfig.global.siteKey}.js`, cxsConfig);
-  let unpw = await other.getUnPw(
-    "What is your username for fcp(aws)?",
-    "What is your password for fcp(aws)?",
-    "@aws.foreseeresults.com"
-  );
+  let unpw = await other.askQuestion([
+    { type: "input", name: "un", message: "What is your username for fcp(aws)?" },
+    { type: "password", name: "pw", message: "What is your password for fcp(aws)?" },
+  ]);
+  unpw = unpw.un + "@aws.foreseeresults.com:" + unpw.pw;
   await other.multipartPost(
     `https://${unpw}@fcp.foresee.com/sites/${jconfig.global.siteKey}/containers/development/configs`,
     `Pushing cxSuite global config values to container develop of sitekey ${jconfig.global.siteKey} for testing`,
@@ -474,7 +486,9 @@ async function commitAndPushToGithub(path) {
   let sitekey = path.split("/");
   sitekey = sitekey[sitekey.length - 1];
   await other.doAGit([`--git-dir=${path}/.git`, "add", "."]);
-  let message = await other.askQuestion("What changes are you committing? ");
+  let message = await other.askQuestion([
+    { type: "input", name: "message", message: "What changes are you committing?" },
+  ]).message;
   await other.doAGit([`--git-dir=${path}/.git`, "commit", "-m", `${message}`]);
   let committed = await other.doAGit([
     `--git-dir=${path}/.git`,
@@ -485,7 +499,9 @@ async function commitAndPushToGithub(path) {
     console.log("Committed changes on " + sitekey + " back to repo");
   }
   let commitnum = await other.doAGit([`--git-dir=${path}/.git`, "log", "--pretty=%h", "-1"]);
-  message = await other.askQuestion("What ticket number in SalesForce is this for? ");
+  let message = await other.askQuestion([
+    { type: "input", name: "message", message: "What ticket number in SalesForce is this for?" },
+  ]).message;
   console.log(`Please paste this in as your fcp push comment: SF Ticket#: ${message}  Git Commit: ${commitnum}`);
   return true;
 }
@@ -499,6 +515,7 @@ module.exports = {
   fullDefection,
   skCopy,
   getCustom,
+  copyCustom,
   ccCopy,
   npmRebuild,
   npmStash,

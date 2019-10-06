@@ -2,7 +2,6 @@ const spawn = require("child_process").spawn,
   simplegit = require("simple-git/promise")(),
   syncrequest = require("sync-request"),
   request = require("request"),
-  readline = require("readline-sync"),
   inquirer = require("inquirer"),
   atob = require("atob");
 const filesystem = require("./filesystem");
@@ -37,7 +36,11 @@ async function doAGit(args /*errLogic*/) {
   let argString = JSON.stringify(args);
   if (argString.includes("https://github.com") && args[0] != "clone" && args[0] != "ls-remote") {
     // using this as the search because so far only using the url when getting errors because we need a un/pw to get access
-    let unpw = await getUnPw("What is your username for github?", "What is your password for github?");
+    let unpw = await askQuestion([
+      { type: "input", name: "un", message: "What is your username for github?" },
+      { type: "password", name: "pw", message: "What is your password for github?" },
+    ]);
+    unpw = unpw.un + ":" + unpw.pw;
     for (let counter = 0; counter < args.length; counter++) {
       args[counter] = args[counter].replace("https://github.com", `https://${unpw}@github.com`);
     }
@@ -78,22 +81,8 @@ async function multipartPost(url, notes, fileLoc) {
   return true;
 }
 
-async function askQuestion(text, options) {
-  if (options) {
-    return readline.question(text, options);
-  }
-  return readline.question(text);
-}
-
-async function getUnPw(untext, pwtext, emailString) {
-  let un = await askQuestion(untext + " ");
-  let pw = await askQuestion(pwtext + " ", {
-    hideEchoBack: true,
-  });
-  if (emailString) {
-    return `${un}${emailString}:${pw}`;
-  }
-  return `${un}:${pw}`;
+async function askQuestion(questions) {
+  return inquirer.prompt(questions);
 }
 
 async function aTob(string) {
@@ -107,6 +96,5 @@ module.exports = {
   httpRequest,
   multipartPost,
   askQuestion,
-  getUnPw,
   aTob,
 };

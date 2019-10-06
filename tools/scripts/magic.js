@@ -8,19 +8,58 @@ const path =
     ? `${process.cwd()}/clientconfigs/`
     : `${process.cwd()}/tools/clientconfigs/`;
 
-async function getSitekey(sitekeys, cmd) {
+async function listCommands(questions) {
+  let answers = await other.askQuestion(questions);
+  if (answers.sitekey) {
+    answers.sitekeys = [answers.sitekey];
+  } else {
+    answers.sitekeys = answers.sitekeys.split(" ");
+  }
+  //if (answers.fcpcontainers[answers.fcpcontainers.length-1] == "Other" {
+  //  answers.fcpothercontainers = answers.fcpothercontainers.split(" ");
+  //  answers.fcpcontainers.pop();
+  //  answers.fcpcontainers = answers.fcpcontainers.concat(answers.fcpothercontainers));
+  //}
+  //answers.deploytoother same thing
+  switch (answers.commands) {
+    case "summon":
+      other.wrap(getSitekey(answers.sitekeys, answers.fcpcontainers));
+      break;
+    case "enchant":
+      other.wrap(build(answers.sitekeys, answers.codeversion));
+      break;
+    case "conjure":
+      other.wrap(test(answers.sitekeys));
+      break;
+    case "transfigure":
+      other.wrap(helpertasks.copyCustom(path, answers.sitekeys, answers.fcpcontainers));
+      break;
+    case "reanimate":
+      other.wrap(rebulidConfig(answers.sitekeys));
+      break;
+    case "facelift":
+      other.wrap(modernize(answers.sitekeys));
+      break;
+    case "purge":
+      other.wrap(turnOff(answers.sitekeys));
+      break;
+    case "trick":
+      other.wrap(deploy(answers.sitekeys, answers.deployto));
+      break;
+    case "vanquish":
+      other.wrap(remove(answers.sitekeys));
+      break;
+    default:
+      console.log(answers.commands);
+  }
+}
+
+async function getSitekey(sitekeys, containers) {
   console.log("Creating local folders for sitekeys:", JSON.stringify(sitekeys), "Please wait...");
   for (counter in sitekeys) {
     await helpertasks.skCopy(path + sitekeys[counter]);
-    //maybe make next three lines into an array and make getcustom take an array?
-    if (cmd.development) {
-      await helpertasks.getCustom(path, sitekeys[counter], "development");
-    }
-    if (cmd.staging) {
-      await helpertasks.getCustom(path, sitekeys[counter], "staging");
-    }
-    if (cmd.production) {
-      await helpertasks.getCustom(path, sitekeys[counter], "production");
+    for (container in containers) {
+      await helpertasks.getCustom(path, sitekeys[counter], containers[container].toLowerCase());
     }
   }
 }
@@ -30,7 +69,9 @@ async function build(sitekeys, cmd) {
   if (sitekeys.length > 0) {
     let newCodeVer = null;
     if (cmd.upgrade) {
-      newCodeVer = await other.askQuestion("What code version would you like to upgrade to? ");
+      newCodeVer = await other.askQuestion([
+        { type: "input", name: "codeVer", message: "What code version would you like to upgrade to?" },
+      ]).codeVer;
     }
     for (counter in sitekeys) {
       await spotcheck.checkCustomerKey(path + sitekeys[counter] + `/config.json`);
@@ -120,47 +161,56 @@ async function turnOff(sitekeys) {
   }
 }
 
-async function deploy(sitekey, cmd) {
-  if (!cmd.pushdev && !cmd.pushstg && !cmd.pushprd) {
+async function deploy(sitekey, wheretopush) {
+  if (wheretopush.length == 0) {
     console.log(
-      "Now you see me, now you don't... (I did nothing, please try again with an options flag if you wanted something done)"
+      "Now you see me, now you don't... (I did nothing, please try again and choose an option if you want something done)"
     );
   }
-  if (cmd.pushdev) {
-    let pushedtogithub = await helpertasks.commitAndPushToGithub(path + sitekey);
-    let pusheddevconfig = await helpertasks.pushCxSuiteConfigsToDevContainer(path + sitekey);
-    await other.spawnProcess("npx", [`prettier --write config.json`], {
-      cwd: path + sitekey,
-      stdio: "inherit",
-      shell: true,
-    });
-    let pusheddev = await other.spawnProcess("gulp", ["push_products"], {
-      cwd: path + sitekey + "/CC/",
-      stdio: "inherit",
-      shell: true,
-    });
-    if (pushedtogithub && pusheddevconfig && pusheddev) {
-      console.log("Pushed to development on sitekey " + sitekey);
-    }
-  }
-  if (cmd.pushstg) {
-    let pushedstg = await other.spawnProcess("gulp", ["push_stg"], {
-      cwd: path + sitekey + "/CC/",
-      stdio: "inherit",
-      shell: true,
-    });
-    if (pushedstg) {
-      console.log("Pushed to staging on sitekey " + sitekey);
-    }
-  }
-  if (cmd.pushprd) {
-    let pushedprod = await other.spawnProcess("gulp", ["push_prod"], {
-      cwd: path + sitekey + "/CC/",
-      stdio: "inherit",
-      shell: true,
-    });
-    if (pushedprod) {
-      console.log("Pushed to production on sitekey " + sitekey);
+  for (place in wheretopush) {
+    if (wheretopush[place] == "Github") {
+      let pushedtogithub = await helpertasks.commitAndPushToGithub(path + sitekey);
+      if (pushedtogithub) {
+        console.log("Pushed to github on sitkey " + sitekey);
+      }
+    } else if (wheretopush[place] == "Production") {
+      let pushedprod = await other.spawnProcess("gulp", ["push_prod"], {
+        cwd: path + sitekey + "/CC/",
+        stdio: "inherit",
+        shell: true,
+      });
+      if (pushedprod) {
+        console.log("Pushed to production on sitekey " + sitekey);
+      }
+    } else if (wheretopush[place] == "Staging") {
+      let pushedstg = await other.spawnProcess("gulp", ["push_stg"], {
+        cwd: path + sitekey + "/CC/",
+        stdio: "inherit",
+        shell: true,
+      });
+      if (pushedstg) {
+        console.log("Pushed to staging on sitekey " + sitekey);
+      }
+    } else {
+      let pusheddevconfig;
+      if (wheretopush[place] == "Development") {
+        pusheddevconfig = await helpertasks.pushCxSuiteConfigsToDevContainer(path + sitekey);
+        await other.spawnProcess("npx", [`prettier --write config.json`], {
+          cwd: path + sitekey,
+          stdio: "inherit",
+          shell: true,
+        });
+      }
+      let pusheddev = await other.spawnProcess("gulp", ["push_products"], {
+        cwd: path + sitekey + "/CC/",
+        stdio: "inherit",
+        shell: true,
+      });
+      if (pusheddevconfig && pusheddev) {
+        console.log("Pushed to development on sitekey " + sitekey);
+      } else if (pusheddev) {
+        console.log("Pushed to " + wheretopush[place] + " on sitekey " + sitekey);
+      }
     }
   }
 }
@@ -176,12 +226,5 @@ async function remove(sitekeys) {
 }
 
 module.exports = {
-  getSitekey,
-  build,
-  test,
-  rebulidConfig,
-  modernize,
-  turnOff,
-  deploy,
-  remove,
+  listCommands,
 };
