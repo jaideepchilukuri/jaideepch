@@ -1,7 +1,7 @@
 /**
  * Record Configuration *****************************************************
  */
-var config = {
+module.exports = {
   /**
    * Disable record on pages under specific conditions.
    *
@@ -32,22 +32,35 @@ var config = {
   /**
    * URL whitelisting, so you can enable record on pages you actually want it to run on.
    */
-   <% if (JSON.stringify(combinedconfig.record.whitelist) == '{"text":[],"variables":[],"cookies":[]}') { %> /*  <% } %>
-   whitelist: {
-     text: <%-JSON.stringify(combinedconfig.record.whitelist.text)%>,
-     variables: <%-JSON.stringify(combinedconfig.record.whitelist.variables)%>,
-     cookies: <%-JSON.stringify(combinedconfig.record.whitelist.cookies)%>,
-   },
-   <% if (JSON.stringify(combinedconfig.record.whitelist) == '{"text":[],"variables":[],"cookies":[]}') { %> */  <% } %>
-  /**
-   * The replay_id
-   */
-  clientId: "<%=combinedconfig.record.clientId%>",
-
+  <% if (JSON.stringify(combinedconfig.record.whitelist) == '{"text":[],"variables":[],"cookies":[]}') { %> /*  <% } %>
+  whitelist: {
+    text: <%-JSON.stringify(combinedconfig.record.whitelist.text)%>,
+    variables: <%-JSON.stringify(combinedconfig.record.whitelist.variables)%>,
+    cookies: <%-JSON.stringify(combinedconfig.record.whitelist.cookies)%>,
+  },
+  <% if (JSON.stringify(combinedconfig.record.whitelist) == '{"text":[],"variables":[],"cookies":[]}') { %> */  <% } %>
+  
+  // clientId is now client.replayid in client_properties
   /**
    * Other settings
    */
   advancedSettings: {
+    /**
+     * Use SessionStorage instead of window.name to store replay data.
+     * This will make sure window.name is no longer touched, but it will
+     * no longer be able to follow the session between domains as a new
+     * SessionStorage is created for each new domain.
+     */
+    useSessionStorage: <%=combinedconfig.record.advancedSettings.useSessionStorage%>,
+
+    /**
+    * Maximum number of megabytes of storage to use for replay. By default
+    * this is 4.5 megabytes for session storage and 10 megabytes for window
+    * storage.
+    */
+   <% if (!combinedconfig.record.advancedSettings.maxStorageMB) { %> // <% } %> maxStorageMB: "<%=combinedconfig.record.advancedSettings.maxStorageMB%>",
+
+
     /**
      * Set up cxReplay pools, which apply before cxR is activated. This is a sticky state and once
      * you are out, you're out (unless you get re-pooled back in)
@@ -130,6 +143,11 @@ var config = {
       * Just copy-paste that into the pii block below and go from there. You may need to clean up some bad
       * guesses and properly configure pagesToSelectiveMask.
       *
+      * @prop {String} [maskCharacters] a string containing the character or characters to be randomly
+      * chosen to be the replacement for masked characters on the page. Optional, random letters and
+      * numbers will be used if this is missing or falsey. Using "****." will mostly use asterisks with
+      * the occasional dot to offset the width of the asterisk.
+      *
       * @prop {Object} selectiveUnMaskZones this defines areas of pages to be UNMASKED on pages that
       * would normally be completely masked (whitelisting).
       *
@@ -148,6 +166,7 @@ var config = {
       * to the server, but the viewer will not see it. Useful for profile images and the like.
       */
      pii: {
+      <% if (!combinedconfig.record.advancedSettings.pii.maskCharacters) { %> // <% } %> maskCharacters: "<%-JSON.stringify(combinedconfig.record.advancedSettings.pii)%>",
       selectiveUnMaskZones: <%-JSON.stringify(combinedconfig.record.advancedSettings.pii.selectiveUnMaskZones)%>,
        pagesToSelectiveMask: <%-JSON.stringify(combinedconfig.record.advancedSettings.pii.pagesToSelectiveMask)%>,
        selectiveMaskZones: <%-JSON.stringify(combinedconfig.record.advancedSettings.pii.selectiveMaskZones)%>,

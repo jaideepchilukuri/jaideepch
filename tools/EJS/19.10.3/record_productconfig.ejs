@@ -32,11 +32,13 @@ module.exports = {
   /**
    * URL whitelisting, so you can enable record on pages you actually want it to run on.
    */
-  whitelist: {
-    text: <%-JSON.stringify(combinedconfig.record.whitelist.text)%>,
-    variables: <%-JSON.stringify(combinedconfig.record.whitelist.variables)%>,
-    cookies: <%-JSON.stringify(combinedconfig.record.whitelist.cookies)%>,
-  },
+   <% if (JSON.stringify(combinedconfig.record.whitelist) == '{"text":[],"variables":[],"cookies":[]}') { %> /*  <% } %>
+   whitelist: {
+     text: <%-JSON.stringify(combinedconfig.record.whitelist.text)%>,
+     variables: <%-JSON.stringify(combinedconfig.record.whitelist.variables)%>,
+     cookies: <%-JSON.stringify(combinedconfig.record.whitelist.cookies)%>,
+   },
+   <% if (JSON.stringify(combinedconfig.record.whitelist) == '{"text":[],"variables":[],"cookies":[]}') { %> */  <% } %>
   
   // clientId is now client.replayid in client_properties
   /**
@@ -49,7 +51,7 @@ module.exports = {
      * no longer be able to follow the session between domains as a new
      * SessionStorage is created for each new domain.
      */
-    useSessionStorage: "<%=combinedconfig.record.advancedSettings.useSessionStorage%>",
+     useSessionStorage: <%=combinedconfig.record.advancedSettings.useSessionStorage%>,
 
     /**
     * Maximum number of megabytes of storage to use for replay. By default
