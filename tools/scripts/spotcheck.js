@@ -48,51 +48,53 @@ async function findCustomerKeyFromSiteKey(siteKey) {
 async function checkCustomerKey(path) {
   // console.log("Checking Customer Key...");
   let jconfig = await filesystem.readFileToObjectIfExists(path);
-  return new Promise(function(resolve, reject) {
-    if (!jconfig.global) {
-      jconfig.global = {};
+  if (!jconfig.global) {
+    jconfig.global = {};
+  }
+  let ckey = null;
+  if (jconfig.global.customerKey) {
+    ckey = jconfig.global.customerKey;
+  }
+  if (isNaN(ckey)) {
+    ckey = null;
+  }
+  if (!ckey && jconfig.global.customerId) {
+    ckey = await findCustomerKeyFromCustomerId(jconfig.global.customerId);
+  }
+  if (!ckey) {
+    let sitekey = null;
+    if (jconfig.global.siteKey) {
+      sitekey = jconfig.global.siteKey;
     }
-    let ckey = null;
-    if (jconfig.global.customerKey) {
-      ckey = jconfig.global.customerKey;
+    if (!sitekey) {
+      let temp = path.split("/");
+      sitekey = temp[temp.length - 2];
     }
-    if (!ckey && jconfig.global.customerId) {
-      ckey = findCustomerKeyFromCustomerId(jconfig.global.customerId);
+    if (sitekey) {
+      ckey = await findCustomerKeyFromSiteKey(sitekey);
     }
-    if (!ckey) {
-      let sitekey = null;
-      if (jconfig.global.siteKey) {
-        sitekey = jconfig.global.siteKey;
-      }
-      if (!sitekey) {
-        let temp = path.split("/");
-        sitekey = temp[temp.length - 2];
-      }
-      if (sitekey) {
-        ckey = findCustomerKeyFromSiteKey(sitekey);
-      }
-    }
-    if (!ckey) {
-      ckey = other.askQuestion([
-        {
-          type: "input",
-          name: "customerkey",
-          message: "Customer key is missing. What is the customer key for this sitekey?",
-        },
-      ]).customerkey;
-    }
-    // console.log(ckey)
-    jconfig.global.customerKey = ckey;
-    jconfig = JSON.stringify(jconfig);
-    filesystem.writeToFile(path, jconfig);
-    return resolve();
-  });
+  }
+  if (!ckey) {
+    ckey = await other.askQuestion([
+      {
+        type: "input",
+        name: "customerkey",
+        message: "Customer key is missing. What is the customer key for this sitekey?",
+      },
+    ]);
+    ckey = ckey.customerkey;
+  }
+  // console.log(ckey)
+  jconfig.global.customerKey = ckey;
+  jconfig = JSON.stringify(jconfig);
+  await filesystem.writeToFile(path, jconfig);
+  return;
 }
 
 async function checkCodeVersion(path) {
   let sitekey = path.split("/");
   sitekey = sitekey[sitekey.length - 1];
-  const ejspath = path.substring(0, path.length - sitekey.length - "clientconfigs/".length) + "CCT";
+  const ejspath = path.substring(0, path.length - sitekey.length - "clientconfigs/".length) + "EJS";
   // console.log("Checking Code Version...");
   let jconfig = await filesystem.readFileToObjectIfExists(`${path}/config.json`);
   return new Promise(function(resolve, reject) {
@@ -116,9 +118,9 @@ async function checkCodeVersion(path) {
       ]).codeVer;
       if (!cVer || cVer == null || cVer == "") {
         return reject(
-          "Code Version " +
-            jconfig.global.codeVer +
-            " is not currently supported, unless you just need to fetch in the new updates from github. Please reach out to support@foresee.com if you have any questions. Thank you come again."
+          `Code Version ${
+            jconfig.global.codeVer
+          } is not currently supported, unless you just need to fetch in new updates from github. Please reach out to support@foresee.com if you have any questions. Thank you come again.`
         );
       }
       jconfig.global.codeVer = cVer;

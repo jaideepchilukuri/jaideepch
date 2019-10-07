@@ -23,31 +23,31 @@ async function listCommands(questions) {
   //answers.deploytoother same thing
   switch (answers.commands) {
     case "summon":
-      other.wrap(getSitekey(answers.sitekeys, answers.fcpcontainers));
+      await getSitekey(answers.sitekeys, answers.fcpcontainers);
       break;
     case "enchant":
-      other.wrap(build(answers.sitekeys, answers.codeversion));
+      await build(answers.sitekeys, answers.codeversion, answers.localhost);
       break;
     case "conjure":
-      other.wrap(test(answers.sitekeys));
+      await test(answers.sitekeys);
       break;
     case "transfigure":
-      other.wrap(helpertasks.copyCustom(path, answers.sitekeys, answers.fcpcontainers));
+      await helpertasks.copyCustom(path, answers.sitekeys, answers.fcpcontainers);
       break;
     case "reanimate":
-      other.wrap(rebulidConfig(answers.sitekeys));
+      await rebulidConfig(answers.sitekeys);
       break;
     case "facelift":
-      other.wrap(modernize(answers.sitekeys));
+      await modernize(answers.sitekeys);
       break;
     case "purge":
-      other.wrap(turnOff(answers.sitekeys));
+      await turnOff(answers.sitekeys);
       break;
     case "trick":
-      other.wrap(deploy(answers.sitekeys, answers.deployto));
+      await deploy(answers.sitekeys, answers.deployto);
       break;
     case "vanquish":
-      other.wrap(remove(answers.sitekeys));
+      await remove(answers.sitekeys);
       break;
     default:
       console.log(answers.commands);
@@ -55,7 +55,7 @@ async function listCommands(questions) {
 }
 
 async function getSitekey(sitekeys, containers) {
-  console.log("Creating local folders for sitekeys:", JSON.stringify(sitekeys), "Please wait...");
+  console.log("Going to check out sitekeys:", JSON.stringify(sitekeys));
   for (counter in sitekeys) {
     await helpertasks.skCopy(path + sitekeys[counter]);
     for (container in containers) {
@@ -64,21 +64,15 @@ async function getSitekey(sitekeys, containers) {
   }
 }
 
-async function build(sitekeys, cmd) {
+async function build(sitekeys, codeversion, localhost) {
   console.log("Building packages for sitekeys:", JSON.stringify(sitekeys), "Please wait...");
   if (sitekeys.length > 0) {
-    let newCodeVer = null;
-    if (cmd.upgrade) {
-      newCodeVer = await other.askQuestion([
-        { type: "input", name: "codeVer", message: "What code version would you like to upgrade to?" },
-      ]).codeVer;
-    }
     for (counter in sitekeys) {
       await spotcheck.checkCustomerKey(path + sitekeys[counter] + `/config.json`);
-      if (newCodeVer != null) {
-        console.log(`Rebuilding for version ${newCodeVer}...`);
+      if (codeversion) {
+        console.log(`Rebuilding for version ${codeversion}...`);
         await helpertasks.upgradeChecks(path + sitekeys[counter]);
-        await helpertasks.updateCodeVersion(path + sitekeys[counter], newCodeVer);
+        await helpertasks.updateCodeVersion(path + sitekeys[counter], codeversion);
       }
       await spotcheck.checkCodeVersion(path + sitekeys[counter]);
       await other.spawnProcess("npx", [`prettier --write config.json`], {
@@ -90,11 +84,10 @@ async function build(sitekeys, cmd) {
       await helpertasks.ccCopy(path + sitekeys[counter]);
       await helpertasks.assetsCopy(path + sitekeys[counter]);
       await helpertasks.configRebuild(path + sitekeys[counter]);
-      await helpertasks.prettifyCC(path + sitekeys[counter]);
       await helpertasks.installNPM(path + sitekeys[counter]);
       console.log("Done building client code package");
     }
-    if (cmd.conjure) {
+    if (localhost) {
       await test(sitekey[0]);
     }
   }
@@ -105,16 +98,19 @@ async function rebulidConfig(sitekeys) {
   for (counter in sitekeys) {
     packagejson = await filesystem.readFileToObjectIfExists(path + sitekeys[counter] + "/CC/package.json");
     config = await filesystem.readFileToObjectIfExists(path + sitekeys[counter] + "/config.json");
-    if (packagejson && packagejson.version && config && config.global && config.global.codeVer) {
-      if (packagejson.version == config.global.codeVer) {
-        console.log("Rebuilding configs for client code package");
-        await helpertasks.assetsCopy(path + sitekeys[counter]);
-        await helpertasks.configRebuild(path + sitekeys[counter]);
-        await helpertasks.prettifyCC(path + sitekeys[counter]);
-      } else {
-        console.log("Changed code version! Building client code package from scratch");
-        await build(path + sitekeys[counter]);
-      }
+    if (
+      packagejson &&
+      packagejson.version &&
+      config &&
+      config.global &&
+      config.global.codeVer &&
+      packagejson.version == config.global.codeVer
+    ) {
+      await helpertasks.assetsCopy(path + sitekeys[counter]);
+      await helpertasks.configRebuild(path + sitekeys[counter]);
+    } else {
+      console.log("Code version is not built! Building client code package from scratch");
+      await build(path + sitekeys[counter]);
     }
   }
 }
@@ -128,6 +124,7 @@ async function test(sitekey) {
 }
 
 async function modernize(sitekeys) {
+  /*should add option to pass in hex codes for colors and use those when rebuilding*/
   console.log("Migrating to modern invite on desktop for sitekeys:", JSON.stringify(sitekeys), "Please wait...");
   for (counter in sitekeys) {
     let modernized = await helpertasks.updateToModernInvite(path + sitekeys[counter]);
@@ -137,8 +134,7 @@ async function modernize(sitekeys) {
         stdio: "inherit",
         shell: true,
       });
-      await helpertasks.configRebuild(path + sitekeys[counter], sitekeys[counter]);
-      await helpertasks.prettifyCC(path + sitekeys[counter]);
+      await helpertasks.configRebuild(path + sitekeys[counter]);
       console.log("You have just modernized " + sitekeys[counter]);
     }
   }
@@ -154,8 +150,7 @@ async function turnOff(sitekeys) {
         stdio: "inherit",
         shell: true,
       });
-      await helpertasks.configRebuild(path + sitekeys[counter], sitekeys[counter]);
-      await helpertasks.prettifyCC(path + sitekeys[counter]);
+      await helpertasks.configRebuild(path + sitekeys[counter]);
       console.log("Turned all sp to -1 for sitekey " + sitekeys[counter]);
     }
   }
@@ -166,13 +161,13 @@ async function deploy(sitekey, wheretopush) {
     console.log(
       "Now you see me, now you don't... (I did nothing, please try again and choose an option if you want something done)"
     );
+  } else if ((await filesystem.checkIfFileOrDirExists(path + sitekey + "/CC")) == false) {
+    console.log("Looks like you haven't built a client code template for this sitekey yet...");
+    await build(sitekey);
   }
   for (place in wheretopush) {
     if (wheretopush[place] == "Github") {
-      let pushedtogithub = await helpertasks.commitAndPushToGithub(path + sitekey);
-      if (pushedtogithub) {
-        console.log("Pushed to github on sitkey " + sitekey);
-      }
+      await helpertasks.commitAndPushToGithub(path + sitekey);
     } else if (wheretopush[place] == "Production") {
       let pushedprod = await other.spawnProcess("gulp", ["push_prod"], {
         cwd: path + sitekey + "/CC/",

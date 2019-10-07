@@ -38,7 +38,12 @@ const wheretodeploy = [
 const scrollQuestion = {
   type: "list",
   name: "commands",
-  message: "What would you like to do, Mage?",
+  message: `${JSON.stringify(scrollCommandDesc)
+    .replace(/",/g, `\n`)
+    .replace("{", "")
+    .replace("}", "")
+    .replace(/"/g, "")
+    .replace(/:/g, " - ")}\r\nWhat would you like to do, Mage?`,
   choices: scrollCommands,
 };
 const sitekeyQuestion = {
@@ -134,9 +139,6 @@ program
     "Also known as Bill Vargo's Unfurling Scroll. This will provide a list of everything you can do, automagically..."
   )
   .action(function() {
-    for (command in scrollCommands) {
-      console.log(scrollCommands[command] + " - " + scrollCommandDesc[scrollCommands[command]]);
-    }
     wrap(
       magic.listCommands([
         scrollQuestion,

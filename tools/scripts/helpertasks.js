@@ -13,14 +13,18 @@ async function upgradeChecks(path) {
 }
 
 async function installNPM(path) {
-  await filesystem.makeDirIfMissing(`./tools/NPM`);
-  await npmRebuild(path);
+  let sitekey = path.split("/");
+  sitekey = sitekey[sitekey.length - 1];
+  const npmpath = path.substring(0, path.length - sitekey.length - "clientconfigs/".length) + "NPM";
+  await filesystem.makeDirIfMissing(npmpath);
+  await npmRebuild(path, npmpath);
+  console.log("Running npm install to make sure we have all the packages we need...");
   await other.spawnProcess("npm", ["install"], {
     cwd: path + "/CC/",
     stdio: "inherit",
     shell: true,
   });
-  await npmStash(path);
+  await npmStash(path, npmpath);
 }
 
 async function fullDefection(path) {
@@ -164,7 +168,7 @@ async function unbaseDefs(Obj) {
   let retObj = Obj;
   for (var def in retObj.trigger.surveydefs) {
     var tempDef = {};
-    eval("tempDef=" + other.aTob(retObj.trigger.surveydefs[def]));
+    eval("tempDef=" + (await other.aTob(retObj.trigger.surveydefs[def])));
     retObj.trigger.surveydefs[def] = tempDef;
   }
   return retObj;
@@ -178,7 +182,7 @@ async function returnEmptyConfig(codeVersion) {
     `https://gateway-elb.foresee.com/sites/emptyconfigs/${codeVersionWithDashes}/config.json`
   );
   respbody = await addEmptyDefs(jconfig, JSON.parse(respbody.getBody("utf8")));
-  if (fcp.cctVersions.includes(codeVersion)) {
+  if (JSON.stringify(respbody.trigger.surveydefs[0]).substring(0, 2) != `{"`) {
     respbody = await unbaseDefs(respbody); // unbase64 the surveydefs
   }
   return respbody;
@@ -232,6 +236,7 @@ async function returnCombinedConfig(customObj, emptyObj, isSpecialArray) {
 async function skCopy(path) {
   let sitekey = path.split("/");
   sitekey = sitekey[sitekey.length - 1];
+  console.log(`Checking out sitekey ${sitekey}...`);
   await filesystem.deleteFileOrDirIfExists(path /*, `Found a folder at path, deleting it.`*/);
   try {
     let done = await other.doAGit([
@@ -243,6 +248,7 @@ async function skCopy(path) {
     // if branch exists (returned value is not null) clone it, else clone master and create new branch
     if (done) {
       await other.doAGit(["clone", "-b", sitekey, "https://github.com/foreseecode/websdk-client-configs.git", path]);
+      console.log("Checked out websdk-client-configs branch named", sitekey);
     } else {
       await other.doAGit(["clone", "https://github.com/foreseecode/websdk-client-configs.git", path]);
       /*await other.spawnProcess("git", [`pull origin ${sitekey}`], {
@@ -258,8 +264,8 @@ async function skCopy(path) {
         `https://github.com/foreseecode/websdk-client-configs.git/`,
         sitekey,
       ]);
+      console.log("Created websdk-client-configs branch named", sitekey);
     }
-    console.log("Checked out websdk-client-configs branch for sitekey", sitekey);
   } catch (err) {
     console.log("This error is from the try catch in the skCopy function in the helpertask.js file", err);
   }
@@ -267,28 +273,41 @@ async function skCopy(path) {
   await filesystem.writeToFile(`${path}/.gitignore`, gitigcontents);
 }
 
-async function getCustom(path, sitekey, env) {
-  //make the call to the url to retrieve the empty config
-  let respbody = await other.httpRequest(
-    "GET",
-    `https://fsrsupport.foresee.com/api/JSON/custom?sitekey=${sitekey}&container=${env}`
-  );
-  await filesystem.makeDirIfMissing(`${path}${sitekey}/_FCP`);
-  await filesystem.makeDirIfMissing(`${path}${sitekey}/_FCP/${env}`);
-  await filesystem.writeToFile(`${path}${sitekey}/_FCP/${env}/config.json`, respbody.getBody("utf8"));
-  await other.spawnProcess("npx", [`prettier --write config.json`], {
-    cwd: `${path}${sitekey}/_FCP/${env}/`,
-    stdio: "inherit",
-    shell: true,
-  });
-  //make the call to the url to retrieve the whole folder, then unzip and copy logos into local folder to keep
-  respbody = await other.httpRequest("GET", `https://fcp.foresee.com/sites/${sitekey}/containers/${env}/files`, {
-    headers: { authorization: fcp.fcpROCreds },
-  });
-  await filesystem.writeZip(`${path}${sitekey}/_FCP/${env}/assets.zip`, respbody.getBody(null));
-  await filesystem.unzipAssets(`${path}${sitekey}/_FCP/${env}/assets`);
-  await filesystem.deleteFileOrDirIfExists(`${path}${sitekey}/_FCP/${env}/assets.zip`);
-  return true;
+async function getCustom(path, sitekey, container) {
+  console.log(`Getting configs for ${sitekey}'s ${container} container from fcp...`);
+  try {
+    //make the call to the url to retrieve the empty config
+    let respbody = await other.httpRequest(
+      "GET",
+      `https://fsrsupport.foresee.com/api/JSON/custom?sitekey=${sitekey}&container=${container}`
+    );
+    await filesystem.makeDirIfMissing(`${path}${sitekey}/_FCP`);
+    await filesystem.makeDirIfMissing(`${path}${sitekey}/_FCP/${container}`);
+    await filesystem.writeToFile(`${path}${sitekey}/_FCP/${container}/config.json`, respbody.getBody("utf8"));
+    await other.spawnProcess("npx", [`prettier --write config.json`], {
+      cwd: `${path}${sitekey}/_FCP/${container}/`,
+      stdio: "inherit",
+      shell: true,
+    });
+    //make the call to the url to retrieve the whole folder, then unzip and copy logos into local folder to keep
+    respbody = await other.httpRequest(
+      "GET",
+      `https://fcp.foresee.com/sites/${sitekey}/containers/${container}/files`,
+      {
+        headers: { authorization: fcp.fcpROCreds },
+      }
+    );
+    await filesystem.writeZip(`${path}${sitekey}/_FCP/${container}/assets.zip`, respbody.getBody(null));
+    await filesystem.unzipAssets(`${path}${sitekey}/_FCP/${container}/assets`);
+    await filesystem.deleteFileOrDirIfExists(`${path}${sitekey}/_FCP/${container}/assets.zip`);
+    return true;
+  } catch (err) {
+    console.log(
+      `Are you SURE that ${sitekey} has a ${container} container in fcp?`,
+      "Got this error trying to get configs from fcp:\n",
+      err.message
+    );
+  }
 }
 
 async function copyCustom(path, sitekey, container) {
@@ -307,6 +326,7 @@ async function ccCopy(path) {
   let sitekey = path.split("/");
   sitekey = sitekey[sitekey.length - 1];
   const cctpath = path.substring(0, path.length - sitekey.length - "clientconfigs/".length) + "CCT";
+  await filesystem.deleteFileOrDirIfExists(path + "/CC");
   jconfig = await filesystem.readFileToObjectIfExists(`${path}/config.json`);
   let codeVersion = await returnCodeVersion(jconfig);
   if (codeVersion == null) {
@@ -316,7 +336,7 @@ async function ccCopy(path) {
   let copied = await filesystem.copyFrom2ToIfFromExists(
     `${cctpath}/${codeVersion}`,
     `${path}/CC`,
-    `Have client code folder for ${codeVersion} stashed, coping it over...`
+    `Have client code template for ${codeVersion} stashed, coping it over...`
   );
   if (!copied) {
     let repoUrl = "https://github.com/foreseecode/client_code.git";
@@ -332,7 +352,7 @@ async function ccCopy(path) {
   await filesystem.copyFrom2ToIfToMissing(
     `${path}/CC`,
     `${cctpath}/${codeVersion}`,
-    `Going to stash client code folder for ${codeVersion} because you don't have it. This will save you time in the future, but may take a moment...`
+    `Going to stash client code template for ${codeVersion} because you don't have it. This will save you time in the future, but may take a moment...`
   );
   return;
 }
@@ -347,28 +367,36 @@ async function assetsCopy(path) {
 }
 
 async function configRebuild(path) {
+  console.log("Rebuilding config files...");
+  let sitekey = path.split("/");
+  sitekey = sitekey[sitekey.length - 1];
+  const ejspath = path.substring(0, path.length - sitekey.length - "clientconfigs/".length) + "EJS";
+  const fcppath = path.substring(0, path.length - sitekey.length - "clientconfigs/".length) + "FCP";
   jconfig = await filesystem.readFileToObjectIfExists(path + "/config.json");
+  if (JSON.stringify(jconfig.trigger.surveydefs[0]).substring(0, 2) != `{"`) {
+    jconfig = await unbaseDefs(jconfig); // unbase64 the surveydefs
+  }
   let codeVersion = await returnCodeVersion(jconfig);
   let econfig = await returnEmptyConfig(codeVersion);
-  //console.log("EmptyConfig:",econfig);
+  // console.log("EmptyConfig:", econfig);
   let combinedconfig = await returnCombinedConfig(jconfig, econfig, false);
-  //console.log("Combined config:",combinedconfig.trigger.surveydefs);
+  // console.log("Combined config defs:", combinedconfig.trigger.surveydefs);
   // then the logic to rebuild from that into the actual files
   await filesystem.writeToFile(
     path + "/CC/clientconfig/client_properties.js",
-    await filesystem.buildFileContentsFromTemplateFile(`./tools/EJS/${codeVersion}/client_properties.ejs`, {
+    await filesystem.buildFileContentsFromTemplateFile(`${ejspath}/${codeVersion}/client_properties.ejs`, {
       combinedconfig: combinedconfig,
     })
   );
   await filesystem.writeToFile(
     path + "/CC/clientconfig/productconfig/record/product_config.js",
-    await filesystem.buildFileContentsFromTemplateFile(`./tools/EJS/${codeVersion}/record_productconfig.ejs`, {
+    await filesystem.buildFileContentsFromTemplateFile(`${ejspath}/${codeVersion}/record_productconfig.ejs`, {
       combinedconfig: combinedconfig,
     })
   );
   await filesystem.writeToFile(
     path + "/CC/clientconfig/productconfig/trigger/product_config.js",
-    await filesystem.buildFileContentsFromTemplateFile(`./tools/EJS/${codeVersion}/trigger_productconfig.ejs`, {
+    await filesystem.buildFileContentsFromTemplateFile(`${ejspath}/${codeVersion}/trigger_productconfig.ejs`, {
       combinedconfig: combinedconfig,
     })
   );
@@ -379,13 +407,14 @@ async function configRebuild(path) {
     }
     await filesystem.writeToFile(
       path + `/CC/clientconfig/productconfig/trigger/surveydef/def${tempstring}${def}.js`,
-      await filesystem.buildFileContentsFromTemplateFile(`./tools/EJS/${codeVersion}/surveydef.ejs`, {
+      await filesystem.buildFileContentsFromTemplateFile(`${ejspath}/${codeVersion}/surveydef.ejs`, {
         surveydef: combinedconfig.trigger.surveydefs[def],
       })
     );
   }
   await filesystem.deleteFileOrDirIfExists(path + "/CC/clientconfig/productconfig/trigger/surveydef/def0.js");
   await filesystem.deleteFileOrDirIfExists(path + "/CC/clientconfig/productconfig/trigger/surveydef/def1.js");
+  await prettifyCC(path);
   if (await filesystem.checkIfFileOrDirExists(path + "/CC/clientconfig/globalconfig")) {
     //todo create templates to build prod file from what's in combinedconfigs
   }
@@ -393,29 +422,29 @@ async function configRebuild(path) {
     path + "/CC/clientconfig/globalconfig/prod.js",
     path + `/CC/clientconfig/globalconfig/local.js`
   );
-  await filesystem.copyFrom2ToIfFromExists(`./tools/FCP/${codeVersion}/gulpfile.js`, path + `/CC/gulpfile.js`);
-  await filesystem.copyFrom2ToIfFromExists(`./tools/FCP/${codeVersion}/FCP.js`, path + `/CC/scripts/FCP.js`);
+  await filesystem.copyFrom2ToIfFromExists(`${fcppath}/${codeVersion}/gulpfile.js`, path + `/CC/gulpfile.js`);
+  await filesystem.copyFrom2ToIfFromExists(`${fcppath}/${codeVersion}/FCP.js`, path + `/CC/scripts/FCP.js`);
   return "done";
 }
 
-async function npmRebuild(path) {
+async function npmRebuild(path, npmpath) {
   jconfig = await filesystem.readFileToObjectIfExists(path + "/config.json");
   let codeVersion = await returnCodeVersion(jconfig);
   await filesystem.copyFrom2ToIfFromExists(
-    `./tools/NPM/${codeVersion}`,
+    `${npmpath}/${codeVersion}`,
     path + "/CC/node_modules",
-    `Have node modules folder for ${codeVersion} stashed, coping it over. This may take a moment...`
+    `Have node modules folder for ${codeVersion} stashed, coping it over. This may take a few moments...`
   );
   return "done";
 }
 
-async function npmStash(path) {
+async function npmStash(path, npmpath) {
   jconfig = await filesystem.readFileToObjectIfExists(path + "/config.json");
   let codeVersion = await returnCodeVersion(jconfig);
   await filesystem.copyFrom2ToIfToMissing(
     path + "/CC/node_modules",
-    `./tools/NPM/${codeVersion}`,
-    `Going to stash node modules folder for ${codeVersion} because you don't have it. This will save you time in the future, but may take a moment...`
+    `${npmpath}/${codeVersion}`,
+    `Going to stash node modules folder for ${codeVersion} because you don't have it. This will save you time in the future, but may take a few moments...`
   );
   return "done";
 }
@@ -453,13 +482,16 @@ async function pushCxSuiteConfigsToDevContainer(path) {
   unpw = unpw.un + "@aws.foreseeresults.com:" + unpw.pw;
   await other.multipartPost(
     `https://${unpw}@fcp.foresee.com/sites/${jconfig.global.siteKey}/containers/development/configs`,
-    `Pushing cxSuite global config values to container develop of sitekey ${jconfig.global.siteKey} for testing`,
+    `Pushing cxSuite global config values to container development of sitekey ${jconfig.global.siteKey} for testing`,
     `${clientconfigspath}_globalconfigs/${jconfig.global.siteKey}.js`
   );
+  await filesystem.deleteFileOrDirIfExists(`${clientconfigspath}_globalconfigs/${jconfig.global.siteKey}.js`);
+  console.log(`Pushed globalconfigs to container development of sitekey ${jconfig.global.siteKey}`);
   return true;
 }
 
 async function prettifyCC(path) {
+  console.log("Prettyifying config files...");
   await other.spawnProcess("npx", [`prettier --write clientconfig/client_properties.js`], {
     cwd: path + "/CC/",
     stdio: "inherit",
@@ -485,24 +517,62 @@ async function prettifyCC(path) {
 async function commitAndPushToGithub(path) {
   let sitekey = path.split("/");
   sitekey = sitekey[sitekey.length - 1];
-  await other.doAGit([`--git-dir=${path}/.git`, "add", "."]);
-  let message = await other.askQuestion([
-    { type: "input", name: "message", message: "What changes are you committing?" },
-  ]).message;
-  await other.doAGit([`--git-dir=${path}/.git`, "commit", "-m", `${message}`]);
-  let committed = await other.doAGit([
+  //await other.doAGit([`--git-dir=${path}/.git`, "add", "."]);
+  await other.spawnProcess("git", [`add .`], {
+    cwd: path,
+    stdio: "inherit",
+    shell: true,
+  });
+  let commitmessage = await other.askQuestion([
+    { type: "input", name: "commitmessage", message: "What changes are you committing?" },
+  ]);
+  commitmessage = commitmessage.commitmessage;
+  // await other.doAGit([`--git-dir=${path}/.git`, "commit", "-m", `${commitmessage}`]);
+  await other.spawnProcess("git", [`commit -m ${commitmessage}`], {
+    cwd: path,
+    stdio: "inherit",
+    shell: true,
+  });
+  /*let committed = await other.doAGit([
     `--git-dir=${path}/.git`,
     "push",
     `https://github.com/foreseecode/websdk-client-configs.git/`,
   ]);
   if (committed == null) {
     console.log("Committed changes on " + sitekey + " back to repo");
+  }*/
+  let unpw = await other.askQuestion([
+    { type: "input", name: "un", message: "What is your username for github?" },
+    { type: "password", name: "pw", message: "What is your password for github?" },
+  ]);
+  unpw = unpw.un + ":" + unpw.pw;
+  let committed = await other.spawnProcess(
+    "git",
+    [`push https://${unpw}@github.com/foreseecode/websdk-client-configs.git/`],
+    {
+      cwd: path,
+      stdio: "inherit",
+      shell: true,
+    }
+  );
+  if (committed == 0) {
+    console.log("Committed changes on " + sitekey + " back to repo");
   }
   let commitnum = await other.doAGit([`--git-dir=${path}/.git`, "log", "--pretty=%h", "-1"]);
-  let message = await other.askQuestion([
-    { type: "input", name: "message", message: "What ticket number in SalesForce is this for?" },
-  ]).message;
-  console.log(`Please paste this in as your fcp push comment: SF Ticket#: ${message}  Git Commit: ${commitnum}`);
+  let ticketnum = NaN;
+  while (isNaN(ticketnum)) {
+    ticketnum = await other.askQuestion([
+      {
+        type: "number",
+        name: "ticketnum",
+        message: "What ticket number in SalesForce is this for? (Please enter the case number)",
+      },
+    ]);
+    ticketnum = ticketnum.ticketnum;
+  }
+  console.log(
+    `Pushed ${sitekey} to github. Please paste this in as your fcp push comment: SF Ticket#: ${ticketnum}  Git Commit: ${commitnum}`
+  );
   return true;
 }
 

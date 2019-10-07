@@ -30,38 +30,30 @@ async function makeDirIfMissing(path, consoleMsg) {
 }
 
 async function deleteFileOrDirIfExists(path, consoleMsg) {
-  if (fs.existsSync(path) && consoleMsg) {
-    console.log(consoleMsg);
+  if (fs.existsSync(path)) {
+    if (consoleMsg) {
+      console.log(consoleMsg);
+    }
+    rimraf.sync(path + "/");
+    return true;
   }
-  rimraf.sync(path + "/");
-  return;
+  return false;
 }
 
 async function copyFrom2ToIfFromExists(from, to, consoleMsg) {
-  return new Promise(function(resolve, reject) {
-    if (fs.existsSync(from)) {
-      if (consoleMsg) {
-        console.log(consoleMsg);
-      }
-      deleteFileOrDirIfExists(to /*, "deleted a folder to copy " + from + " to " + to*/);
-      copydir.sync(
-        from,
-        to,
-        {
-          utimes: true,
-          mode: true,
-          cover: true,
-        },
-        function(err) {
-          if (err) {
-            return reject(err);
-          }
-          return resolve(true);
-        }
-      );
+  if (fs.existsSync(from)) {
+    if (consoleMsg) {
+      console.log(consoleMsg);
     }
-    return resolve(false);
-  });
+    await deleteFileOrDirIfExists(to /*, "deleted a folder to copy " + from + " to " + to*/);
+    copydir.sync(from, to, {
+      utimes: true,
+      mode: true,
+      cover: true,
+    });
+    return true;
+  }
+  return false;
 }
 
 async function copyFrom2ToIfToMissing(from, to, consoleMsg) {
@@ -91,7 +83,12 @@ async function readFileToStringIfExists(path, consoleMsg) {
 }
 
 async function readFileToObjectIfExists(path, consoleMsg) {
-  return JSON.parse(await readFileToStringIfExists(path, consoleMsg));
+  let string = await readFileToStringIfExists(path, consoleMsg);
+  if (string) {
+    return JSON.parse(string);
+  }
+  console.log("Got an undefined string in readFileToObjectIfExists", path);
+  return undefined;
 }
 
 async function readFileToReadStream(path) {
@@ -127,7 +124,8 @@ async function writeZip(path, fileContents, consoleMsg) {
 
 async function unzipAssets(path) {
   await makeDirIfMissing(`${path}/`);
-  fs.createReadStream(`${path}.zip`)
+  await fs
+    .createReadStream(`${path}.zip`)
     .pipe(unzip.Parse())
     .on("entry", function(entry) {
       if (
@@ -144,6 +142,9 @@ async function unzipAssets(path) {
         entry.autodrain();
       }
     });
+  let assetsLoc = path.split("/");
+  assetsLoc = assetsLoc[assetsLoc.length - 2] + "/" + assetsLoc[assetsLoc.length - 1];
+  console.log(assetsLoc);
 }
 
 async function buildFileContentsFromTemplateFile(filename, data, delimiter) {
