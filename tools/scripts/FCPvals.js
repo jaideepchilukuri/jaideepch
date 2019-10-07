@@ -1,3 +1,5 @@
+const loginFile = process.env[process.platform == "win32" ? "USERPROFILE" : "HOME"] + "/env.json";
+
 const fcpROCreds = "Basic ZnNyLnN1cHBvcnRAYXdzLmZvcmVzZWVyZXN1bHRzLmNvbTpjZElIJjAwSnpSVmE=";
 
 const cxsDefaultConfig = {
@@ -137,6 +139,7 @@ const legacyDesktopDefaults = {
 };
 
 module.exports = {
+  loginFile,
   fcpROCreds,
   cxsDefaultConfig,
   legacyDesktopVersions,

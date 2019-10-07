@@ -2,6 +2,7 @@ const helpertasks = require("./helpertasks"),
   spotcheck = require("./spotcheck"),
   filesystem = require("./filesystem"),
   other = require("./other");
+const loginFile = require("./FCPvals").loginFile;
 
 const path =
   process.cwd().substr(process.cwd().length - 6, 6) == "\\tools" // "/tools" doesn't work, tried it, so I hope this doesn't cause an error on mac
@@ -180,7 +181,7 @@ async function deploy(sitekey, wheretopush) {
   }
   for (place in wheretopush) {
     if (wheretopush[place] == "Github") {
-      await helpertasks.commitAndPushToGithub(path + sitekey);
+      await helpertasks.commitAndPushToGithub(path + sitekey, loginFile);
     } else if (wheretopush[place] == "Production") {
       let pushedprod = await other.spawnProcess("gulp", ["push_prod"], {
         cwd: path + sitekey + "/CC/",
@@ -202,7 +203,7 @@ async function deploy(sitekey, wheretopush) {
     } else {
       let pusheddevconfig;
       if (wheretopush[place] == "Development") {
-        pusheddevconfig = await helpertasks.pushCxSuiteConfigsToDevContainer(path + sitekey);
+        pusheddevconfig = await helpertasks.pushCxSuiteConfigsToDevContainer(path + sitekey, loginFile);
         await other.spawnProcess("npx", [`prettier --write config.json`], {
           cwd: path + sitekey,
           stdio: "inherit",

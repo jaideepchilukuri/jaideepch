@@ -87,7 +87,7 @@ async function readFileToObjectIfExists(path, consoleMsg) {
   if (string) {
     return JSON.parse(string);
   }
-  console.log("Got an undefined string in readFileToObjectIfExists", path);
+  //console.log("Got an undefined string in readFileToObjectIfExists", path);
   return undefined;
 }
 

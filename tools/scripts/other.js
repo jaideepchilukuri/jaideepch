@@ -5,6 +5,7 @@ const spawn = require("child_process").spawn,
   inquirer = require("inquirer"),
   atob = require("atob");
 const filesystem = require("./filesystem");
+const loginFile = require("./FCPvals").loginFile;
 
 function wrap(fn) {
   return function(...args) {
@@ -36,11 +37,36 @@ async function doAGit(args /*errLogic*/) {
   let argString = JSON.stringify(args);
   if (argString.includes("https://github.com") && args[0] != "clone" && args[0] != "ls-remote") {
     // using this as the search because so far only using the url when getting errors because we need a un/pw to get access
-    let unpw = await askQuestion([
-      { type: "input", name: "un", message: "What is your username for github?" },
-      { type: "password", name: "pw", message: "What is your password for github?" },
+    let savedLogins = await filesystem.readFileToObjectIfExists(loginFile);
+    if (savedLogins == undefined) {
+      savedLogins = {};
+    }
+    let un = savedLogins.GH_USERNAME;
+    let unpw = await other.askQuestion([
+      {
+        type: "input",
+        name: "un",
+        message: "What is your username for github?",
+        default: function() {
+          if (un) {
+            return un;
+          }
+          return;
+        },
+      },
+      { type: "password", name: "pw", message: "What is your password for github?", mask: "*" },
     ]);
-    unpw = unpw.un + ":" + unpw.pw;
+    if (!un) {
+      un = unpw.un;
+      savedLogins.GH_USERNAME = un;
+      await filesystem.writeToFile(loginFile, savedLogins);
+      await other.spawnProcess("npx", [`prettier --write env.json`], {
+        cwd: loginFile.substring(0, loginFile.length - "env.json".length),
+        stdio: "inherit",
+        shell: true,
+      });
+    }
+    unpw = un + ":" + unpw.pw;
     for (let counter = 0; counter < args.length; counter++) {
       args[counter] = args[counter].replace("https://github.com", `https://${unpw}@github.com`);
     }

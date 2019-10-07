@@ -454,7 +454,7 @@ async function deleteBranch(path) {
   return await filesystem.deleteFileOrDirIfExists(path);
 }
 
-async function pushCxSuiteConfigsToDevContainer(path) {
+async function pushCxSuiteConfigsToDevContainer(path, loginFile) {
   let sitekey = path.split("/");
   sitekey = sitekey[sitekey.length - 1];
   const clientconfigspath = path.substring(0, path.length - sitekey.length);
@@ -476,11 +476,36 @@ async function pushCxSuiteConfigsToDevContainer(path) {
   await filesystem.makeDirIfMissing(clientconfigspath);
   await filesystem.makeDirIfMissing(`${clientconfigspath}_globalconfigs`);
   await filesystem.writeToFile(`${clientconfigspath}_globalconfigs/${jconfig.global.siteKey}.js`, cxsConfig);
+  let savedLogins = await filesystem.readFileToObjectIfExists(loginFile);
+  if (savedLogins == undefined) {
+    savedLogins = {};
+  }
+  let un = savedLogins.FCP_USERNAME;
   let unpw = await other.askQuestion([
-    { type: "input", name: "un", message: "What is your username for fcp(aws)?" },
-    { type: "password", name: "pw", message: "What is your password for fcp(aws)?" },
+    {
+      type: "input",
+      name: "un",
+      message: "What is your username for fcp(aws)?",
+      default: function() {
+        if (un) {
+          return un;
+        }
+        return;
+      },
+    },
+    { type: "password", name: "pw", message: "What is your password for fcp(aws)?", mask: "*" },
   ]);
-  unpw = unpw.un + "@aws.foreseeresults.com:" + unpw.pw;
+  if (!un) {
+    un = unpw.un;
+    savedLogins.FCP_USERNAME = un;
+    await filesystem.writeToFile(loginFile, savedLogins);
+    await other.spawnProcess("npx", [`prettier --write env.json`], {
+      cwd: loginFile.substring(0, loginFile.length - "env.json".length),
+      stdio: "inherit",
+      shell: true,
+    });
+  }
+  unpw = un + "@aws.foreseeresults.com:" + unpw.pw;
   await other.multipartPost(
     `https://${unpw}@fcp.foresee.com/sites/${jconfig.global.siteKey}/containers/development/configs`,
     `Pushing cxSuite global config values to container development of sitekey ${jconfig.global.siteKey} for testing`,
@@ -515,7 +540,7 @@ async function prettifyCC(path) {
   });
 }
 
-async function commitAndPushToGithub(path) {
+async function commitAndPushToGithub(path, loginFile) {
   let sitekey = path.split("/");
   sitekey = sitekey[sitekey.length - 1];
   //await other.doAGit([`--git-dir=${path}/.git`, "add", "."]);
@@ -542,11 +567,36 @@ async function commitAndPushToGithub(path) {
   if (committed == null) {
     console.log("Committed changes on " + sitekey + " back to repo");
   }*/
+  let savedLogins = await filesystem.readFileToObjectIfExists(loginFile);
+  if (savedLogins == undefined) {
+    savedLogins = {};
+  }
+  let un = savedLogins.GH_USERNAME;
   let unpw = await other.askQuestion([
-    { type: "input", name: "un", message: "What is your username for github?" },
-    { type: "password", name: "pw", message: "What is your password for github?" },
+    {
+      type: "input",
+      name: "un",
+      message: "What is your username for github?",
+      default: function() {
+        if (un) {
+          return un;
+        }
+        return;
+      },
+    },
+    { type: "password", name: "pw", message: "What is your password for github?", mask: "*" },
   ]);
-  unpw = unpw.un + ":" + unpw.pw;
+  if (!un) {
+    un = unpw.un;
+    savedLogins.GH_USERNAME = un;
+    await filesystem.writeToFile(loginFile, savedLogins);
+    await other.spawnProcess("npx", [`prettier --write env.json`], {
+      cwd: loginFile.substring(0, loginFile.length - "env.json".length),
+      stdio: "inherit",
+      shell: true,
+    });
+  }
+  unpw = un + ":" + unpw.pw;
   let committed = await other.spawnProcess(
     "git",
     [`push https://${unpw}@github.com/foreseecode/websdk-client-configs.git/`],
