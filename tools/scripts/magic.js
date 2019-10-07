@@ -43,6 +43,9 @@ async function listCommands(questions) {
     case "purge":
       await turnOff(answers.sitekeys);
       break;
+    case "illusion":
+      await onPrem(answers.sitekeys);
+      break;
     case "trick":
       await deploy(answers.sitekeys, answers.deployto);
       break;
@@ -112,6 +115,16 @@ async function rebulidConfig(sitekeys) {
       console.log("Code version is not built! Building client code package from scratch");
       await build(path + sitekeys[counter]);
     }
+  }
+}
+
+async function onPrem(sitekeys) {
+  for (counter in sitekeys) {
+    await other.spawnProcess("gulp", ["get_self_hosted"], {
+      cwd: path + sitekeys[counter] + "/CC/",
+      stdio: "inherit",
+      shell: true,
+    });
   }
 }
 

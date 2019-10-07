@@ -415,13 +415,14 @@ async function configRebuild(path) {
   await filesystem.deleteFileOrDirIfExists(path + "/CC/clientconfig/productconfig/trigger/surveydef/def0.js");
   await filesystem.deleteFileOrDirIfExists(path + "/CC/clientconfig/productconfig/trigger/surveydef/def1.js");
   await prettifyCC(path);
-  if (await filesystem.checkIfFileOrDirExists(path + "/CC/clientconfig/globalconfig")) {
-    //todo create templates to build prod file from what's in combinedconfigs
+  if (await filesystem.checkIfFileOrDirExists(`${ejspath}/${codeVersion}/globalconfig_local.ejs`)) {
+    await filesystem.writeToFile(
+      path + "/CC/clientconfig/globalconfig/local.js",
+      await filesystem.buildFileContentsFromTemplateFile(`${ejspath}/${codeVersion}/globalconfig_local.ejs`, {
+        combinedconfig: combinedconfig,
+      })
+    );
   }
-  await filesystem.copyFrom2ToIfFromExists(
-    path + "/CC/clientconfig/globalconfig/prod.js",
-    path + `/CC/clientconfig/globalconfig/local.js`
-  );
   await filesystem.copyFrom2ToIfFromExists(`${fcppath}/${codeVersion}/gulpfile.js`, path + `/CC/gulpfile.js`);
   await filesystem.copyFrom2ToIfFromExists(`${fcppath}/${codeVersion}/FCP.js`, path + `/CC/scripts/FCP.js`);
   return "done";

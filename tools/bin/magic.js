@@ -12,6 +12,7 @@ const scrollCommands = [
   "reanimate",
   "facelift",
   "purge",
+  "illusion",
   "trick",
   "vanquish",
 ];
@@ -23,6 +24,7 @@ const scrollCommandDesc = {
   reanimate: "Rebuild config files and assets for sitekey(s)",
   facelift: "Move all desktop invites to modern for sitekey(s)",
   purge: "Stop all invites for sitekey(s)",
+  illusion: "Create an on premise package for sitekey(s)",
   trick: "Commit changes for a sitekey",
   vanquish: "Delete local folder for sitekey(s)",
 };
