@@ -38,8 +38,8 @@ program
   .action(wrap(rebulidConfig))
 
 program
-  .command("zeena <sitekey> [sitekeys...]")
-  .alias("z")
+  .command("facelift <sitekey> [sitekeys...]")
+  .alias("f")
   .description("Move all desktop invites to modern invite")
   .action(wrap(modernize))
 
