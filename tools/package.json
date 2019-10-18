@@ -14,7 +14,9 @@
     "lodash.isequal": "^4.4.0",
     "node-gitsync": "^1.0.5",
     "prettier": "^1.17.1",
+    "readline-sync": "^1.4.10",
     "request": "^2.88.0",
-    "sync-request": "^6.1.0"
+    "sync-request": "^6.1.0",
+    "unzip-stream": "^0.3.0"
   }
 }
