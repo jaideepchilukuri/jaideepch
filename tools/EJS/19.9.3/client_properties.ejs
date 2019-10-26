@@ -55,7 +55,7 @@ module.exports = {
      * Note: the URL (path) can use wildcards.
      * Note: the first match will be used, starting from the top.
      */
-    // cookieDomain: <% if(!combinedconfig.global.cookieDomain) { %> [] <% } else { %> <%-JSON.stringify(combinedconfig.global.cookieDomain)%> <% } %>,
+    cookieDomain: <% if(!combinedconfig.global.cookieDomain) { %> [] <% } else { %> <%-JSON.stringify(combinedconfig.global.cookieDomain)%> <% } %>,
 
     /**
      * Configuration for which journey events we want to send to the

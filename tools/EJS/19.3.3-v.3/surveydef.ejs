@@ -112,7 +112,7 @@
    * This is in case we want to switch to bubbling mode for specific client urls
    * If you choose to use this make sure the url fits a format that is compatible with the utils.testAgainst function
    */
-  useBubbleMode: <%-JSON.stringify(surveydef.useBubbleMode)%>
+  useBubbleMode: <%-JSON.stringify(surveydef.useBubbleMode)%>,
 
   /**
    * Bind on-page elements to actions. See http://bit.ly/1NKPZy6 for details. Overview:
@@ -162,7 +162,7 @@
       noThanksBottomSection: "<%=surveydef.qualifier.survey.noThanksBottomSection%>",
       validationFailedMsg: "<%=surveydef.qualifier.survey.validationFailedMsg%>",
       continueLabel: "<%=surveydef.qualifier.survey.continueLabel%>",
-      noLabel: "<%=surveydef.qualifier.survey.closeLabel%>",
+      noLabel: "<%=surveydef.qualifier.survey.noLabel%>",
       closeLabel: "<%=surveydef.qualifier.survey.closeLabel%>",
       questions: <%-JSON.stringify(surveydef.qualifier.survey.questions)%>,
       <% if(surveydef.qualifier.survey.locales) { %>

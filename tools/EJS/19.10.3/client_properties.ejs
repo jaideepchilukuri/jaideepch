@@ -23,8 +23,8 @@ module.exports = {
        */
       productsToBuild: [
         <% if (!combinedconfig.global.products.trigger) { %> // <% } %> "trigger",
+        <% if (!combinedconfig.global.products.feedback) { %> // <% } %> "feedback",
         <% if (!combinedconfig.global.products.record) { %> // <% } %> "record",
-        // <% if (!combinedconfig.global.products.feedback) { %> // <% } %> "feedback",
       ],
   
       /**

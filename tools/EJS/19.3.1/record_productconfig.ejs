@@ -7,9 +7,7 @@ var config = {
    */
   blacklist: {
     active: <%=combinedconfig.record.blacklist.active%>,
-    text: <%-JSON.stringify(combinedconfig.record.blacklist.text)%>,
-    variables: <%-JSON.stringify(combinedconfig.record.blacklist.variables)%>,
-    cookies: <%-JSON.stringify(combinedconfig.record.blacklist.cookies)%>,
+    text: <%-JSON.stringify(combinedconfig.record.blacklist.text)%>
   },
   
   /**
@@ -26,7 +24,7 @@ var config = {
      * Tell us the general layout of the site's main column.
      * Valid options: 'LEFTFIXED', 'CENTERFIXED', 'LEFTSTRETCH', or 'CENTERSTRETCH'
      */
-    layout: 'CENTERFIXED',
+    layout: '<%=combinedconfig.record.advancedSettings.layout%>',
 
     /**
      * Set up cxReplay pools, which apply before cxR is activated. This is a sticky state and once
@@ -79,7 +77,7 @@ var config = {
      * If undefined, this will default to all devices true. cxRecord needs to be set to true in trigger_config.js
      */
     device_type_support: {
-      desktop: <%=combinedconfig.record.advancedSettings.device_type_support.desktop%>,
+      desktop: <%=combinedconfig.record.advancedSettings.device_type_support["desktop"]%>,
       phone: <%=combinedconfig.record.advancedSettings.device_type_support.phone%>,
       tablet: <%=combinedconfig.record.advancedSettings.device_type_support.tablet%>,
     },
@@ -140,7 +138,7 @@ var config = {
     /**
      * Elements to watch scroll on  (sample usage: scrollEls: "div,ul",)
      */
-    scrollEls: <%=combinedconfig.record.advancedSettings.scrollEls%>,
+     scrollEls: <% if (!combinedconfig.record.advancedSettings.scrollEls) { %>null<% } else { %>"<%=combinedconfig.record.advancedSettings.scrollEls%>"<% } %>,
 
     /**
      * Use element level DOM mutation method rewrites instead of prototype mutation method rewrites.
@@ -164,7 +162,7 @@ var config = {
      * Customize the CSS selector that targets the watchNodeList for IE. The watchNodeList is the list of HTML
      * nodes that Internet Explorer captures interactions with.
      */
-    watchNodeList: <%=combinedconfig.record.advancedSettings.watchNodeList%>,
+    watchNodeList: "<%=combinedconfig.record.advancedSettings.watchNodeList%>",
 
     /**
      * Set Keep comments to true to stop the removal of html comment content during HTML serialization.

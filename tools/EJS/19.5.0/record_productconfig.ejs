@@ -87,7 +87,7 @@ var config = {
      * If undefined, this will default to all devices true. cxRecord needs to be set to true in trigger_config.js
      */
     device_type_support: {
-      desktop: <%=combinedconfig.record.advancedSettings.device_type_support.desktop%>,
+      desktop: <%=combinedconfig.record.advancedSettings.device_type_support["desktop"]%>,
       phone: <%=combinedconfig.record.advancedSettings.device_type_support.phone%>,
       tablet: <%=combinedconfig.record.advancedSettings.device_type_support.tablet%>,
     },
@@ -148,7 +148,7 @@ var config = {
     /**
      * Elements to watch scroll on  (sample usage: scrollEls: "div,ul",)
      */
-    scrollEls: <%=combinedconfig.record.advancedSettings.scrollEls%>,
+    scrollEls: <%-JSON.stringify(combinedconfig.record.advancedSettings.scrollEls)%>,
 
     /**
      * Use element level DOM mutation method rewrites instead of prototype mutation method rewrites.
@@ -172,7 +172,7 @@ var config = {
      * Customize the CSS selector that targets the watchNodeList for IE. The watchNodeList is the list of HTML
      * nodes that Internet Explorer captures interactions with.
      */
-    watchNodeList: <%=combinedconfig.record.advancedSettings.watchNodeList%>,
+    watchNodeList: "<%=combinedconfig.record.advancedSettings.watchNodeList%>",
 
     /**
      * Set Keep comments to true to stop the removal of html comment content during HTML serialization.

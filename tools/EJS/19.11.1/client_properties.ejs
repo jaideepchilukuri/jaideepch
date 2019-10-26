@@ -23,8 +23,8 @@ module.exports = {
        */
       productsToBuild: [
         <% if (!combinedconfig.global.products.trigger) { %> // <% } %> "trigger",
+        <% if (!combinedconfig.global.products.feedback) { %> // <% } %> "feedback",
         <% if (!combinedconfig.global.products.record) { %> // <% } %> "record",
-        // <% if (!combinedconfig.global.products.feedback) { %> // <% } %> "feedback",
       ],
   
       /**
@@ -106,6 +106,6 @@ module.exports = {
        * Note: This value is never sent to FCP and this can't be set from
        * CxSuite. This is a local setting only.
        */
-       <% if (combinedconfig.global.integrityHashLocation === "") { %>// integrityHashLocation: "fsrConfigIntegrityHashes",<% } else { %> integrityHashLocation: "<%=combinedconfig.global.integrityHashLocation%>", <% } %>
+       <% if (!combinedconfig.global.integrityHashLocation) { %>// integrityHashLocation: "fsrConfigIntegrityHashes",<% } else { %> integrityHashLocation: "<%=combinedconfig.global.integrityHashLocation%>", <% } %>
     },
   };

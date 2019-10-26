@@ -5,19 +5,19 @@ var triggerconfig = {
   /**
    * These are specified in client_properties.js. (DO NOT MODIFY)
    */
-  id: "<%=combinedconfig.trigger.config.id%>",
-  site_id: "<%=combinedconfig.trigger.config.site_id%>",
-  site_key: "<%=combinedconfig.trigger.config.site_key%>",
+  id: '${client.id}',
+  site_id: '${client.siteid}',
+  site_key: '${client.sitekey}',
 
   /**
    * Where the survey is located
    */
-  surveyAsyncCurl: "<%=combinedconfig.trigger.config.surveyAsyncCurl%>",
+  surveyAsyncCurl: '${client.surveyasynccurl}',
 
   /**
    * Is recording turned on? THIS IS AUTO-POPULATED.
    */
-  hasReplay: "<%=combinedconfig.trigger.config.hasReplay%>",
+  hasReplay: '${hasreplay}',
 
   /**
    * How many milliseconds (1000/sec) to wait after the page first appears to initiate trigger
@@ -144,8 +144,8 @@ var triggerconfig = {
   globalExclude: {
     urls: <%-JSON.stringify(combinedconfig.trigger.config.globalExclude.urls)%>,
     referrers: <%-JSON.stringify(combinedconfig.trigger.config.globalExclude.referrers)%>,
-    userAgents: <%-JSON.stringify(combinedconfig.trigger.config.globalExclude.referrers)%>,
-    browsers: <%-JSON.stringify(combinedconfig.trigger.config.globalExclude.referrers)%>,
+    userAgents: <%-JSON.stringify(combinedconfig.trigger.config.globalExclude.userAgents)%>,
+    browsers: <%-JSON.stringify(combinedconfig.trigger.config.globalExclude.browsers)%>,
     cookies: <%-JSON.stringify(combinedconfig.trigger.config.globalExclude.cookies)%>,
     variables: <%-JSON.stringify(combinedconfig.trigger.config.globalExclude.variables)%>,
   },

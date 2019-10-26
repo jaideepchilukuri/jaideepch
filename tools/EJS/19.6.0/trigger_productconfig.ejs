@@ -17,7 +17,7 @@ var triggerconfig = {
   /**
    * Is recording turned on? THIS IS AUTO-POPULATED.
    */
-  hasReplay: "false",//'${hasreplay}',
+  hasReplay: '${hasreplay}',
 
   /**
    * How many milliseconds (1000/sec) to wait after the page first appears to initiate trigger
@@ -130,8 +130,8 @@ var triggerconfig = {
   globalExclude: {
     urls: <%-JSON.stringify(combinedconfig.trigger.config.globalExclude.urls)%>,
     referrers: <%-JSON.stringify(combinedconfig.trigger.config.globalExclude.referrers)%>,
-    userAgents: <%-JSON.stringify(combinedconfig.trigger.config.globalExclude.referrers)%>,
-    browsers: <%-JSON.stringify(combinedconfig.trigger.config.globalExclude.referrers)%>,
+    userAgents: <%-JSON.stringify(combinedconfig.trigger.config.globalExclude.userAgents)%>,
+    browsers: <%-JSON.stringify(combinedconfig.trigger.config.globalExclude.browsers)%>,
     cookies: <%-JSON.stringify(combinedconfig.trigger.config.globalExclude.cookies)%>,
     variables: <%-JSON.stringify(combinedconfig.trigger.config.globalExclude.variables)%>,
   },
