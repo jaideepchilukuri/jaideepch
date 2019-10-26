@@ -22,13 +22,43 @@
 		"jest": "^24.9.0"
 	},
 	"jest": {
+		"coveragePathIgnorePatterns": [
+			"<rootDir>/NPM/",
+			"<rootDir>/CCT/",
+			"<rootDir>/clientconfigs/",
+			"<rootDir>/tests/EJS/emptyconfigs/",
+			"<rootDir>/tests/empty*"
+		],
+		"modulePathIgnorePatterns": [
+			"<rootDir>/NPM/",
+			"<rootDir>/CCT/",
+			"<rootDir>/clientconfigs/",
+			"<rootDir>/tests/EJS/emptyconfigs/",
+			"<rootDir>/tests/empty*"
+		],
+		"testPathIgnorePatterns": [
+			"<rootDir>/NPM/",
+			"<rootDir>/CCT/",
+			"<rootDir>/clientconfigs/",
+			"<rootDir>/tests/EJS/emptyconfigs/",
+			"<rootDir>/tests/empty*"
+		],
+		"transformIgnorePatterns": [
+			"<rootDir>/NPM/",
+			"<rootDir>/CCT/",
+			"<rootDir>/clientconfigs/",
+			"<rootDir>/tests/EJS/emptyconfigs/",
+			"<rootDir>/tests/empty*"
+		],
 		"watchPathIgnorePatterns": [
 			"<rootDir>/NPM/",
 			"<rootDir>/CCT/",
+			"<rootDir>/clientconfigs/",
+			"<rootDir>/tests/EJS/emptyconfigs/",
 			"<rootDir>/tests/empty*"
 		]
 	},
 	"scripts": {
-		"test": "node_modules/.bin/jest --watch"
+		"test": "node_modules/.bin/jest --runInBand"
 	}
 }
