@@ -1,0 +1,169 @@
+/*===========================================
+=            Config and settings            =
+===========================================*/
+
+$basefont: 10 !default; // Base font size HTML element is set to
+$bodyfont: 14 !default; // Font size for regular body text
+
+$h1font: 22 !default;
+$h2font: 18 !default;
+$h3font: 16 !default;
+$h4font: 14 !default;
+$h5font: 10 !default;
+
+$base-lineheight: 1.618;
+
+@function em($target, $context: $basefont) {
+	@return ($target / $context) * 1em;
+}
+
+$use-markup-fix: false;
+
+$tablet-width: 768px;
+$desktop-width: 1024px;
+
+/**
+*
+* FONTS FOR PHOENIX PORTAL UI
+*
+**/
+
+$f-app-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$f-app-login-font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+
+/**
+*
+* PADDING AND MARGINS
+*
+**/
+
+$form-element-padding-unit: 10 !default;
+$modal-border-radius: 3px !default;
+$border-radius: 1.5em !default;
+$question-border-radius: 0;
+$question-option-height: 36;
+$grid-padding: 15;
+$footer-padding: 10;
+$gutter: 20;
+$button-height: 40;
+$close-button-size: 10;
+
+// Spacing needed in epilogue template.
+$epilogue-padding: 40;
+
+// Used for the badge
+$general_padding: 0.3em;
+$badge_padding: 0.6em;
+$page_margin: ($general_padding * 2);
+$acsBadgeMagnifier: 1.1;
+$badge-border-radius: 0.2em !default;
+
+/**
+*
+* COLORS FOR PHOENIX PORTAL UI
+*
+**/
+
+// WHITE
+$c-app-white                        : #FFF;
+
+// BLUES
+$c-app-blue                         : #165fd8;
+$c-app-blue-10						          : #136AD5;
+$c-app-blue-20                      : lighten($c-app-blue, 50%);
+$c-app-blue-40                      : lighten($c-app-blue, 10%);
+$c-app-blue-50                      : #9268ed;
+$c-app-blue-80                      : #724aca;
+$c-app-blue-85                      : #124b91;
+$c-app-blue-90                      : darken($c-app-blue, 20%);
+$c-app-blue-radio					          : #4d8dde;
+
+// GREYS
+$c-app-grey-10                      : #F9F9F9;
+$c-app-grey-20                      : #EAEBEC;
+$c-app-grey-30                      : #F2F3F4;
+$c-app-grey-35                      : #D5D8DA;
+$c-app-grey-40                      : #BFC3C8;
+$c-app-grey-45                      : #AAAFB6;
+$c-app-grey-50                      : #959BA3;
+$c-app-grey-60                      : #808891;
+$c-app-grey-65                      : #626262;
+$c-app-grey-67						: #627085;
+$c-app-grey-70                      : #6C747E;
+$c-app-grey-80                      : #59606A;
+$c-app-grey-85                      : #464C55;
+$c-app-grey-90                      : #343941;
+$c-app-grey-95						: #3A475B;
+$c-app-ms-badge-content             : #424242;
+// BLACKS
+$c-app-black                        : #313943;
+$acsDarkText: #343941;
+$acsLightText: #959BA3;
+$c-app-black-60                     : #59606A;
+$c-app-black-80                     : #343941;
+
+// TERTIARY
+$c-app-red                          : #F24554;
+$c-app-red-20                       : lighten(#F24554, 36%);
+$c-app-orange                       : #FA8536;
+$c-app-orange-dark                  : #DE6511;
+$c-app-yellow                       : #FCD60F;
+$c-app-green                        : #28B13F;
+$c-app-blue-green                   : #11A2F3;
+$c-app-purple                       : #7244CD;
+$c-app-purple-50                    : #9268ED;
+
+
+// BUTTONS
+$c-button-grad-top                  : $c-app-grey-20;
+$c-button-grad-bottom               : $c-app-grey-50;
+$c-button-border                    : $c-app-grey-50;
+$c-button-text                      : $c-app-grey-90;
+$c-app-button-primary-bg			      : $c-app-grey-85;
+$c-app-button-primary-bg-hover		  : $c-app-grey-60;
+$c-app-button-primary-border		    : $c-app-grey-85;
+$c-app-button-primary-color			    : $c-app-white;
+
+// PRIMARY BUTTON
+$c-app-button-primary-bg-active     : $c-app-blue-80;
+$c-app-button-primary-color         : $c-app-white;
+$c-app-button-primary-color-hover   : $c-app-white;
+$c-app-button-primary-border-hover  : $c-app-blue-80;
+
+// SECONDARY BUTTON
+$c-app-button-secondary-bg          : $c-app-black-60;
+$c-app-button-secondary-bg-hover    : $c-app-black-80;
+$c-app-button-secondary-bg-active   : $c-app-black-80;
+$c-app-button-secondary-color       : $c-app-white;
+$c-app-button-secondary-color-hover : $c-app-white;
+$c-app-button-secondary-border      : $c-app-black-60;
+$c-app-button-secondary-border-hover: $c-app-black-60;
+
+// PICKER BUTTON
+$c-app-button-picker-bg             : $c-app-white;
+$c-app-button-picker-bg-hover       : $c-app-white;
+$c-app-button-picker-color          : $c-app-grey-45;
+$c-app-button-picker-color-hover    : $c-app-grey-85;
+$c-app-button-picker-border         : $c-app-grey-45;
+$c-app-button-picker-border-hover   : $c-app-grey-85;
+
+// DISABLED BUTTON
+$c-app-button-disabled-bg           : $c-app-grey-20;
+$c-app-button-disabled-color        : $c-app-grey-45;
+$c-app-button-disabled-border       : $c-app-grey-45;
+
+// CARET
+$c-app-dropdown-caret               : $c-app-white;
+
+// FEEDBACK COLOR
+$c-app-body-color					          : $c-app-grey-70;
+$c-app-heading-color				        : $c-app-grey-90;
+
+// STAR RATING
+$c-app-rating-star-disabled         : $c-app-grey-40;
+$c-app-rating-star-selected         : $c-app-yellow;
+$c-app-rating-star                  : lighten($c-app-rating-star-selected, 25%);
+
+// MODAL
+$modalBackgroundColor               : #FFFFFF;
+$modalBackfaceColor                 : $c-app-black-80;

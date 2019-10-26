@@ -1,0 +1,24 @@
+<div class="acsLogoSpacer">
+    <img src="<%=(trackerLogo || '')%>" class="<%=((trackerLogo && trackerLogo.length > 0) ? 'acsSiteLogo' : 'acsNoDisplay')%>" title="<%=(siteLogoTitleText || '')%>" alt="<%=(siteLogoAltText || '')%>">
+    <img src="https://static.foresee.com/logos/foresee/150_67.png" class="<%=(!supportsSVG ? 'acsVendorLogo' : 'acsNoDisplay')%>" title="<%=(vendorTitleText || '')%>" alt="<%=(vendorAltText || '')%>">
+    <div title="<%=(vendorTitleText || '')%>" alt="<%=(vendorAltText || '')%>" class="<%=(supportsSVG ? 'acsVendorLogoSVG' : 'acsNoDisplay')%>"></div>
+</div>
+<div tabindex="0" id="buttonAreaContainer" acsfill="true" acsactivatebutton="true" title="<%=dialog.trackerClickToView%>">
+    <div id="innerButtonContent" acscentervertically="true">
+        <h1 tabindex="0" class="plsLeaveOpen initialContent" acshidewhenloading="true"><%=dialog.trackerPlsLeaveOpen%></h1>
+
+        <h1 tabindex="0" class="postLaunchInstructions showLater" acshidewhenloading="true"><%=dialog.trackerAtEnd%></h1>
+
+        <p tabindex="0" class="topInstructions initialContent" acshidewhenloading="true"><%=dialog.trackerDesc1%></p>
+
+        <p tabindex="0" class="topInstructions showLater" acshidewhenloading="true"><%=dialog.trackerDesc2%></p>
+
+        <p tabindex="0" class="lessImportantIntructions" acshidewhenloading="true"><%=dialog.trackerDesc3%></p>
+
+        <p tabindex="0" class="copyrightDetails" acshidewhenloading="true">© <%=copyrightDate%> <a href="//www.foresee.com" TARGET="_blank"
+                                                                                      class="specialLink"><%=dialog.trackerCorp%></a> |
+            <a tabindex="0" href="http://www.foresee.com/about-us/privacy-policy/" TARGET="_blank" class="specialLink"><%=dialog.trackerPrivacy%></a>.
+        </p>
+    </div>
+    <img src="<%=loadImg%>" id="loadImg" acsshowwhenloading="true" alt="loadimg">
+</div>

@@ -1,0 +1,10 @@
+/.idea
+/build.bat
+/build.properties
+/dist
+/local.properties
+/node_modules
+src/.idea
+src/feedbackreport/misc
+/.DS_Store
+/src/utils/.DS_Store

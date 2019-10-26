@@ -1,0 +1,33 @@
+@import "survey";
+
+// Modal CSS and Customizations for this template..
+.acsModalContainer--tmob_ecomm {
+  @extend %acsModalContainer;
+}
+
+// Badge and ReportBadge CSS and customizations for this template..
+._acsbadge--tmob_ecomm {
+  @extend %_acsbadge;
+  background-color: #E20074;
+}
+
+._acsreport--tmob_ecomm {
+  @extend %_acsreport;
+  .acsCounter.acsCounterInner {
+    background-color: #E20074;
+  }
+}
+
+// Popup CSS and customizations for this template..
+.acsMainContainerMobile--tmob_ecomm {
+  @extend %acsMainContainerMobile;
+}
+
+.acsFrameContainer--tmob_ecomm {
+  @extend .acsFrameContainer;
+}
+
+// Full Page Version Container and customizations for this template..
+.acsMainContainerFullPage--tmob_ecomm {
+  @extend %acsMainContainerFullPage;
+}

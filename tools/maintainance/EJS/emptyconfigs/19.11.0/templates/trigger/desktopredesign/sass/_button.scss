@@ -1,0 +1,67 @@
+@mixin buttonMixin {
+
+  .fsrButton {
+    margin: 0;
+    padding: 0.9em;
+    min-width: 10em;
+    font-family: $font-family;
+    font-size: 1.0em;
+    font-weight: 400;
+    text-transform: none;
+    border: none;
+    cursor: pointer;
+    border: none;
+    -moz-border-radius: 0.4em;
+    -webkit-border-radius: 0.4em;
+    border-radius: 0.4em;
+
+    // Invite Buttons
+    &__inviteClose {
+      width: 0.5em;
+      min-width: inherit;
+      height: 0.5em;
+      background: #ffffff !important;
+      color: #000000 !important;
+      box-sizing: content-box;
+      box-shadow: 0 2px 5px 0 #222b3c;
+      padding: 0.2em;
+      -moz-border-radius: 50px;
+      -webkit-border-radius: 50px;
+      border-radius: 50px;
+    }
+
+    &__inviteDecline {
+      background-color: transparent !important;
+      color: $btn-default-bg-color !important;
+      min-width: 0;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &__inviteAccept {
+      padding: 0.9em 3.125em;
+      background-color: $btn-default-bg-color !important;
+      color: $btn-default-txt-color !important;
+    }
+
+    // Tracker button
+    &__beginSurvey {
+      padding: 0.9em 3.125em;
+      background-color: $btn-default-bg-color;
+      color: $btn-default-txt-color;
+    }
+
+    &--hoverEffects {
+      opacity: 1;
+      transition: opacity .3s;
+      -webkit-transition: opacity .3s;
+      -webkit-backface-visibility: hidden;
+
+      &:hover {
+        opacity: 0.75;
+      }
+    }
+  }
+}

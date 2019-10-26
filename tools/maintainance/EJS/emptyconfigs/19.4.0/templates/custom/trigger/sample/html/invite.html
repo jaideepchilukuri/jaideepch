@@ -1,0 +1,130 @@
+<div class="__acs <%= dialog.cssInviteExtraClasses %>" aria-labelledby="heading">
+    <div class="acsModalBackdrop acsAbandonButton" data-isbackdrop="true">
+        <div class="acsFocusFirst acsClassicInvite" id="acsMainInvite" role="dialog" aria-labelledby="heading">
+            <div class="acsClassicInner" role="document">
+                <div class="acsLogoSpacer">
+                    <img src="<%=(inviteLogo || '')%>" class="<%=((!!inviteLogo && inviteLogo.length > 0) ? 'acsSiteLogo' : 'acsNoDisplay')%>" title="<%=(siteLogoTitleText || '')%>" alt="<%=(siteLogoAltText || '')%>">
+                    <img src="https://static.foresee.com/logos/foresee/150_67.png" class="<%=(!supportsSVG ? 'acsVendorLogo' : 'acsNoDisplay')%>" title="<%=(vendorTitleText || '')%>" alt="<%=(vendorAltText || '')%>">
+                    <div title="<%=(vendorTitleText || '')%>" alt="<%=(vendorAltText || '')%>" class="<%=(supportsSVG ? 'acsVendorLogoSVG' : 'acsNoDisplay')%>">
+                    </div>
+                </div>
+
+                <h1 tabindex="2" id="heading"><%=dialog.headline%></h1>
+                <p tabindex="3"><%=dialog.blurb%></p>
+                <p tabindex="4" class="acsNoticeAboutSurvey"><%=dialog.noticeAboutSurvey%></p>
+                <p tabindex="5" class="acsAttribution"><%=dialog.attribution%></p>
+                <a href="#" tabindex="6" class="acsInviteButton acsDeclineButton" title="<%=dialog.declineButton%>" role="button"><%=dialog.declineButton%></a><a id="acsFocusFirst" tabindex="1" href="#" class="acsInviteButton acsRightButton acsAcceptButton" title="<%=dialog.acceptButtonTitleText%>" role="button"><%=dialog.acceptButton%></a>
+                <% if (trust.up) { %>
+                <a tabindex="7" class="acsAllowDefault" href="<%= trust.ref.url %>" title="<%=trusteLogoAltText%>" target="_blank"><img src="https://static.foresee.com/logos/truste/250_79.png" class="acsTrusteseal <%=(supportsSVG ? 'acsNoDisplay' : '')%>" alt="TRUSTe Certified Privacy"><div class="acsTrustesealSVG <%=(supportsSVG ? '' : 'acsNoDisplay')%>"></div></a>
+                <% } %>
+            </div>
+            <a href="#" tabindex="8" class="acsCloseButton acsAbandonButton <%=(!!dialog.allowclose ? '' : 'acsNoDisplay')%>" title="<%=dialog.closeInviteButtonText%>" role="button" aria-label="Close Modal Box">×</a>
+        </div>
+        <!-- On Exit Invite -->
+        <div class="acsClassicInvite acsNoDisplay" id="acsOnExitMobileInvite" role="dialog">
+            <div class="acsClassicInner">
+                <div class="acsLogoSpacer">
+                    <img src="<%=(inviteLogo || '')%>" class="<%=((!!inviteLogo && inviteLogo.length > 0) ? 'acsSiteLogo' : 'acsNoDisplay')%>" title="<%=(siteLogoTitleText || '')%>" alt="<%=(siteLogoAltText || '')%>">
+                    <img src="https://static.foresee.com/logos/foresee/150_67.png" class="<%=(!supportsSVG ? 'acsVendorLogo' : 'acsNoDisplay')%>" title="<%=(vendorTitleText || '')%>" alt="<%=(vendorAltText || '')%>">
+                    <div title="<%=(vendorTitleText || '')%>" alt="<%=(vendorAltText || '')%>" class="<%=(supportsSVG ? 'acsVendorLogoSVG' : 'acsNoDisplay')%>">
+                    </div>
+                </div>
+
+                <h1><%=dialog.onexitheadline%></h1>
+                <p><%=dialog.onexitblurb%></p>
+                <p id="acsInvalidInput" class="acsNoDisplay"><%=(inviteType == 'SMSEMAIL' ? dialog.onexitinvalidFormatErrorText : (inviteType == 'SMS' ? dialog.onexitinvalidsmstext : (inviteType == 'EMAIL' ? dialog.onexitinvalidemailtext : '')))%></p>
+                <p><input type="<%=(inviteType == 'SMSEMAIL' ? 'email' : (inviteType == 'SMS' ? 'tel' : (inviteType == 'EMAIL' ? 'email' : '')))%>" tabindex="9" placeholder="<%=(inviteType == 'SMSEMAIL' ? dialog.onexitinputMessage : (inviteType == 'SMS' ? dialog.onexitinputMessageJustMobile : (inviteType == 'EMAIL' ? dialog.onexitinputMessageJustEmail : '')))%>" id="acsEmailSMSInput"></p>
+                <p class="acsAttribution"><%=dialog.onexitattribution%></p>
+                <a href="#" tabindex="10" class="acsInviteButton acsDeclineButton" title="<%=dialog.onexitdeclineButton%>" role="button"><%=dialog.onexitdeclineButton%></a><a tabindex="11" href="#" class="acsInviteButton acsRightButton acsAcceptButton" title="<%=(inviteType == 'SMSEMAIL' ? dialog.onexitacceptButton : (inviteType == 'SMS' ? dialog.onexittextMeButtonText : (inviteType == 'EMAIL' ? dialog.onexitemailMeButtonText : '')))%>" role="button"><%=(inviteType == 'SMSEMAIL' ? dialog.onexitacceptButton : (inviteType == 'SMS' ? dialog.onexittextMeButtonText : (inviteType == 'EMAIL' ? dialog.onexitemailMeButtonText : '')))%></a>
+                <% if (trust.up) { %>
+                <a tabindex="8" class="acsAllowDefault" href="<%= trust.ref.url %>" title="<%=trusteLogoAltText%>" target="_blank"><img src="https://static.foresee.com/logos/truste/250_79.png" class="acsTrusteseal <%=(supportsSVG ? 'acsNoDisplay' : '')%>" alt="TRUSTe Certified Privacy"><div class="acsTrustesealSVG <%=(supportsSVG ? '' : 'acsNoDisplay')%>"></div></a>
+                <% } %>
+            </div>
+            <a href="#" tabindex="4" class="acsCloseButton acsAbandonButton <%=(!!dialog.allowclose ? '' : 'acsNoDisplay')%>" title="<%=dialog.closeInviteButtonText%>" role="button">×</a>
+        </div>
+    </div>
+    <% if (!!dialog.font) { %>
+        <link href="https://fonts.googleapis.com/css?family=<%=dialog.font%>" rel="stylesheet"/>
+    <% } %>
+    <style>
+        .__acs .acsModalBackdrop {
+            <% if (dialog.backdropbg) { %>
+                background-color: <%= dialog.backdropbg %>;
+            <% } %>
+        }
+        .__acs,
+        .__acs .acsClassicInvite .acsClassicInner h1,
+        .__acs .acsClassicInvite .acsClassicInner p,
+        .__acs a {
+            <% if (!!dialog.font) { %>
+                font-family : "<%=dialog.font%>", Arial, Helvetica, sans-serif !important;
+            <% } %>
+        }
+        .__acs .acsClassicInvite {
+            <% if (!!dialog.borderbgcolor) { %>
+                background-color: <%= dialog.borderbgcolor %>;
+            <% } %>
+        }
+        .__acs,
+        .__acs .acsClassicInvite .acsClassicInner h1,
+        .__acs .acsClassicInvite .acsClassicInner p {
+            <% if (!!dialog.txtcolor) { %>
+                color: <%= dialog.txtcolor %>;
+            <% } %>
+        }
+        .__acs .acsClassicInvite .acsClassicInner p.acsAttribution {
+            <% if (!!dialog.attributiontxtcolor) { %>
+                color: <%= dialog.attributiontxtcolor %>;
+            <% } else if (!!dialog.txtcolor) { %>
+                color: <%= dialog.txtcolor %>;
+            <% } %>
+        }
+        .__acs .acsClassicInvite .acsClassicInner {
+            <% if (!!dialog.bgcolor) { %>
+                background-color: <%= dialog.bgcolor %>;
+            <% } %>
+        }
+        .__acs .acsClassicInvite .acsClassicInner .acsInviteButton {
+            <% if (!!dialog.btntxtcolor) { %>
+                color : <%= dialog.btntxtcolor %>;
+            <% } %>
+            <% if (!!dialog.btnbgcolor) { %>
+                background-color : <%= dialog.btnbgcolor %>;
+            <% } %>
+            <% if (!!dialog.btnboxshadow) { %>
+                box-shadow : 0 2px 4px 0 <%= dialog.btnboxshadow %>;
+            <% } %>
+            <% if (!!dialog.btnbordercolor) { %>
+                border: 1px solid <%= dialog.btnbordercolor %>;
+            <% } %>
+        }
+        .__acs .acsClassicInvite .acsClassicInner .acsInviteButton:hover {
+            <% if (!!dialog.leftbtnhoverbg) { %>
+                background-color : <%= dialog.leftbtnhoverbg %>;
+            <% } %>
+        }
+        .__acs .acsClassicInvite .acsClassicInner .acsInviteButton.acsRightButton {
+            <% if (!!dialog.rightbtnbgcolor) { %>
+                background-color : <%= dialog.rightbtnbgcolor %>;
+            <% } %>
+        }
+        .__acs .acsClassicInvite .acsClassicInner .acsInviteButton.acsRightButton:hover {
+            <% if (!!dialog.rightbtnhoverbg) { %>
+                background-color : <%= dialog.rightbtnhoverbg %>;
+            <% } %>
+        }
+        .__acs .acsCloseButton {
+            <% if (!!dialog.closebtnbordercolor) { %>
+                border: 2px solid <%= dialog.closebtnbordercolor %>;
+            <% } %>
+            <% if (!!dialog.closebtncolor) { %>
+                color: <%= dialog.closebtncolor %>;
+            <% } %>
+        }
+        .__acs .acsCloseButton:hover {
+            <% if (!!dialog.closebtnhoverbgcolor) { %>
+                background-color: <%= dialog.closebtnhoverbgcolor %>;
+            <% } %>
+        }
+    </style>
+</div>

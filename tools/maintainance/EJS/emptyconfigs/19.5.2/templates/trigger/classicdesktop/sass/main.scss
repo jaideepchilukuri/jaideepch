@@ -1,0 +1,23 @@
+@import 'vars';
+@import 'reset';
+@import 'backdrop';
+@import 'invite';
+@import 'tracker';
+@import 'qualifier';
+@import 'reminder';
+.__acs {
+    font-size: 16px !important;
+    .acsNoDisplay {
+        display: none !important;
+        visibility: hidden !important;
+    }
+    .acsDisplay {
+        display: block !important;
+        visibility: visible !important;
+    }
+}
+
+html._fsrclientInvokedHide .__acs {
+    display: none !important;
+    visibility: hidden !important;
+}

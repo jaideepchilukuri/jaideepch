@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>cxRecord Test Page 1</title>
+    <script type="text/javascript">
+        // Instructions: please embed this snippet directly into every page in your website template.
+        // For optimal performance, this must be embedded directly into the template, not referenced
+        // as an external file.
+
+        // ForeSee Embed Script v2.00
+        // DO NOT MODIFY BELOW THIS LINE *****************************************
+        ; (function (g) {
+            var d = document, am = d.createElement('script'), h = d.head || d.getElementsByTagName("head")[0], fsr = 'fsReady',
+                aex = {
+                    "src": "/gateway.js",
+                    "type": "text/javascript",
+                    "async": "true",
+                    "data-vendor": "fs",
+                    "data-role": "gateway"
+                };
+            for (var attr in aex) { am.setAttribute(attr, aex[attr]); } h.appendChild(am); g[fsr] = function () { var aT = '__' + fsr + '_stk__'; g[aT] = g[aT] || []; g[aT].push(arguments); };
+        })(window);
+        // DO NOT MODIFY ABOVE THIS LINE *****************************************
+        /*var workerFn = function () {
+            console.log("HELLO FROM WW");
+            self.onmessage = function (e) {
+                self.postMessage('msg from worker');
+            };
+        }
+
+        var blob = new Blob([
+            "(" + workerFn.toString() + ")()"
+        ], { type: "text/javascript" })
+
+        // Note: window.webkitURL.createObjectURL() in Chrome 10+.
+        var worker = new Worker((window.webkitURL || window.URL).createObjectURL(blob));
+        worker.onmessage = function (e) {
+            console.log("Received: " + e.data);
+        }
+        worker.postMessage("hello"); // Start the worker.*/
+        var nodeList = [];
+        if (true) {
+            setInterval(function () {
+                var mstr = document.getElementById('domChangesGoHere'),
+                    maskNd = document.getElementById('changeMeShouldBeMasked');
+                var newel = document.createElement("div");
+                nodeList.push(newel);
+                newel.innerHTML = "<p>LOREM IPSUM DOLOR " + Math.random() + "</p>";
+
+                var newelmask = document.createElement("div");
+                nodeList.push(newelmask);
+                newelmask.innerHTML = "<p>More text!</p>";
+                if (!window.els) {
+                    mstr.appendChild(newel);
+                    maskNd.appendChild(newelmask);
+                }
+                setTimeout(function () {
+                    nodeList.forEach(function (nd) {
+                        nd.setAttribute('class', '_' + Math.round(Math.random() * 10000));
+                    });
+                }, 150);
+            }, 1000);
+        }
+    </script>
+</head>
+
+<body>
+    <h1>cxRecord hello world.</h1>
+    <h2>Page 1</h2>
+    <input type="text" />
+    <div style="height:300px; overflow:scroll;">
+        <div class="topMasker fsrHidden">
+            <p>Here is some text</p>
+            <div id="changeMeShouldBeMasked">
+                <p>Here is some more text</p>
+            </div>
+        </div>
+        <div id="domChangesGoHere"></div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+@import url('//fonts.googleapis.com/css?family=Lato');
+@import 'reset';
+@import 'text';
+@import 'invite';
+@import 'tracker';
+@import 'button';
+@import 'footer';
+@import 'vars';
+
+.__fsr {
+
+  .fsrNoDisplay {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  .fsrDisplay {
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  @include nested-reset;
+  @include textMixin;
+  @include inviteMixin;
+  @include trackerMixin;
+  @include buttonMixin;
+  @include footerMixin;
+}
+
+html._fsrclientInvokedHide .__fsr{
+  display: none !important;
+  visibility: hidden !important;
+}

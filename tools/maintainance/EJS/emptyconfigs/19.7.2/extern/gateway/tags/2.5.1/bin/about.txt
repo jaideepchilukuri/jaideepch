@@ -1,0 +1,2 @@
+legalheader.txt - Added to the top of the output JS file
+require.js - Used in test harnesses

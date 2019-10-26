@@ -1,0 +1,175 @@
+@import 'vars';
+
+.__acs {
+  &.fsrbottomright {
+    .acsClassicInvite {
+      -webkit-transform: none;
+      -ms-transform: none;
+      transform: none;
+      top: auto;
+      bottom: 1.5em;
+      position: absolute;
+    }
+  }
+  .acsCloseButton {
+    font-size: 89%;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+    display: block;
+    position: absolute;
+    border: 1px solid #f0f0f0;
+    color: #f0f0f0;
+    text-decoration: none;
+    top: 1.4em;
+    right: $general-padding;
+    line-height: 1em;
+    opacity: 0.8;
+    &:hover {
+      background-color: #f0f0f0;
+      color: #000000;
+      opacity: 1;
+    }
+  }
+  .acsClassicInvite {
+    background-color: #666;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: relative;
+    display: inline-block;
+    max-width: 22em;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    .acsLogoSpacer {
+      height: 1.4em;
+      background-color: #062237;
+      padding: $general-padding;
+    }
+    hr {
+      height: 1px;
+      width: 100%;
+      background-color: #cccccc;
+      border: 0;
+    }
+    .acsDialogInner {
+      padding: $general-padding;
+    }
+    .acsTrusteseal {
+      height: 1.75em;
+      float: right;
+      margin-top: $general-padding;
+    }
+    .acsTrustesealSVG {
+      background-image: $svgtrustlogo;
+      background-size: 100% 100%;
+      width: 5.25em;
+      height: 1.75em;
+      float: right;
+    }
+    .acsPrivacyPolicy {
+      text-align: right;
+    }
+    .acsClassicInner {
+      background-color: white;
+      display: inline-block;
+      text-align: left;
+      font-family: $general-font-family;
+      .acsNoDisplay {
+        display: none;
+      }
+      .acsVendorLogo, .acsVendorLogoSVG {
+        height: 1.75em;
+        margin-right: $general-padding;
+      }
+      .acsSiteLogo {
+        height: 1.5em;
+      }
+      .acsVendorLogoSVG {
+        background-image: $svglogo;
+        background-size: 100% 100%;
+        width: 3em;
+      }
+      .acsVendorLogo, .acsVendorLogoSVG {
+        float: right;
+      }
+      p {
+        font-family: $general-font-family;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      h1 {
+        text-transform: uppercase;
+        font-family: 'Arvo', serif;
+        font-weight: bold;
+        font-size: 1.0em;
+        color: #062237;
+      }
+      p {
+        font-weight: lighter;
+        font-size: 0.7em;
+        line-height: 1.5em;
+        color: #333333;
+        &.acsNoticeAboutSurvey {
+          font-weight: bold;
+        }
+        &.acsAttribution {
+          font-size: 0.6em;
+          color: #666;
+        }
+      }
+      p:last-child {
+        margin-bottom: 0;
+      }
+      #acsEmailSMSInput {
+        border: 0.25em solid #666;
+        width: 100%;
+        font-size: 1.2em;
+        padding: 0.3em;
+        color: #000000;
+        box-sizing: border-box;
+      }
+      #acsInvalidInput {
+        color: brown;
+        font-size: 0.8em;
+      }
+      .acsInviteButton {
+        font-family: $button-font-family;
+        text-transform: uppercase;
+        display: inline-block;
+        width: 38.5%;
+        line-height: 2.5em;
+        text-align: center;
+        -webkit-border-radius: $general-borderradius;
+        -moz-border-radius: $general-borderradius;
+        border-radius: $general-borderradius;
+        text-decoration: none;
+        color: black;
+        font-size: 90%;
+        font-weight: bold;
+        background: #eeeeee; /* Old browsers */
+        background: -moz-linear-gradient(top, #eeeeee 0%, #cccccc 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#cccccc)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top, #eeeeee 0%,#cccccc 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top, #eeeeee 0%,#cccccc 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top, #eeeeee 0%,#cccccc 100%); /* IE10+ */
+        background: linear-gradient(to bottom, #eeeeee 0%,#cccccc 100%); /* W3C */
+        &:hover {
+          background: #f6f6f6; /* Old browsers */
+          background: -moz-linear-gradient(top, #f6f6f6 0%, #e3e3e3 100%); /* FF3.6+ */
+          background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f6f6f6), color-stop(100%,#e3e3e3)); /* Chrome,Safari4+ */
+          background: -webkit-linear-gradient(top, #f6f6f6 0%,#e3e3e3 100%); /* Chrome10+,Safari5.1+ */
+          background: -o-linear-gradient(top, #f6f6f6 0%,#e3e3e3 100%); /* Opera 11.10+ */
+          background: -ms-linear-gradient(top, #f6f6f6 0%,#e3e3e3 100%); /* IE10+ */
+          background: linear-gradient(to bottom, #f6f6f6 0%,#e3e3e3 100%); /* W3C */
+        }
+        &.acsRightButton {
+          width: 58.5%;
+          float: right;
+          &:hover {
+
+          }
+        }
+      }
+    }
+  }
+}

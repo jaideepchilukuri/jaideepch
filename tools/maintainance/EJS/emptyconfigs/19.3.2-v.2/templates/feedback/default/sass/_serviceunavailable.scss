@@ -1,0 +1,51 @@
+@mixin serviceUnavailableMixin {
+  .acsModalInnerContent {
+    .acs-serviceunavailable {
+      padding-top: em(15, $bodyfont);
+      padding-bottom: em(15, $bodyfont);
+      text-align: center;
+      p {
+        font-size: 1.5em;
+        margin-bottom: 0.2em;
+      }
+      &--flashIcon {
+        font-size: 3.5em;
+        color: $c-app-red;
+        // This next line was added because of B&Q
+        background: transparent !important;
+      }
+      .acs-serviceunavailable__heading {
+        font-size: 3em;
+        margin-bottom: 0.5em;
+        color: $c-app-red;
+      }
+    }
+  }
+}
+
+@mixin serviceUnavailableMobileMixin {
+  .acs-serviceunavailable {
+    padding-top: em(15, $bodyfont);
+    padding-bottom: em(15, $bodyfont);
+    .flashIcon {
+      &:before {
+        @include mi;
+        content: $mi-flash_on;
+      }
+      font-size: 3.5em;
+      color: $c-app-red;
+      // This next line was added because of B&Q
+      background: transparent !important;
+    }
+    text-align: center;
+    p {
+      font-size: 1.5em;
+      margin-bottom: 0.2em;
+    }
+    .acs-serviceunavailable__heading {
+      font-size: 3em;
+      margin-bottom: 0.5em;
+      color: $c-app-red;
+    }
+  }
+}

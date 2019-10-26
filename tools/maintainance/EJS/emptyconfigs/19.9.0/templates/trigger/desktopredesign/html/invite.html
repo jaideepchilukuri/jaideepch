@@ -1,0 +1,222 @@
+<div class="__fsr <%= style.presetStyles %>" role="dialog" aria-labelledby="fsrHeading" aria-describedby="fsrDescription">
+  <div class="fsrModalBackdrop fsrAbandonButton" id="fsrFullScreenContainer" data-isbackdrop="true">
+    <div id="fsrInvite" class="fsrInvite">
+
+      <button id="fsrFocusFirst" class="fsrInvite__closeWrapper fsrAbandonButton" tabindex="0" aria-label="<%= dialog.closeInviteButtonText %>">
+        <svg class="fsrButton fsrButton__inviteClose fsrAbandonButton" width="332px" height="331px" viewBox="0 0 332 331" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false" aria-hidden="true">
+          <g class="fsrAbandonButton" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <path class="fsrAbandonButton" d="M166,132.973088 L298.582521,0.390566593 L331.109433,32.9174785 L198.526912,165.5 L331.109433,298.082521 L298.582521,330.609433 L166,198.026912 L33.4174785,330.609433 L0.890566593,298.082521 L133.473088,165.5 L0.890566593,32.9174785 L33.4174785,0.390566593 L166,132.973088 Z" id="Combined-Shape" fill="#000000"></path>
+          </g>
+        </svg>
+      </button>
+
+      <section class="fsrInvite__top">
+        <div class="fsrBanner" role="img" aria-label="banner image"></div>
+
+        <picture class="fsrClientLogo">
+          <img class="fsrClientLogo__img" src="<%=inviteLogo%>" title="<%=siteLogoTitleText%>" alt="<%=siteLogoAltText%>" aria-label="Client Banner Image">
+        </picture>
+      </section>
+
+      <section class="fsrInvite__message fsrInvite--margin">
+        <h1 id="fsrHeading" class="fsrInvite__heading" role="heading" aria-level="1"><%=dialog.headline%></h1>
+        <p id="fsrDescription" class="fsr_p" aria-level="1"><%=dialog.blurb%></p>
+      </section>
+
+      <section class="fsrInvite__buttons fsrInvite--margin">
+        <button class="fsrButton fsrButton__inviteAccept fsrButton--hoverEffects fsrAcceptButton" tabindex="0" title="<%=dialog.acceptButtonTitleText%>"><%=dialog.acceptButton%></button>
+        <button class="fsrButton fsrButton__inviteDecline fsrDeclineButton" tabindex="0" title="<%=dialog.declineButton%>"><%=dialog.declineButton%></button>
+      </section>
+
+      <footer class="fsrFooter--invite">
+        <span class="fsrFooter__poweredby"><%= dialog.poweredbyText %></span>
+        <a href="<%= dialog.privacyPolicyLink %>" class="fsrFooter__privacy fsrAllowDefault" target="_blank" tabindex="0"><%= dialog.privacyPolicyText %></a>
+      </footer>
+
+    </div>
+  </div>
+
+  <style>
+    <% if (style.backgroundColor) { %>
+      .__fsr .fsrInvite {
+        background-color: <%= style.backgroundColor %>;
+      }
+      .__fsr .fsrClientLogo {
+        background-color: <%= style.backgroundColor %>;
+      }
+    <% } %>
+
+    <% if (style.brandColor) { %>
+      .__fsr .fsrButton__inviteAccept {
+        background-color: <%= style.brandColor %> !important;
+      }
+      .__fsr .fsrButton__inviteDecline {
+        color: <%= style.brandColor %> !important;
+      }
+      .__fsr .fsrFooter__privacy {
+        color: <%= style.brandColor %> !important;
+      }
+    <% } %>
+
+    <% if (inviteBanner) { %>
+      .__fsr .fsrBanner {
+        background-image: url("<%= inviteBanner %>");
+      }
+    <% } %>
+
+    <% if (style.invite.backgroundImage) { %>
+      .__fsr .fsrInvite {
+        background-image: url("<%= style.invite.backgroundImage %>");
+      }
+    <% } %>
+
+    <% if (style.invite.height) { %>
+      .__fsr .fsrInvite {
+        height: <%= style.invite.height %>;
+      }
+    <% } %>
+
+    <% if (style.invite.width) { %>
+      .__fsr .fsrInvite {
+        width: <%= style.invite.width %>;
+        max-width: <%= style.invite.width %>;
+      }
+    <% } %>
+
+    <% if (style.invite.borderRadius) { %>
+      .__fsr .fsrInvite {
+        border-radius: <%= style.invite.borderRadius %>;
+      }
+      .__fsr .fsrBanner {
+      	border-top-left-radius: <%= style.invite.borderRadius %>;
+      	border-top-right-radius: <%= style.invite.borderRadius %>;
+      }
+    <% } %>
+
+    <% if (style.invite.bannerBackgroundColor) { %>
+      .__fsr .fsrBanner {
+        background-color: <%= style.invite.bannerBackgroundColor %>;
+      }
+    <% } %>
+
+    <% if (style.invite.bannerHeight) { %>
+      .__fsr .fsrBanner {
+        height: <%= style.invite.bannerHeight %>;
+      }
+    <% } %>
+
+    <% if (style.invite.logoMargin) { %>
+      .__fsr .fsrClientLogo {
+        margin-top: <%= style.invite.logoMargin %>;
+      }
+    <% } %>
+
+    <% if (style.invite.logoBackgroundColor) { %>
+      .__fsr .fsrClientLogo {
+        background-color: <%= style.invite.logoBackgroundColor %>;
+      }
+    <% } %>
+
+	<% if (style.invite.logoHide == true) { %>
+      .__fsr .fsrClientLogo {
+		display: none !important;
+      }
+    <% } %>
+
+    <% if (style.invite.headerFontSize) { %>
+      .__fsr .fsrInvite__heading {
+        font-size: <%= style.invite.headerFontSize %>;
+      }
+    <% } %>
+
+    <% if (style.invite.headerLineHeight) { %>
+      .__fsr .fsrInvite__heading {
+        line-height: <%= style.invite.headerLineHeight %>;
+      }
+    <% } %>
+
+    <% if (style.invite.headerFontWeight) { %>
+      .__fsr .fsrInvite__heading {
+        font-weight: <%= style.invite.headerFontWeight %> !important;
+      }
+    <% } %>
+
+    <% if (style.invite.headerTextDecor) { %>
+      .__fsr .fsrInvite__heading {
+        text-decoration: <%= style.invite.headerTextDecor %>;
+      }
+    <% } %>
+
+    <% if (style.invite.bodyFontSize) { %>
+      .__fsr .fsr_p {
+        font-size: <%= style.invite.bodyFontSize %>;
+      }
+    <% } %>
+
+    <% if (style.invite.bodyLineHeight) { %>
+      .__fsr .fsr_p {
+        line-height: <%= style.invite.bodyLineHeight %>;
+      }
+    <% } %>
+
+    <% if (style.invite.bodyTextDecor) { %>
+      .__fsr .fsr_p {
+        text-decoration: <%= style.invite.bodyTextDecor %>;
+      }
+    <% } %>
+
+    <% if (style.invite.buttonBorder) { %>
+      .__fsr .fsrButton__inviteAccept {
+        border: <%= style.invite.buttonBorder %>;
+      }
+    <% } %>
+
+    <% if (style.invite.buttonBorderRadius) { %>
+      .__fsr .fsrButton {
+        border-radius: <%= style.invite.buttonBorderRadius %>;
+      }
+    <% } %>
+
+    <% if (style.invite.acceptTextColor) { %>
+      .__fsr .fsrButton__inviteAccept {
+        color: <%= style.invite.acceptTextColor %> !important;
+      }
+    <% } %>
+
+    <% if (style.invite.acceptFontSize) { %>
+      .__fsr .fsrButton__inviteAccept {
+        font-size: <%= style.invite.acceptFontSize %>;
+      }
+    <% } %>
+
+    <% if (style.invite.declineTextColor) { %>
+      .__fsr .fsrButton__inviteDecline {
+        color: <%= style.invite.declineTextColor %> !important;
+      }
+    <% } %>
+
+    <% if (style.invite.declineFontSize) { %>
+      .__fsr .fsrButton__inviteDecline {
+        font-size: <%= style.invite.declineFontSize %>;
+      }
+    <% } %>
+
+    <% if (style.invite.xColor) { %>
+      .__fsr .fsrButton__inviteClose path {
+        fill: <%= style.invite.xColor %> !important;
+      }
+    <% } %>
+
+    <% if (style.invite.xBorderRadius) { %>
+      .__fsr .fsrButton__inviteClose {
+        border-radius: <%= style.invite.xBorderRadius %>;
+      }
+    <% } %>
+
+    <% if (style.customStyleBlock) { %>
+	  <%= style.customStyleBlock %>;
+    <% } %>
+
+  </style>
+
+</div>

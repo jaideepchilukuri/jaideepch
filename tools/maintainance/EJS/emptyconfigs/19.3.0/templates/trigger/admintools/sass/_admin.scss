@@ -1,0 +1,140 @@
+@import 'vars';
+
+.__acs {
+  &.acsAdmin {
+    padding: $general-bigpadding;
+    font-family: $general-font-family;
+    text-align: left;
+    #fsMessage {
+      margin-left: 1em;
+      background-color: #fffe9b;
+    }
+    #acsSetValues {
+      background-color: #CCFFCC;
+      &:hover {
+        background-color: #cccccc;
+      }
+    }
+    .acsOptOutButton {
+      border: 1px solid #999;
+      padding: $general-padding;
+      background-color: #f0f0f0;
+      border-radius: $general-borderradius;
+      padding-left: (4 * $general-padding);
+      padding-right: (4 * $general-padding);
+      cursor: pointer;
+      &:hover {
+        background-color: #cccccc;
+      }
+    }
+    a {
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    .acsFooter {
+      font-size: 0.7em;
+      margin-top: 1.5em;
+      text-align: center;
+    }
+    .acsOptInControls, .acsOptOutControls {
+      display: none;
+    }
+    .acsOptInControls span.acsmsg {
+      font-size: 0.9em;
+      background-color: yellow;
+      padding-left: 0.5em;
+      padding-right: 0.5em;
+      padding-top: 0.2em;
+      padding-bottom: 0.2em;
+      color: #666;
+      margin-left: 1em;
+      &#acswhenexpires {
+        margin-left: 0;
+        padding: 0;
+        background-color: transparent;
+      }
+    }
+    hr {
+      border: 0;
+      border-bottom: 1px dashed #ccc;
+      background: #999;
+      margin-bottom: 1.3em;
+    }
+    h1 {
+      float: right;
+      font-size: 1.5em;
+      padding-top: 0.3em;
+      color: #999;
+      text-align: left;
+    }
+    .fsrBoxLogo {
+      width: 5.5em;
+      height: 3em;
+    }
+    h2 {
+      font-size: 1.3em;
+      text-align: left;
+    }
+    h2, p, li {
+      margin-bottom: 0.5em;
+      text-align: left;
+    }
+    ol {
+      margin-left: $general-bigpadding;
+      font-size: 0.9em;
+      list-style-type: decimal;
+      text-align: left;
+      li {
+        display: list-item;
+        color: #666;
+        text-align: left;
+      }
+    }
+    .acsFocusBox {
+      padding: $general-padding;
+      border: 1px dashed #999;
+      background-color: #f0f0f0;
+      border-radius: $general-borderradius;
+      h3 {
+        font-weight: bold;
+        margin-bottom: 0.5em;
+        text-align: left;
+      }
+      label {
+        color: #666;
+        font-size: 0.8em;
+      }
+      button {
+        padding: 0.2em;
+        font-size: 1.1em;
+        border-radius: $general-borderradius;
+        cursor: pointer;
+        border: 1px solid #999;
+        background-color: #f0f0f0;
+        &:hover {
+          background-color: #ccc;
+        }
+      }
+      hr {
+        margin-bottom: 0.5em;
+      }
+      #acsAdminTable {
+        font-size: 1.1em;
+        color: #666;
+        td, th {
+          padding-right: 2em;
+        }
+        th {
+          color: #000;
+          font-weight: bold;
+        }
+        input[type=text] {
+          width: 3em;
+          font-size: 1.1em;
+        }
+      }
+    }
+  }
+}

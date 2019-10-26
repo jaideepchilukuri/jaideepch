@@ -1,0 +1,39 @@
+.acs-feedback__cbradio {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  cursor: pointer;
+  -ms-align-items: center;
+  align-items: center;
+  height: em($question-option-height, $bodyfont);
+  margin-bottom: -1px;
+  color: $c-app-grey-95;
+  input {
+    visibility: hidden;
+    opacity: 0;
+  }
+  &:before {
+    @include mi;
+    content: $mi-check_box_outline_blank;
+    padding-left: 0.2em;
+    padding-right: 0.3em;
+    color: inherit;
+    font-size: 150%;
+  }
+  &.acsChecked {
+    font-weight:bold;
+    &:before {
+      content: $mi-check_box;
+    }
+  }
+  &.acs-feedback__cb-radio {
+    &:before {
+      content: $mi-radio_button_unchecked;
+    }
+    &.acsChecked {
+      &:before {
+        content: $mi-radio_button_checked;
+      }
+    }
+  }
+}
