@@ -97,7 +97,7 @@ async function build(sitekeys, codeversion, localhost) {
 	}
 }
 
-async function rebulidConfig(sitekeys) {
+async function rebulidConfig(sitekeys, codeversion) {
 	console.log("Rebuiliding config files for sitekeys:", JSON.stringify(sitekeys), "Please wait...");
 	for (counter in sitekeys) {
 		packagejson = await filesystem.readFileToObjectIfExists(path + sitekeys[counter] + "/CC/package.json");
@@ -108,13 +108,14 @@ async function rebulidConfig(sitekeys) {
 			config &&
 			config.global &&
 			config.global.codeVer &&
-			packagejson.version == config.global.codeVer
+			packagejson.version == config.global.codeVer &&
+			(!codeversion || codeversion == config.global.codeVer)
 		) {
 			await helpertasks.assetsCopy(path + sitekeys[counter]);
 			await helpertasks.configRebuild(path + sitekeys[counter]);
 		} else {
 			console.log("Code version is not built! Building client code package from scratch");
-			await build(path + sitekeys[counter]);
+			await build([sitekeys[counter]], codeversion);
 		}
 	}
 }
@@ -226,11 +227,13 @@ async function deploy(sitekey, wheretopush) {
 	}
 }
 
-async function remove(sitekeys) {
-	console.log("Deleting local folders for sitekeys:", JSON.stringify(sitekeys), "Please wait...");
+async function remove(sitekeys, quiet) {
+	if (!quiet) {
+		console.log("Deleting local folders for sitekeys:", JSON.stringify(sitekeys), "Please wait...");
+	}
 	for (counter in sitekeys) {
 		let deleted = await helpertasks.deleteBranch(path + sitekeys[counter]);
-		if (deleted) {
+		if (deleted && !quiet) {
 			console.log("Deleted " + sitekeys[counter] + " branch locally");
 		}
 	}
@@ -238,4 +241,13 @@ async function remove(sitekeys) {
 
 module.exports = {
 	listCommands,
+	getSitekey,
+	build,
+	test,
+	rebulidConfig,
+	modernize,
+	turnOff,
+	onPrem,
+	deploy,
+	remove,
 };
