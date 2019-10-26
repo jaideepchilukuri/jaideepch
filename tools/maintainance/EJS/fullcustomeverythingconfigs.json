@@ -1,0 +1,761 @@
+{
+  "trigger": {
+    "surveydefs": [
+      {
+        "display": {
+          "desktop_legacy_disabled": [
+            {
+              "displayname": "custom_desktoplegacydisplayname",
+              "template": "custom_desktoplegacytemplate",
+              "inviteLogo": "custom_desktoplegacyinvitelogo.png",
+              "trackerLogo": "custom_desktoplegacytrackerlogo.png",
+              "siteLogoTitleText": "custom_desktoplegacysiteLogoTitleText",
+              "siteLogoAltText": "custom_desktoplegacysiteLogoAltText",
+              "vendorTitleText": "custom_desktoplegacyvendorTitleText",
+              "vendorAltText": "custom_desktoplegacyvendorAltText",
+              "trusteLogoAltText": "custom_desktoplegacytrusteLogoAltText",
+              "inviteType": "INSESSION",
+              "closeClickOnBackdrop": false,
+              "removeSurveyAlerts": true,
+              "dialog": {
+                "headline": "custom_desktoplegacyheadline",
+                "blurb": "custom_desktoplegacyblurb",
+                "noticeAboutSurvey": "custom_desktoplegacynoticeAboutSurvey",
+                "attribution": "custom_desktoplegacyattribution",
+                "closeInviteButtonText": "custom_desktoplegacycloseInviteButtonText",
+                "declineButton": "custom_desktoplegacydeclineButton",
+                "acceptButton": "custom_desktoplegacyacceptButton",
+                "acceptButtonTitleText": "custom_desktoplegacyacceptButtonTitleText",
+                "error": "custom_desktoplegacyerror",
+                "warnLaunch": "custom_desktoplegacywarnLaunch",
+                "allowclose": false,
+                "surveyavailable": "custom_desktoplegacysurveyavailable",
+                "trackerTitle": "custom_desktoplegacytrackerTitle",
+                "trackerClickToView": "custom_desktoplegacytrackerClickToView",
+                "trackerPlsLeaveOpen": "custom_desktoplegacytrackerPlsLeaveOpen",
+                "trackerAtEnd": "custom_desktoplegacytrackerAtEnd",
+                "trackerDesc1": "custom_desktoplegacytrackerDesc1",
+                "trackerDesc2": "custom_desktoplegacytrackerDesc2",
+                "trackerDesc3": "custom_desktoplegacytrackerDesc3",
+                "trackerCorp": "custom_desktoplegacytrackerCorp",
+                "trackerPrivacy": "custom_desktoplegacytrackerPrivacy",
+                "onexitheadline": "custom_desktoplegacyonexitheadline",
+                "onexitblurb": "custom_desktoplegacyonexitblurb",
+                "onexitattribution": "custom_desktoplegacyonexitattribution",
+                "onexitdeclineButton": "custom_desktoplegacyonexitdeclineButton",
+                "onexitacceptButton": "custom_desktoplegacyonexitacceptButton",
+                "onexiterror": "custom_desktoplegacyonexiterror",
+                "onexitallowclose": false,
+                "onexitsupport": "e",
+                "onexitinputMessage": "custom_desktoplegacyonexitinputMessage",
+                "onexitinputMessageJustMobile": "custom_desktoplegacyonexitinputMessageJustMobile",
+                "onexitinputMessageJustEmail": "custom_desktoplegacyonexitinputMessageJustEmail",
+                "onexitemailMeButtonText": "custom_desktoplegacyonexitemailMeButtonText",
+                "onexittextMeButtonText": "custom_desktoplegacyonexittextMeButtonText",
+                "onexitinvalidemailtext": "custom_desktoplegacyonexitinvalidemailtext",
+                "onexitinvalidsmstext": "custom_desktoplegacyonexitinvalidsmstext",
+                "onexitinvalidFormatErrorText": "custom_desktoplegacyonexitinvalidFormatErrorText",
+                "cssInviteExtraClasses": "fsrbottomright",
+                "locales": { "fr": { "headline": "custom_desktoplegacyheadlineINFRENCH" } },
+                "backdropbg": "rgba(0, 0, 0, 0.7)",
+                "font": "Lato",
+                "borderbgcolor": "rgba(0, 0, 0, 0.5)",
+                "bgcolor": "#ffffff",
+                "txtcolor": "#000000",
+                "btntxtcolor": "#000000",
+                "btnbordercolor": "#ffffff",
+                "btnbgcolor": "white",
+                "btnboxshadow": "rgba(0, 0, 0, 0.5)",
+                "rightbtnbgcolor": "#ffffff",
+                "leftbtnhoverbg": "#ededed",
+                "rightbtnhoverbg": "#e8f1e5",
+                "closebtncolor": "#595959",
+                "closebtnbordercolor": "#595959",
+                "closebtnhoverbgcolor": "#cccccc"
+              }
+            }
+          ],
+          "desktop": [
+            {
+              "displayname": "custom_desktopdisplayname",
+              "template": "custom_desktoptemplate",
+              "inviteLogo": "custom_desktopinvitelogo.png",
+              "inviteBanner": "custom_desktopinvitebanner.png",
+              "trackerLogo": "custom_desktoptrackerlogo.png",
+              "trackerBanner": "custom_desktoptrackerbanner.png",
+              "siteLogoTitleText": "custom_desktopsiteLogoTitleText",
+              "siteLogoAltText": "custom_desktopsiteLogoAltText",
+              "inviteType": "INSESSION",
+              "inviteDelay": 1,
+              "closeClickOnBackdrop": false,
+              "removeSurveyAlerts": true,
+              "shortSurvey": {
+                "idleViewsBeforeStop": 99,
+                "idleTimeBeforeAbandon": 1,
+                "paginationType": "random",
+                "midOverride": "FSRTESTINGCODEMID12345==",
+                "abTestPercent": 99,
+                "style": { "zIndex": 1, "position": "topleft" }
+              },
+              "dialog": {
+                "headline": "custom_desktopheadline",
+                "blurb": "custom_desktopblurb",
+                "closeInviteButtonText": "custom_desktopcloseInviteButtonText",
+                "declineButton": "custom_desktopdeclineButton",
+                "acceptButton": "custom_desktopacceptButton",
+                "acceptButtonTitleText": "custom_desktopacceptButtonTitleText",
+                "error": "custom_desktoperror",
+                "warnLaunch": "custom_desktopwarnLaunch",
+                "allowclose": false,
+                "surveyavailable": "custom_desktopsurveyavailable",
+                "poweredbyLink": "http://www.custom_desktoppoweredbyLink.com",
+                "poweredbyText": "custom_desktoppoweredbyText",
+                "privacyPolicyText": "custom_desktopprivacyPolicyText",
+                "privacyPolicyLink": "http://www.custom_mobileprivacyPolicyLink.com",
+                "trackerTitle": "custom_desktoptrackerTitle",
+                "trackerClickToView": "custom_desktoptrackerClickToView",
+                "trackerPlsLeaveOpen": "custom_desktoptrackerPlsLeaveOpen",
+                "trackerDesc1": "custom_desktoptrackerDesc1",
+                "trackerDesc2": "custom_desktoptrackerDesc2"
+              },
+              "style": {
+                "backgroundColor": "#000000",
+                "invite": {
+                  "backgroundImage": "custom_desktopbackgroundImage.png",
+                  "height": "99",
+                  "width": "99",
+                  "borderRadius": "99",
+                  "bannerHeight": "99",
+                  "logoMargin": "99",
+                  "logoBackgroundColor": "#000000",
+                  "logoHide": true,
+                  "headerFontFamily": "custom_desktopheaderFontFamily",
+                  "headerFontSize": "custom_desktopheaderFontSize",
+                  "headerLineHeight": "99",
+                  "headerFontWeight": "99",
+                  "headerTextDecor": "custom_desktopheaderTextDecor",
+                  "bodyFontFamily": "custom_desktopbodyFontFamily",
+                  "bodyFontSize": "99",
+                  "bodyLineHeight": "99",
+                  "bodyTextDecor": "custom_desktopbodyTextDecor",
+                  "buttonFontFamily": "custom_desktopbuttonFontFamily",
+                  "buttonBorder": "99",
+                  "buttonBorderRadius": "99",
+                  "acceptTextColor": "#000000",
+                  "acceptFontSize": "99",
+                  "declineTextColor": "#000000",
+                  "declineFontSize": "99",
+                  "xColor": "#000000",
+                  "xBorderRadius": "99"
+                },
+                "tracker": {
+                  "margin": "99",
+                  "leftBackgroundColor": "#000000",
+                  "logoHide": true,
+                  "headerFontFamily": "custom_desktopheaderFontFamily",
+                  "headerFontSize": "99",
+                  "headerLineHeight": "99",
+                  "headerFontWeight": "99",
+                  "headerTextDecor": "custom_desktopheaderTextDecor",
+                  "bodyFontFamily": "custom_desktopbodyFontFamily",
+                  "bodyFontSize": "99",
+                  "bodyLineHeight": "99",
+                  "buttonFontFamily": "custom_desktopbuttonFontFamily",
+                  "startBorder": "99",
+                  "startBorderRadius": "99",
+                  "startTextColor": "#000000",
+                  "startFontSize": "99"
+                },
+                "presetStyles": "fsrBottomRight",
+                "customStyleBlock": "custom_desktopcustomStyleBlock"
+              }
+            }
+          ],
+          "mobile": [
+            {
+              "dialog": {
+                "ariaCloseInvite": "custom_mobileariaCloseInvite",
+                "headline": "custom_mobileheadline",
+                "subheadline": "custom_mobilesubheadline",
+                "declineButton": "custom_mobiledeclineButton",
+                "acceptButton": "custom_mobileacceptButton",
+                "emailButton": "custom_mobileemailButton",
+                "textButton": "custom_mobiletextButton",
+                "poweredbyDisclaimer": "custom_mobilepoweredbyDisclaimer",
+                "poweredbyLink": "http://www.custom_mobilepoweredbyLink.com",
+                "poweredbyText": "custom_mobilepoweredbyText",
+                "ariaContactLabel": "custom_mobileariaContactLabel",
+                "emailPlaceholder": "custom_mobileemailPlaceholder",
+                "textPlaceholder": "custom_mobiletextPlaceholder",
+                "submitButton": "custom_mobilesubmitButton",
+                "textDisclaimer": "custom_mobiletextDisclaimer",
+                "emailDisclaimer": "custom_mobileemailDisclaimer",
+                "termsAndConditionsText": "custom_mobiletermsAndConditionsText",
+                "termsAndConditionsLink": "https://www.custom_mobiletermsAndConditionsLink.com",
+                "privacyPolicyText": "custom_mobileprivacyPolicyText",
+                "privacyPolicyLink": "http://www.custom_mobileprivacyPolicyLink.com",
+                "emailInvalidation": "custom_mobileemailInvalidation",
+                "textInvalidation": "custom_mobiletextInvalidation",
+                "onexitheadline": "custom_mobileonexitheadline",
+                "onexitsubheadline": "custom_mobileonexitsubheadline",
+                "onexitcountertag": "custom_mobileonexitcountertag",
+                "onexitcounterval": "99",
+                "theme": "light",
+                "font": "Anton",
+                "invitebg": "#FFA94F",
+                "shadowcolor": "#FF8F35",
+                "bannerprivacybg": "rgb(249,99,2)",
+                "textcolor": "blue",
+                "buttontextcolor": "rgb(249,99,2)",
+                "buttonbg": "rgb(249,99,2)",
+                "buttondisabledbg": "#FFDB81",
+                "buttonshadowcolor": "orange",
+                "fullscreenbg": "rgba(255, 169, 79, 0.95)",
+                "closebuttontextcolor": "#ffffff",
+                "closebuttonbg": "rgb(249,99,2)",
+                "closebuttonfullscreenbg": "transparent",
+                "invalidtextcolor": "rgb(249,99,2)",
+                "locales": {
+                  "fr": {
+                    "headline": "custom_mobileheadlineINFRENCH",
+                    "localeImages": {
+                      "inviteLogo": "custom_mobileinvitelogoINFRENCH.png",
+                      "siteLogoAltText": "custom_mobilesiteLogoAltTextINFRENCH",
+                      "siteLogoTitleText": "custom_mobilesiteLogoTitleTextINFRENCH"
+                    }
+                  }
+                }
+              },
+              "displayname": "custom_mobiledisplayname",
+              "template": "custom_mobiletemplate",
+              "inviteLogo": "custom_mobileinvitelogo.png",
+              "trackerLogo": "custom_mobiletrackerlogo.png",
+              "siteLogoTitleText": "custom_mobilesiteLogoTitleText",
+              "siteLogoAltText": "custom_mobilesiteLogoAltText",
+              "vendorLogo": "custom_mobilevendorLogo.svg",
+              "vendorLogoPNG": "custom_mobilevendorLogoPNG.png",
+              "vendorTitleText": "custom_mobilevendorTitleText",
+              "vendorAltText": "custom_mobilevendorAltText",
+              "trusteLogoAltText": "custom_mobiletrusteLogoAltText",
+              "hideForeSeeLogoMobile": true,
+              "inviteType": "EMAIL",
+              "inviteDelay": 1,
+              "trapFocus": true,
+              "style": {
+                "font": "custom_mobilefont",
+                "backgroundColor": "#000000",
+                "shadowColor": "#000000",
+                "privacyBackgroundColor": "#000000",
+                "fullScreenBackgroundColor": "#000000",
+                "invite": {
+                  "logoSwitch": true,
+                  "textColor": "#000000",
+                  "smsButtonTextColor": "#000000",
+                  "smsButtonBackgroundColor": "#000000",
+                  "emailButtonTextColor": "#000000",
+                  "emailButtonBackgroundColor": "#000000",
+                  "xColor": "#000000",
+                  "xBackgroundColor": "#000000",
+                  "xBorderRadius": "99",
+                  "buttonBorderRadius": "99",
+                  "buttonShadowColor": "#000000",
+                  "buttonDisabledTextColor": "#000000",
+                  "buttonDisabledBackgroundColor": "#000000",
+                  "invalidColor": "#000000"
+                },
+                "presetStyles": "fsrBottomRight",
+                "customStyleBlock": "custom_mobilecustomStyleBlock"
+              }
+            }
+          ]
+        },
+        "name": "custom_surveydefname",
+        "site": "custom_surveydefsite",
+        "uid": "custom_surveydefuid",
+        "section": "custom_surveydefsection",
+        "language": {
+          "locale": "custom_surveydeflocale",
+          "src": "variable",
+          "name": "custom_surveydeflocalename",
+          "locales": [
+            {
+              "match": "custom_surveydeflocalematch",
+              "locale": "custom_surveydeflocalelocale"
+            }
+          ]
+        },
+        "cxRecord": true,
+        "mouseoff": {
+          "mode": "multitab",
+          "minSiteTime": 1,
+          "minPageTime": 1,
+          "sp": { "reg": 99, "outreplaypool": 99 },
+          "lf": 99
+        },
+        "criteria": {
+          "sp": { "reg": 99, "outreplaypool": 99 },
+          "lf": 99,
+          "supportsSmartPhones": true,
+          "supportsTablets": true,
+          "supportsDesktop": true
+        },
+        "include": {
+          "urls": ["*custom_includeurl*", "*custom_includeurl2*"],
+          "referrers": [
+            "*custom_includereferrers*",
+            "*custom_includereferrers2*"
+          ],
+          "userAgents": ["custom_includeuseragent"],
+          "browsers": [
+            { "name": "AOL Shield Browser", "comparison": "lt", "version": 3 }
+          ],
+          "cookies": [
+            {
+              "name": "custom_includecookiename",
+              "value": "custom_includecookievalue"
+            }
+          ],
+          "variables": [
+            {
+              "name": "custom_includevariablename",
+              "value": "custom_includevariablevalue"
+            }
+          ]
+        },
+        "inviteExclude": {
+          "urls": ["*custom_defexcludeurl*", "*custom_defexcludeurl2*"],
+          "referrers": [
+            "*custom_defexcludereferrers*",
+            "*custom_defexcludereferrers2*"
+          ],
+          "userAgents": ["custom_defexcludeuseragent"],
+          "browsers": [
+            { "name": "AOL Shield Browser", "comparison": "lt", "version": 3 }
+          ],
+          "cookies": [
+            {
+              "name": "custom_defexcludecookiename",
+              "value": "custom_defexcludecookievalue"
+            }
+          ],
+          "variables": [
+            {
+              "name": "custom_defexcludevariablename",
+              "value": "custom_defexcludevariablevalue"
+            }
+          ]
+        },
+        "pattern": "custom_pattern",
+        "selectMode": "lock",
+        "links": {
+          "cancel": [
+            {
+              "selector": "custom_cancelselector",
+              "attribute": "custom_cancelattribute",
+              "patterns": ["custom_cancelpattern"],
+              "preventDefault": false
+            }
+          ],
+          "survey": [
+            {
+              "selector": "custom_surveyselector",
+              "attribute": "custom_surveyattribute",
+              "patterns": ["custom_surveypattern"],
+              "preventDefault": false
+            }
+          ],
+          "tracker": [
+            {
+              "selector": "custom_trackerselector",
+              "attribute": "custom_trackerattribute",
+              "patterns": ["custom_trackerpattern"],
+              "preventDefault": false
+            }
+          ]
+        },
+        "qualifier": {
+          "useQualifier": true,
+          "survey": {
+            "topSection": "custom_qualifiertopSection",
+            "noThanksTopSection": "custom_qualifiernoThanksTopSection",
+            "noThanksBottomSection": "custom_qualifiernoThanksBottomSection",
+            "validationFailedMsg": "custom_qualifiervalidationFailedMsg",
+            "continueLabel": "custom_qualifiercontinueLabel",
+            "noLabel": "custom_qualifiernoLabel",
+            "closeLabel": "custom_qualifiercloseLabel",
+            "questions": [
+              {
+                "text": "custom_qualifierquestionstext",
+                "questionType": "RADIO",
+                "choices": [
+                  {
+                    "text": "custom_qualifierquestionschoicestext",
+                    "qualifies": true
+                  },
+                  {
+                    "text": "custom_qualifierquestionschoicestext1",
+                    "qualifies": "custom_qualifierquestionschoicesqualifies1",
+                    "cpps": [
+                      {
+                        "custom_qualifierquestionschoicescpp": "custom_qualifierquestionschoicescppvalue"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "locales": {
+              "fr": {
+                "topSection": "custom_qualifiertopSectionINFRENCH",
+                "noThanksTopSection": "custom_qualifiernoThanksTopSectionINFRENCH",
+                "noThanksBottomSection": "custom_qualifiernoThanksBottomSectionINFRENCH",
+                "validationFailedMsg": "custom_qualifiervalidationFailedMsgINFRENCH",
+                "continueLabel": "custom_qualifiercontinueLabelINFRENCH",
+                "noLabel": "custom_qualifiernoLabelINFRENCH",
+                "closeLabel": "custom_qualifiercloseLabelINFRENCH",
+                "questions": [
+                  {
+                    "text": "custom_qualifierquestionstextINFRENCH",
+                    "questionType": "RADIO",
+                    "choices": [
+                      {
+                        "text": "custom_qualifierquestionschoicestextINFRENCH",
+                        "qualifies": true
+                      },
+                      {
+                        "text": "custom_qualifierquestionschoicestext1INFRENCH",
+                        "qualifies": "custom_qualifierquestionschoicesqualifies1INFRENCH",
+                        "cpps": [
+                          {
+                            "custom_qualifierquestionschoicescpp": "custom_qualifierquestionschoicescppvalueINFRENCH"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "reminder": {
+          "useReminder": true,
+          "display": {
+            "headerSection": "custom_reminderheaderSection",
+            "bodySection": "custom_reminderbodySection",
+            "buttonText": "custom_reminderbuttonText",
+            "locales": {
+              "fr": {
+                "headerSection": "custom_reminderheaderSectionINFRENCH",
+                "bodySection": "custom_reminderbodySectionINFRENCH",
+                "buttonText": "custom_reminderbuttonTextINFRENCH"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "config": {
+      "surveyAsyncCurl": "custom_surveyasynccurl",
+      "site_id": "custom_siteid",
+      "triggerDelay": 1,
+      "inviteDelay": 1,
+      "pageLoadUrlChangeBlackout": 1,
+      "pagesInviteAvailable": 1,
+      "repeatDays": { "decline": 1, "accept": 1 },
+      "pageViewsResetTimeout": 1,
+      "cppsResetTimeout": 1,
+      "surveyDefResetTimeout": 1,
+      "trackerConvertsAfter": 1,
+      "trackerHeartbeatTimeout": 1,
+      "trackerHeartbeatLongTimeout": 1,
+      "onExitMobileHeartbeatInterval": 1,
+      "reinviteDelayAfterInviteAbandon": 1,
+      "centerTrackerPopup": true,
+      "workInIframes": "runAllIframes",
+      "abSurveyType": {
+        "defs": [
+          {
+            "name": "custom_abSurveyTypedefsname",
+            "section": "custom_abSurveyTypedefssection",
+            "site": "custom_abSurveyTypedefssite",
+            "modernPercentage": 1
+          }
+        ],
+        "shouldTest": true
+      },
+      "onlyModernSurvey": true,
+      "ignoreNavigationEvents": true,
+      "publicApiName": "custom_publicapiname",
+      "globalExclude": {
+        "urls": ["*custom_globalexcludeurl*", "*custom_globalexcludeurl2*"],
+        "referrers": [
+          "*custom_globalexcludereferrers*",
+          "*custom_globalexcludereferrers2*"
+        ],
+        "userAgents": ["custom_globalexcludeuseragent"],
+        "browsers": [
+          { "name": "AOL Shield Browser", "comparison": "lt", "version": 3 }
+        ],
+        "cookies": [
+          {
+            "name": "custom_globalexcludecookiename",
+            "value": "custom_globalexcludecookievalue"
+          }
+        ],
+        "variables": [
+          {
+            "name": "custom_globalexcludevariablename",
+            "value": "custom_globalexcludevariablevalue"
+          }
+        ]
+      },
+      "inviteExclude": {
+        "urls": ["*custom_inviteexcludeurl*", "*custom_inviteexcludeurl2*"],
+        "referrers": [
+          "*custom_inviteexcludereferrers*",
+          "*custom_inviteexcludereferrers2*"
+        ],
+        "userAgents": ["custom_inviteexcludeuseragent"],
+        "browsers": [
+          { "name": "AOL Shield Browser", "comparison": "lt", "version": 3 }
+        ],
+        "cookies": [
+          {
+            "name": "custom_inviteexcludecookiename",
+            "value": "custom_inviteexcludecookievalue"
+          }
+        ],
+        "variables": [
+          {
+            "name": "custom_inviteexcludevariablename",
+            "value": "custom_inviteexcludevariablevalue"
+          }
+        ]
+      },
+      "browser_cutoff": {
+        "Edge": 0,
+        "IE": 1,
+        "Safari": 1,
+        "Firefox": 1,
+        "Chrome": 1,
+        "Opera": 1
+      },
+      "platform_cutoff": {
+        "Android": 1,
+        "Winphone": 1,
+        "iPod": 1,
+        "iPhone": 1,
+        "iPad": 1
+      },
+      "device_blacklist": ["custom_triggerdevice_blacklist"],
+      "replay_pools": [{ "path": "custom_replay_poolspath", "sp": 99 }],
+      "replay_repools": ["custom_replay_repools"],
+      "disable_default_cpps": ["custom_disable_default_cpps"],
+      "cpps": {
+        "custom_static_cpp_key": "custom_static_cpp_value",
+        "custom_param_cpp_key": {
+          "source": "param",
+          "val": "custom_param_cpp_value",
+          "mode": "append"
+        },
+        "custom_cookie_cpp_key": {
+          "source": "cookie",
+          "init": "custom_cookie_init",
+          "val": "custom_cookie_cpp_value",
+          "exists": {
+            "init": "custom_cookie_existsinit",
+            "success": "custom_cookie_existssuccess"
+          }
+        },
+        "custom_variable_cpp_key": {
+          "source": "variable",
+          "init": "custom_variable_init",
+          "name": "custom_variable_cpp_value",
+          "exists": {
+            "init": "custom_cookie_existsinit",
+            "success": "custom_cookie_existssuccess"
+          }
+        },
+        "custom_url_cpp_key": {
+          "source": "url",
+          "init": "custom_url_init",
+          "patterns": [
+            { "regex": "custom_url_cpp_value", "value": "custom_url_value" }
+          ]
+        }
+      }
+    }
+  },
+  "global": {
+    "brainUrl": "custom_brainurl",
+    "recUrl": "custom_transporturl",
+    "surveyUrl": "custom_surveyurl",
+    "modernSurveyUrl": "custom_modernSurveyUrl",
+    "analyticsUrl": "custom_events",
+    "staticUrl": "custom_static",
+    "deviceDetectionUrl": "custom_deviceDetectionUrl",
+    "featureFlags": {},
+    "storage": "MICROCOOKIE",
+    "modernRecord": true,
+    "journeyEvents": {
+      "transmit": "only",
+      "list": ["custom_journeyEventslist"]
+    },
+    "disable_cpps": ["custom_disable_cpps"],
+    "integrityHashLocation": "custom_integrityHashLocation",
+    "adobeRsid": "custom_adobersid",
+    "cookieDomain": [
+      {
+        "path": "custom_cookieDomainpath",
+        "domain": "custom_cookieDomaindomain"
+      }
+    ],
+    "mobileOnExitUrl": "custom_mobileOnExitUrl",
+    "customerId": "custom_customerid",
+    "siteKey": "fullcustomeverythingconfigs",
+    "cookieSecure": true,
+    "products": { "trigger": true, "feedback": true, "record": true },
+    "customerKey": 1,
+    "codeVer": "19.3.1"
+  },
+  "record": {
+    "clientId": "custom_replayid",
+    "blacklist": {
+      "active": true,
+      "text": ["*custom_blacklisttext*"],
+      "variables": [
+        {
+          "name": "custom_blacklistvariablename",
+          "value": "custom_blacklistvariablevalue"
+        }
+      ],
+      "cookies": [
+        {
+          "name": "custom_blacklistcookiename",
+          "value": "custom_blacklistcookievalue"
+        }
+      ]
+    },
+    "whitelist": {
+      "active": true,
+      "text": ["*custom_whitelisttext*"],
+      "variables": [
+        {
+          "name": "custom_whitelistvariablename",
+          "value": "custom_whitelistvariablevalue"
+        }
+      ],
+      "cookies": [
+        {
+          "name": "custom_whitelistcookiename",
+          "value": "custom_whitelistcookievalue"
+        }
+      ]
+    },
+    "advancedSettings": {
+      "useSessionStorage": true,
+      "maxStorageMB": 99,
+      "layout": "LEFTSTRETCH",
+      "svgCaptureEnabled": true,
+      "replay_pools": [{ "path": "custom_replay_poolspath", "sp": 99 }],
+      "exclude": {
+        "urls": ["*custom_excludeurl*", "*custom_excludeurl2*"],
+        "referrers": [
+          "*custom_excludereferrers*",
+          "*custom_excludereferrers2*"
+        ],
+        "userAgents": ["custom_excludeuseragent"],
+        "browsers": [
+          { "name": "AOL Shield Browser", "comparison": "lt", "version": 3 }
+        ],
+        "cookies": [
+          {
+            "name": "custom_excludecookiename",
+            "value": "custom_excludecookievalue"
+          }
+        ],
+        "variables": [
+          {
+            "name": "custom_excludevariablename",
+            "value": "custom_excludevariablevalue"
+          }
+        ]
+      },
+      "browser_cutoff": {
+        "IE": 1,
+        "Edge": 0,
+        "Safari": 1,
+        "Firefox": 1,
+        "Chrome": 1,
+        "Chrome Mobile": 1,
+        "Opera": 1
+      },
+      "platform_cutoff": {
+        "Android": 1,
+        "Winphone": 1,
+        "iPod": 1,
+        "iPhone": 1,
+        "iPad": 1
+      },
+      "device_type_support": {
+        "desktop": false,
+        "phone": false,
+        "tablet": false
+      },
+      "device_blacklist": ["custom_recorddevice_blacklist"],
+      "pii": {
+        "staticBlockEls": {
+          "*custom_staticBlockElsurl*": "#custom_staticBlockElscssselector"
+        },
+        "dynamicBlockEls": {
+          "*custom_dynamicBlockElsurl*": "#custom_dynamicBlockElscssselector"
+        },
+        "staticVisibleEls": {
+          "*custom_staticVisibleElsurl*": "#custom_staticVisibleElscssselector"
+        },
+        "dynamicVisibleEls": {
+          "*custom_dynamicVisibleElsurl*": "#custom_dynamicVisibleElscssselector"
+        },
+        "assetBlockEls": {
+          "*custom_assetBlockElsurl*": "#custom_assetBlockElscssselector"
+        },
+        "removeVisibilityEls": {
+          "*custom_removeVisibilityElsurl*":
+            "#custom_removeVisibilityElscssselector"
+        },
+        "obscureEls": { "*custom_obscureElsurl*": "#custom_obscureElscssselector" },
+        "staticWhiteListEls": {
+          "*custom_staticWhiteListElsurl*":
+            "#custom_staticWhiteListElscssselector"
+        },
+        "dynamicWhiteListEls": {
+          "*custom_dynamicWhiteListElsurl*":
+            "#custom_dynamicWhiteListElscssselector"
+        },
+        "maskCharacters": "custom_maskCharacters",
+        "selectiveUnMaskZones": {
+          "*custom_selectiveUnMaskZonesurl*": "#selectiveUnMaskZonescustom_cssselector"
+        },
+        "pagesToSelectiveMask": ["*custom_pagesToSelectiveMaskurl*"],
+        "selectiveMaskZones": {
+          "*custom_selectiveMaskZonesurl*": "#custom_selectiveMaskZonescssselector"
+        },
+        "visibleInputs": {
+          "*custom_visibleInputsurl*": "#custom_visibleInputscssselector"
+        },
+        "redactZones": {
+          "*custom_redactZonesurl*": "#custom_redactZonescssselector"
+        }
+      },
+      "scrollEls": "custom_scrollElsfakeelement",
+      "skipIframes": true
+    }
+  },
+  "fbmods": {
+    "temporaryCssHack": "custom_temporaryCssHack",
+    "noPositionRelativeBody": true,
+    "overflowScroll": true,
+    "skipIFrames": true
+  }
+}
