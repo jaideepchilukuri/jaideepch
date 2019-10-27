@@ -115,6 +115,32 @@ async function aTob(string) {
 	return atob(string);
 }
 
+async function stringifyCompare(firstThing, secondThing, whatsNotMatching) {
+	firstThing = JSON.stringify(firstThing);
+	// console.log("firstThing:", firstThing);
+	secondThing = JSON.stringify(secondThing);
+	// console.log("secondThing:", secondThing);
+	if (firstThing.length != secondThing.length) {
+		console.log("Strings not same length:", firstThing.length, secondThing.length);
+	}
+	let matching = true;
+	let temp = 0;
+	while (matching && temp < firstThing.length) {
+		if (firstThing.charAt(temp) != secondThing.charAt(temp)) {
+			console.log(
+				whatsNotMatching + " not matching at:",
+				temp,
+				firstThing.substring(temp - 10, temp + 10),
+				secondThing.substring(temp - 10, temp + 10)
+			);
+			matching = false;
+		} else {
+			temp++;
+		}
+	}
+	return matching;
+}
+
 module.exports = {
 	wrap,
 	spawnProcess,
@@ -123,4 +149,5 @@ module.exports = {
 	multipartPost,
 	askQuestion,
 	aTob,
+	stringifyCompare,
 };

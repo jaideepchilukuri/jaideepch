@@ -26,36 +26,41 @@
 			"<rootDir>/NPM/",
 			"<rootDir>/CCT/",
 			"<rootDir>/clientconfigs/",
-			"<rootDir>/tests/EJS/emptyconfigs/",
-			"<rootDir>/tests/empty*"
+			"<rootDir>/maintainance/EJS/emptyconfigs/",
+			"<rootDir>/maintainance/EJS/fullcustomeverythingconfigs/",
+			"<rootDir>/maintainance/empty*"
 		],
 		"modulePathIgnorePatterns": [
 			"<rootDir>/NPM/",
 			"<rootDir>/CCT/",
 			"<rootDir>/clientconfigs/",
-			"<rootDir>/tests/EJS/emptyconfigs/",
-			"<rootDir>/tests/empty*"
+			"<rootDir>/maintainance/EJS/emptyconfigs/",
+			"<rootDir>/maintainance/EJS/fullcustomeverythingconfigs/",
+			"<rootDir>/maintainance/empty*"
 		],
 		"testPathIgnorePatterns": [
 			"<rootDir>/NPM/",
 			"<rootDir>/CCT/",
 			"<rootDir>/clientconfigs/",
-			"<rootDir>/tests/EJS/emptyconfigs/",
-			"<rootDir>/tests/empty*"
+			"<rootDir>/maintainance/EJS/emptyconfigs/",
+			"<rootDir>/maintainance/EJS/fullcustomeverythingconfigs/",
+			"<rootDir>/maintainance/empty*"
 		],
 		"transformIgnorePatterns": [
 			"<rootDir>/NPM/",
 			"<rootDir>/CCT/",
 			"<rootDir>/clientconfigs/",
-			"<rootDir>/tests/EJS/emptyconfigs/",
-			"<rootDir>/tests/empty*"
+			"<rootDir>/maintainance/EJS/emptyconfigs/",
+			"<rootDir>/maintainance/EJS/fullcustomeverythingconfigs/",
+			"<rootDir>/maintainance/empty*"
 		],
 		"watchPathIgnorePatterns": [
 			"<rootDir>/NPM/",
 			"<rootDir>/CCT/",
 			"<rootDir>/clientconfigs/",
-			"<rootDir>/tests/EJS/emptyconfigs/",
-			"<rootDir>/tests/empty*"
+			"<rootDir>/maintainance/EJS/emptyconfigs/",
+			"<rootDir>/maintainance/EJS/fullcustomeverythingconfigs/",
+			"<rootDir>/maintainance/empty*"
 		]
 	},
 	"scripts": {

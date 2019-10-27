@@ -38,43 +38,17 @@ async function getAConfig(codeVersionToTest, filepath, filename, defnumber) {
 	return object;
 }
 
-async function testMatchingHelperFunction(expected, created, sitekeyandfilename) {
-	expected = JSON.stringify(expected);
-	// console.log("expected:", expected);
-	created = JSON.stringify(created);
-	// console.log("created:", created);
-	if (expected.length != created.length) {
-		console.log("Strings not same length:", expected.length, created.length);
-	}
-	let matching = true;
-	let temp = 0;
-	while (matching && temp < expected.length) {
-		if (expected.charAt(temp) != created.charAt(temp)) {
-			console.log(
-				sitekeyandfilename + " not matching at:",
-				temp,
-				expected.substring(temp - 10, temp + 10),
-				created.substring(temp - 10, temp + 10)
-			);
-			matching = false;
-		} else {
-			temp++;
-		}
-	}
-	return matching;
-}
-
 async function buildForTemplateTest(sitekey, codeVersionToTest, overwriteSitekeysConfigJSONifExists) {
   await filesystem.makeDirIfMissing(`${path}/../clientconfigs/${sitekey}/`);
   await filesystem.makeDirIfMissing(`${path}/../clientconfigs/${sitekey}/assets/`);
   if (overwriteSitekeysConfigJSONifExists) {
     await filesystem.copyFrom2ToIfFromExists(
-      `${path}/EJS/${sitekey}.json`,
+      `${path}/${sitekey}.json`,
       `${path}/../clientconfigs/${sitekey}/config.json`
     );
   } else {
     await filesystem.copyFrom2ToIfToMissing(
-      `${path}/EJS/${sitekey}.json`,
+      `${path}/${sitekey}.json`,
       `${path}/../clientconfigs/${sitekey}/config.json`
     );
   }
@@ -159,7 +133,7 @@ async function testTemplate(sitekey, codeVersionToTest, filename) {
 		filename,
 		afterfilename
 	);
-	expected = await fixExpectedForMe(filename, sitekey, codeVersionToTest, expected); //maybe this can go away at some point? I hope
+  expected = await fixExpectedForMe(filename, sitekey, codeVersionToTest, expected); //maybe this can go away at some point? I hope
 	if (filename == "productconfig/trigger/surveydef/def") {
 		afterfilename = "000";
 	}
@@ -169,8 +143,8 @@ async function testTemplate(sitekey, codeVersionToTest, filename) {
 		filename,
 		afterfilename
 	);
-	created = await fixCreatedForMe(filename, sitekey, codeVersionToTest, created, expected); //maybe this can go away at some point? I hope
-	let matching = await testMatchingHelperFunction(expected, created, `${sitekey} ${filename}`);
+  created = await fixCreatedForMe(filename, sitekey, codeVersionToTest, created, expected); //maybe this can go away at some point? I hope
+	let matching = await other.stringifyCompare(expected, created, `${sitekey} ${filename}`);
 	return matching;
 }
 
@@ -418,7 +392,7 @@ async function fixCreatedForMe(filename, sitekey, codeVersionToTest, created, ex
             )
               delete created.module.exports.display.desktop[0].vendorAltText;
           }
-          if (created.module.exports.display.desktop[0].hideForeSeeLogoDesktop) {
+          //if (created.module.exports.display.desktop[0].hideForeSeeLogoDesktop) {
             if (
               !expected ||
               !expected.module ||
@@ -429,7 +403,7 @@ async function fixCreatedForMe(filename, sitekey, codeVersionToTest, created, ex
               !expected.module.exports.display.desktop[0].hideForeSeeLogoDesktop
             )
               delete created.module.exports.display.desktop[0].hideForeSeeLogoDesktop;
-          }
+          //}
         }
         if (created.module.exports.display.mobile && created.module.exports.display.mobile[0]) {
           if (created.module.exports.display.mobile[0].trusteLogoAltText) {

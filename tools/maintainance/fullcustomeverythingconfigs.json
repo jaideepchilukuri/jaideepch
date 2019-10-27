@@ -13,6 +13,7 @@
               "siteLogoAltText": "custom_desktoplegacysiteLogoAltText",
               "vendorTitleText": "custom_desktoplegacyvendorTitleText",
               "vendorAltText": "custom_desktoplegacyvendorAltText",
+              "hideForeSeeLogoDesktop": true,
               "trusteLogoAltText": "custom_desktoplegacytrusteLogoAltText",
               "inviteType": "INSESSION",
               "closeClickOnBackdrop": false,

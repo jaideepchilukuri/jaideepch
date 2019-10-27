@@ -98,7 +98,7 @@ const legacyDesktopDefaults = {
 	template: "classicdesktop",
 	vendorTitleText: "ForeSee",
 	vendorAltText: "ForeSee",
-	hideForeSeeLogoDesktop: "false",
+	hideForeSeeLogoDesktop: false,
 	blurb:
 		"Thank you for visiting our website. You have been selected to participate in a brief customer satisfaction survey to let us know how we can improve your experience.",
 	noticeAboutSurvey:
