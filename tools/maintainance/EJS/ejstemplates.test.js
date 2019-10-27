@@ -16,7 +16,7 @@ const filestocheck = [
 ];
 // whether or not to overwrite the config.json files in the clientconfig/sitekey folder if they exist already
 const overwriteSitekeysConfigJSONifExists = true;
-// whetrher or not to delete the test config folders from tools/clientconfigs after running the tests
+// whether or not to delete the test config folders from tools/clientconfigs after running the tests
 const deleteSitekeysWhenFinished = true;
 
 const etthf = require("./ejstemplatetesthelperfunctions");
