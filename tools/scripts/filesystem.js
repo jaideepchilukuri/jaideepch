@@ -152,6 +152,7 @@ async function buildFileContentsFromTemplateFile(filename, data, delimiter) {
 		delimiter = "%";
 	}
 	let string = await ejs.renderFile(filename, data, { delimiter: delimiter });
+	//come back and revisit this - if there's something that replaces all of these instead of hardcoding a list it would be better
 	string = string
 		.replace(/&lt;/g, "<")
 		.replace(/&gt;/g, ">")

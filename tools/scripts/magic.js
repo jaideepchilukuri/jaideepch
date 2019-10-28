@@ -9,8 +9,13 @@ const path =
 		? `${process.cwd()}/clientconfigs/`
 		: `${process.cwd()}/tools/clientconfigs/`;
 
-async function listCommands(questions) {
-	let answers = await other.askQuestion(questions);
+async function listCommands(questions, testing, testvals) {
+	let answers;
+	if (testing) {
+		answers = testvals;
+	} else {
+		answers = await other.askQuestion(questions);
+	}
 	if (answers.sitekey) {
 		answers.sitekeys = [answers.sitekey];
 	} else {
@@ -54,7 +59,7 @@ async function listCommands(questions) {
 			await remove(answers.sitekeys);
 			break;
 		default:
-			console.log(answers.commands);
+			console.log(answers.commands + " isn't a scroll command we have logic written to handle");
 	}
 }
 
