@@ -59,7 +59,7 @@ module.exports = {
      * this is 4.5 megabytes for session storage and 10 megabytes for window
      * storage.
      */
-    <% if (!combinedconfig.record.advancedSettings.maxStorageMB) { %> // <% } %> maxStorageMB: "<%=combinedconfig.record.advancedSettings.maxStorageMB%>",
+    <% if (!combinedconfig.record.advancedSettings.maxStorageMB) { %> // <% } %> maxStorageMB: <%=combinedconfig.record.advancedSettings.maxStorageMB%>,
 
     /**
      * Set up cxReplay pools, which apply before cxR is activated. This is a sticky state and once
@@ -115,7 +115,7 @@ module.exports = {
      * cxRecord needs to be set to true in trigger_config.js
      */
     device_type_support: {
-      desktop: <%=combinedconfig.record.advancedSettings.device_type_support.desktop%>,
+      desktop: <%=combinedconfig.record.advancedSettings.device_type_support["desktop"]%>,
       phone: <%=combinedconfig.record.advancedSettings.device_type_support.phone%>,
       tablet: <%=combinedconfig.record.advancedSettings.device_type_support.tablet%>,
     },
@@ -166,12 +166,12 @@ module.exports = {
       * to the server, but the viewer will not see it. Useful for profile images and the like.
       */
      pii: {
-      <% if (!combinedconfig.record.advancedSettings.pii.maskCharacters) { %> // <% } %> maskCharacters: "<%-JSON.stringify(combinedconfig.record.advancedSettings.pii)%>",
+      <% if (!combinedconfig.record.advancedSettings.pii.maskCharacters) { %> // <% } %> maskCharacters: "<%=combinedconfig.record.advancedSettings.pii.maskCharacters%>",
       selectiveUnMaskZones: <%-JSON.stringify(combinedconfig.record.advancedSettings.pii.selectiveUnMaskZones)%>,
-       pagesToSelectiveMask: <%-JSON.stringify(combinedconfig.record.advancedSettings.pii.pagesToSelectiveMask)%>,
-       selectiveMaskZones: <%-JSON.stringify(combinedconfig.record.advancedSettings.pii.selectiveMaskZones)%>,
-       visibleInputs: <%-JSON.stringify(combinedconfig.record.advancedSettings.pii.visibleInputs)%>,
-       redactZones: <%-JSON.stringify(combinedconfig.record.advancedSettings.pii.visibleInputs)%>,
+      pagesToSelectiveMask: <%-JSON.stringify(combinedconfig.record.advancedSettings.pii.pagesToSelectiveMask)%>,
+      selectiveMaskZones: <%-JSON.stringify(combinedconfig.record.advancedSettings.pii.selectiveMaskZones)%>,
+      visibleInputs: <%-JSON.stringify(combinedconfig.record.advancedSettings.pii.visibleInputs)%>,
+      redactZones: <%-JSON.stringify(combinedconfig.record.advancedSettings.pii.redactZones)%>,
      },
  
      /**

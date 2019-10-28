@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Page 1</title>
+    <script type="text/javascript">
+      // Instructions: please embed this snippet directly into every page in your website template.
+      // For optimal performance, this must be embedded directly into the template, not referenced
+      // as an external file.
+
+      // ForeSee Embed Script v2.00
+      // DO NOT MODIFY BELOW THIS LINE *****************************************
+      ;(function (g) {
+        var d = document, am = d.createElement('script'), h = d.head || d.getElementsByTagName("head")[0], fsr = 'fsReady',
+          aex = {
+            "src": "http://qa-gateway-elb.foresee.com/sites/aarp/production/gateway.js?" + Math.random(),
+            "type": "text/javascript",
+            "async": "true",
+            "data-vendor": "fs",
+            "data-role": "gateway"
+          };
+        for (var attr in aex){am.setAttribute(attr, aex[attr]);}h.appendChild(am);g[fsr] = function () {var aT = '__' + fsr + '_stk__';g[aT] = g[aT] || [];g[aT].push(arguments);};
+      })(window);
+      // DO NOT MODIFY ABOVE THIS LINE *****************************************
+
+        function changeIFrame() {
+            var fr = document.getElementById('T:if2');
+            fr.src = 'emptyframe.html';
+            setTimeout(function() {
+                fr.style.height = '300px';
+            }, 4000);
+
+            return false;
+        }
+    </script>
+    <script   src="https://code.jquery.com/jquery-2.2.4.js"></script>
+</head>
+<body>
+<h1>hello world.</h1>
+<h2>Page 1</h2>
+<div><div>Hellow</div><div>More stuff</div></div>
+<p><a href="#" onclick="return changeIFrame()">Change iframe src</a></p>
+<p><iframe id="T:if2" src="javascript:''" style="width:400px; height:150px; border:1px solid black;"></iframe></p>
+<p id="somecontainer">hello world <input type="text" id="mytb" class="fsrVisible"></p>
+<p class="removeIt">REMOVE ME Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>KEEP Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>KEEP Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p class="removeIt">REMOVE ME Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>KEEP Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p id="childNs">Lorem ipsum <span id="hello1">dolor</span> sit <span class="dsfdsf">amet</span>, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p id="adder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+</body>
+</html>

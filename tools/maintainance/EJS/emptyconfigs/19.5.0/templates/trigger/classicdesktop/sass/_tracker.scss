@@ -1,0 +1,67 @@
+@import 'vars';
+
+.__acs {
+  &.acsActiveTracker {
+    .postLaunchInstructions {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+  &.acsTracker {
+    background-color: white;
+    overflow: hidden;
+    margin: $general-bigpadding;
+    font-family: Arial, Helvetica, sans-serif;
+    .acsSiteLogo, .acsVendorLogo, .acsVendorLogoSVG, .acsLogoSpacer {
+      height: 4em;
+    }
+    .acsVendorLogoSVG {
+      background-image: $svglogo;
+      background-size: 100% 100%;
+      width: 7em;
+      float: right;
+    }
+    .acsVendorLogo {
+      float: right;
+    }
+    .acsLogoSpacer {
+      margin-bottom: $general-bigpadding;
+    }
+    #buttonAreaContainer {
+      padding-left: $general-bigpadding;
+      padding-right: $general-bigpadding;
+      border-radius: $general-borderradius;
+      text-align: center;
+      position: relative;
+    }
+    h1 {
+      color: #0F6FD5;
+      font-size: 1.4em;
+      margin-bottom: ($general-padding - 0.5);
+    }
+    .initialContent {
+      margin-bottom: $general-padding;
+    }
+    .showLater {
+      display: none;
+    }
+    p {
+      font-size: 0.9em;
+      margin-bottom: $general-padding;
+    }
+    .lessImportantIntructions {
+      color: #4c4c4c;
+    }
+    .copyrightDetails {
+      font-size: 0.8em;
+    }
+    #loadImg {
+      width: 1em;
+      height: 1em;
+      position: absolute;
+      left: 49%;
+      top: 49%;
+      visibility: hidden;
+    }
+  }
+}

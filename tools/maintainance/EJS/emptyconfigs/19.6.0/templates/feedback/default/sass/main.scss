@@ -1,0 +1,30 @@
+@import "survey";
+
+// Modal CSS and Customizations for this template..
+.acsModalContainer--default {
+  @extend %acsModalContainer;
+}
+
+// Badge and ReportBadge CSS and customizations for this template..
+._acsbadge--default {
+  @extend %_acsbadge;
+}
+
+._acsreport--default {
+  @extend %_acsreport;
+}
+
+// Popup CSS and customizations for this template..
+.acsMainContainerMobile--default {
+  @extend %acsMainContainerMobile;
+}
+
+// In Page report frame container and customizations for this template..
+.acsFrameContainer--default {
+  @extend .acsFrameContainer;
+}
+
+// Full Page Version Container and customizations for this template..
+.acsMainContainerFullPage--default {
+  @extend %acsMainContainerFullPage;
+}

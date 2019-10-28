@@ -1,0 +1,60 @@
+{
+  "name": "GATEWAY_JS",
+  "version": "2.6.4",
+  "defaultCodeVer": "19.8.4",
+  "description": "ForeSee Gateway Bootloader",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alexei White",
+  "license": "ISC",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "prettier": {
+    "printWidth": 100,
+    "trailingComma": "es5"
+  },
+  "lint-staged": {
+    "*.{js,json}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "archiver": "*",
+    "atob": "*",
+    "btoa": "*",
+    "colors": "*",
+    "dateformat": "*",
+    "fcp-client": "git+https://6e4a48bb784a816412d43fe1bc3e0f28a02f54ad:x-oauth-basic@github.com/foreseecode/fcp-client.git",
+    "filemunge": "*",
+    "gulp": "3.9.1",
+    "gulp-concat": "*",
+    "gulp-if-else": "*",
+    "gulp-jsbeautifier": "*",
+    "gulp-jshint": "*",
+    "gulp-pragma": "*",
+    "gulp-replace": "*",
+    "gulp-rimraf": "*",
+    "gulp-uglify": "^3.0.0",
+    "gulp-util": "*",
+    "gulp-wrap": "*",
+    "handydevserver": "*",
+    "husky": "^1.2.0",
+    "jshint": "*",
+    "jshint-stylish": "*",
+    "lint-staged": "^8.1.0",
+    "mkdirp": "*",
+    "node-notifier": "*",
+    "prettier": "^1.15.3",
+    "prompt": "*",
+    "restler": "*",
+    "rimraf": "*",
+    "strip-comments": "*",
+    "through": "*"
+  }
+}

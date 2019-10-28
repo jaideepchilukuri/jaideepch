@@ -1,0 +1,25 @@
+﻿// Light theme ..
+@import 'vars';
+
+// Invite..
+$invite-background: #ffffff;
+$close-btn-color: #3A475B;
+$box-shadow-color: #627085;
+$close-btn-text-color: #ffffff;
+$close-btn-color-fullscreen: transparent;
+$close-btn-text-color-fullscreen: #627085;
+$pp-background-color: #EFF1F6;
+$invite-text-color: #000;
+$invalid-text-color: #9c0000;
+$fullscreen-background: rgba(255, 255, 255, 0.95);
+$fullscreen-shadow: #627085;
+$svglogo: url('https://static.foresee.com/logos/foresee/grey/foresee.svg');
+
+// Button..
+$btn-background: #3A475B;
+$btn-shadow: none;
+$btn-disabled-background: #B7C0CC;
+$btn-text-color: #ffffff;
+
+@import 'invite';
+@import 'tracker';

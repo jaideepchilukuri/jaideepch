@@ -1,0 +1,182 @@
+@import 'vars';
+
+.__acs {
+  &.fsrbottomright {
+    .acsClassicInvite {
+      -webkit-transform: none;
+      -ms-transform: none;
+      transform: none;
+      top: auto;
+      bottom: 1.5em;
+      position: absolute;
+    }
+  }
+  .acsCloseButton {
+    font-size: 89%;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+    display: block;
+    position: absolute;
+    border: 1px solid #888;
+    color: $bluecolor;
+    text-decoration: none;
+    top: 1.1em;
+    right: $general-bigpadding;
+    -webkit-border-radius: $general-borderradius;
+    -moz-border-radius: $general-borderradius;
+    border-radius: $general-borderradius;
+    line-height: 1em;
+    background-color: #ffffff;
+    font-family: initial;
+    &:hover {
+      background-color: #cccccc;
+    }
+  }
+  .acsClassicInvite {
+    font-size: 125%;
+    -webkit-box-shadow: 0px 0px 19px 0px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0px 0px 19px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 0px 19px 0px rgba(0, 0, 0, 0.25);
+    -webkit-border-radius: $general-borderradius;
+    -moz-border-radius: $general-borderradius;
+    border-radius: $general-borderradius;
+    padding: 2px;
+    background-color: #777;
+    position: relative;
+    display: inline-block;
+    max-width: 27em;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    &#acsOnExitMobileInvite {
+      div.acsLogoSpacer {
+        display: none;
+      }
+    }
+    div.acsLogoContainer {
+      padding-left: ($general-bigpadding * 2);
+      padding-right: ($general-bigpadding * 2);
+      table.acsLogoSpacer {
+        display: table;
+        border-collapse: collapse;
+        margin-top: $general-bigpadding;
+        tr {
+          display: table-row;
+          td {
+            display: table-cell;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+    a.acsTrustSealA {
+      display: inline-block;
+      height: 1.5em;
+      width: 4.5em;
+      .acsTrusteseal {
+        height: 1.5em;
+        width: 4.5em;
+      }
+      .acsTrustesealSVG {
+        background-image: $svgtrustlogo;
+        background-size: 100% 100%;
+        height: 1.5em;
+        width: 4.5em;
+      }
+    }
+    .acsClassicInner {
+      text-align: center;
+      background-color: #eeeeee;
+      -webkit-border-radius: $general-borderradius;
+      -moz-border-radius: $general-borderradius;
+      border-radius: $general-borderradius;
+      display: inline-block;
+      padding: $general-padding;
+      font-family: $general-font-family;
+      .acsNoDisplay {
+        display: none;
+      }
+      .acsSiteLogo, .acsVendorLogo, .acsVendorLogoSVG {
+        height: 2em !important;
+      }
+      .acsVendorLogoSVG {
+        background-image: $svglogo;
+        background-size: 100% 100%;
+        width: 3.6em;
+      }
+      p, h1 {
+        font-family: $general-font-family;
+      }
+      h1 {
+        font-weight: normal;
+        font-size: 1.3em;
+        margin-top: ($general-padding / 2);
+        color: #000000;
+        line-height: 1.2em;
+      }
+      p {
+        font-weight: lighter;
+        font-size: 0.6em;
+        line-height: 1.5em;
+        color: #666;
+        margin-top: $general-padding;
+        &.acsNoticeAboutSurvey {
+          font-weight: bold;
+          color: #000;
+        }
+        &.acsAttribution {
+          font-size: 0.6em;
+          color: #666;
+        }
+      }
+      #acsEmailSMSInput {
+        border: 0.25em solid #666;
+        width: 100%;
+        font-size: 1.2em;
+        padding: 0.3em;
+        color: #000000;
+        box-sizing: border-box;
+      }
+      #acsInvalidInput {
+        color: brown;
+        font-size: 0.8em;
+      }
+      .acsInviteButton {
+        white-space: nowrap;
+        background: #5e9bff; /* Old browsers */
+        background: -moz-linear-gradient(top, #5e9bff 0%, #0062e5 44%, #0062e4 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #5e9bff), color-stop(44%, #0062e5), color-stop(100%, #0062e4)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top, #5e9bff 0%, #0062e5 44%, #0062e4 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top, #5e9bff 0%, #0062e5 44%, #0062e4 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top, #5e9bff 0%, #0062e5 44%, #0062e4 100%); /* IE10+ */
+        background: linear-gradient(to bottom, #5e9bff 0%, #0062e5 44%, #0062e4 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#5e9bff', endColorstr='#0062e4', GradientType=0); /* IE6-9 */
+        display: inline-block;
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 0.8em;
+        padding: 0.6em;
+        margin-top: $general-padding;
+        text-align: center;
+        border-radius: $general-borderradius;
+        width: 35%;
+        font-weight: normal;
+        box-sizing: content-box;
+        &.acsDeclineButton {
+          margin-right: $general-padding;
+        }
+        &:hover {
+          background: #0766ff; /* Old browsers */
+          background: -moz-linear-gradient(top, #0766ff 0%, #004bac 49%, #004bac 100%); /* FF3.6+ */
+          background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #0766ff), color-stop(49%, #004bac), color-stop(100%, #004bac)); /* Chrome,Safari4+ */
+          background: -webkit-linear-gradient(top, #0766ff 0%, #004bac 49%, #004bac 100%); /* Chrome10+,Safari5.1+ */
+          background: -o-linear-gradient(top, #0766ff 0%, #004bac 49%, #004bac 100%); /* Opera 11.10+ */
+          background: -ms-linear-gradient(top, #0766ff 0%, #004bac 49%, #004bac 100%); /* IE10+ */
+          background: linear-gradient(to bottom, #0766ff 0%, #004bac 49%, #004bac 100%); /* W3C */
+          filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0766ff', endColorstr='#004bac', GradientType=0); /* IE6-9 */
+        }
+      }
+    }
+  }
+}

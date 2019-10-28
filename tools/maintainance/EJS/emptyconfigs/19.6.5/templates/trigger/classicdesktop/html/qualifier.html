@@ -1,0 +1,34 @@
+<div class="acsLogoSpacer">
+    <img src="<%=(trackerLogo || '')%>" class="<%=((trackerLogo && trackerLogo.length > 0) ? 'acsSiteLogo' : 'acsNoDisplay')%>" title="<%=(siteLogoTitleText || '')%>" alt="<%=(siteLogoAltText || '')%>">
+    <% if (typeof hideForeSeeLogoDesktop === "undefined" || !hideForeSeeLogoDesktop) { %>
+    <img src="https://static.foresee.com/logos/foresee/150_67.png" class="<%=(!supportsSVG ? 'acsVendorLogo' : 'acsNoDisplay')%>" title="<%=(vendorTitleText || '')%>" alt="<%=(vendorAltText || '')%>">
+    <div title="<%=(vendorTitleText || '')%>" alt="<%=(vendorAltText || '')%>" class="<%=(supportsSVG ? 'acsVendorLogoSVG' : 'acsNoDisplay')%>"></div>
+    <% } %>
+</div>
+<div id="fsrQualifierMain">
+    <h2><%= qual.survey.topSection %></h2>
+    <form id="qualifierForm">
+    <% for (var qi = 0; qi < qual.survey.questions.length; qi++) {
+        var q = qual.survey.questions[qi]; %>
+    <div class="qualQuestion activeQuestion" questionNum="<%= qi %>">
+        <h3><span class="questionQ">Q:</span> <%= q.text %></h3>
+        <% if (q.questionType == 'RADIO') { %>
+        <ul class="qualRadio">
+            <% for (var ch = 0; ch < q.choices.length; ch++) {
+                var chobj = q.choices[ch]; %>
+            <li>
+                <input type="radio" <% for (var chel in chobj) { %><%= chel %>="<%= chobj[chel] %>" <% } %> /> <label for="<%= chobj.id %>"><%= chobj.text %></label>
+            </li>
+            <% } %>
+        </ul>
+        <% } %>
+    </div>
+    <% } %>
+    <div id="qualButtonZone"><input type="submit" value="<%= qual.survey.continueLabel %>" id="qualSubmitButton"> <input type="button" value="<%= qual.survey.noLabel %>" id="qualCancelButton"></div>
+    </form>
+</div>
+<div id="fsrQualifierNoThanks" class="acsNoDisplay">
+    <h2><%= qual.survey.noThanksTopSection %></h2>
+    <h3><%= qual.survey.noThanksBottomSection %></h3>
+    <div id="qualButtonZone"><input type="button" value="<%= qual.survey.closeLabel %>" id="qualCloseButton"></div>
+</div>

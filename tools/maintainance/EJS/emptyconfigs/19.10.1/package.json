@@ -1,0 +1,132 @@
+{
+  "name": "client_code",
+  "version": "19.10.1",
+  "description": "ForeSee Client Code",
+  "main": "gulpfile.js",
+  "fcp": "gateway.foresee.com",
+  "scripts": {
+    "dev": "nodemon --exec gulp test_debug",
+    "test": "jest",
+    "lint": "eslint .",
+    "cov": "jest --coverage --coverageDirectory=\"./cov\"",
+    "watch": "rollup -c rollup.config.js --watch"
+  },
+  "build": {
+    "dist": "./dist",
+    "config": "./clientconfig",
+    "ports": [
+      8080,
+      443
+    ],
+    "previewsrc": "dist/feedback/**",
+    "previewdst": "preview"
+  },
+  "engines": {
+    "node": ">=10.14.1",
+    "npm": ">=6.4.1"
+  },
+  "author": "Foresee (https://www.foresee.com/)",
+  "homepage": "https://github.com/foreseecode/client_code",
+  "license": "UNLICENSED",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/foreseecode/client_code.git"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && jest --onlyChanged",
+      "pre-push": "jest"
+    }
+  },
+  "jest": {
+    "modulePathIgnorePatterns": [
+      "/dist/",
+      "/node_modules/"
+    ]
+  },
+  "prettier": {
+    "printWidth": 100,
+    "trailingComma": "es5"
+  },
+  "lint-staged": {
+    "*.{js,json}": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "eslintIgnore": [
+    "*.json",
+    "/node_modules/",
+    "/dist/",
+    "/clientconfig/",
+    "/templates/",
+    "/smoketest/"
+  ],
+  "nodemonConfig": {
+    "ignore": [
+      "dist/",
+      "clientconfig*/productconfig/trigger/surveydef/*.js"
+    ]
+  },
+  "devDependencies": {
+    "@babel/cli": "~7.4.4",
+    "@babel/core": "~7.4.5",
+    "@babel/preset-env": "~7.4.5",
+    "@gidw/prompt-confirm": "^1.0.1",
+    "atob": "^2.0.3",
+    "bity-promise": "~0.0.6",
+    "btoa": "^1.2.1",
+    "chalk": "^2.4.1",
+    "commander": "^2.19.0",
+    "copy-dir": "^0.3.0",
+    "email-validator": "^1.0.7",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-plugin-es5": "^1.3.1",
+    "eslint-plugin-jest": "^22.2.2",
+    "eslint": "^5.13.0",
+    "fcp-client": "git+https://6e4a48bb784a816412d43fe1bc3e0f28a02f54ad:x-oauth-basic@github.com/foreseecode/fcp-client.git",
+    "gulp-cssmin": "~0.2.0",
+    "gulp-htmlmin": "~3.0.0",
+    "gulp-if": "~2.0.2",
+    "gulp-ignore": "~2.0.2",
+    "gulp-promise": "~1.0.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-sass": "~3.1.0",
+    "gulp-util": "~3.0.8",
+    "gulp-wrap": "^0.13.0",
+    "gulp": "~3.9.1",
+    "handydevserver": "^1.0.9",
+    "html-entities": "^1.2.1",
+    "husky": "^1.2.0",
+    "jest": "^24.0.0",
+    "lint-staged": "^8.1.0",
+    "lodash.template": "~4.4.0",
+    "mv": "^2.1.1",
+    "node-notifier": "^5.1.2",
+    "nodemailer-smtp-transport": "^2.7.4",
+    "nodemailer": "^4.0.1",
+    "prettier": "~1.17.1",
+    "prompt": "^1.0.0",
+    "request": "^2.88.0",
+    "rimraf": "^2.6.1",
+    "rollup-plugin-babel": "~4.3.2",
+    "rollup-plugin-bundle-size": "~1.0.3",
+    "rollup-plugin-conditional": "~3.1.0",
+    "rollup-plugin-strip-code": "~0.2.6",
+    "rollup": "~1.13.0",
+    "run-sequence": "~1.2.2",
+    "semver-compare": "^1.0.0",
+    "semver": "^5.3.0",
+    "simple-git": "^1.110.0",
+    "strip-comments": "~0.4.4",
+    "terser": "~3.17.0",
+    "uuid": "~3.0.1",
+    "yargs": "^10.0.3",
+    "zip-dir": "~1.0.2"
+  },
+  "yargs": {
+    "short-option-groups": false
+  }
+}

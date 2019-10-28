@@ -1,0 +1,18 @@
+<div class="acsLogoSpacer">
+    <img src="<%=(trackerLogo || '')%>" class="<%=((trackerLogo && trackerLogo.length > 0) ? 'acsSiteLogo' : 'acsNoDisplay')%>" title="<%=(siteLogoTitleText || '')%>" alt="<%=(siteLogoAltText || '')%>">
+    <% if (typeof hideForeSeeLogoDesktop === "undefined" || !hideForeSeeLogoDesktop) { %>
+    <img src="https://static.foresee.com/logos/foresee/150_67.png" class="<%=(!supportsSVG ? 'acsVendorLogo' : 'acsNoDisplay')%>" title="<%=(vendorTitleText || '')%>" alt="<%=(vendorAltText || '')%>">
+    <div title="<%=(vendorTitleText || '')%>" alt="<%=(vendorAltText || '')%>" class="<%=(supportsSVG ? 'acsVendorLogoSVG' : 'acsNoDisplay')%>"></div>
+    <% } %>
+</div>
+<div id="fsrReminderMain">
+    <h2><%= rmdr.display.headerSection %></h2>
+    <form id="reminderForm">
+        <div id="fsrReminderBody">
+            <span><%= rmdr.display.bodySection %></span>
+        </div>
+        <div id="rmdrButtonZone">
+            <input type="submit" value="<%= rmdr.display.buttonText %>" id="rmdrAcceptButton">
+        </div>
+    </form>
+</div>

@@ -1,0 +1,184 @@
+<% if (meta.logo2graphic) { %>
+  <div class="acs-feedback-banner-img-container">
+    <img src='<%=meta.logo2graphic%>' class="acs-feedback-banner-img" alt="company logo" />
+  </div>
+<% } %>
+<div class="acs-feedback">
+  <div class="acs-feedback__block acs-feedback--keyline acs-headingzone">
+    <% if (meta.logo1graphic) { %>
+      <img src="<%= meta.logo1graphic %>" class="acs-feedback__logo" alt="ForeSee Logo" />
+    <% } %>
+    <% if (meta.prologuetext) { %>
+      <%= meta.prologuetext %>
+    <% } %>
+  </div>
+  <% for (var nti = 0; nti < notopic.length; nti++) {
+    var qobj = notopic[nti]; %>
+    <% if (qobj.qt != '2' || qobj.answers.length > 1) { %>
+      <div class="acs-feedback__block acs-persistent__block <% if (qobj.qt == '4') { %>acs-starrating__block<% } %>" questionid="<%= qobj.id %>"
+        data-question-type="<%= qobj.qt %>">
+        <label class="acs-feedback__label" id="acs_label<%= qobj.id %>" for="<%= qobj.id %>">
+          <%= qobj.txt %>
+          <span class="acs-feedback__block--required">
+            &nbsp;&#42;
+          </span>
+        </label>
+        <% if (qobj.qt == '4') { %>
+          <fieldset class="star-rating" questionid="<%= qobj.id %>" role="radiogroup" id="<%= qobj.id %>" title="Star rating" aria-required="true">
+            <% for (var ati = 0; ati < qobj.answers.length; ati++) {
+        var ans = qobj.answers[ati]; %>
+              <label for="sr_<%= qobj.id %>_<%= ans.id %>" alt="<%=ans.val %> stars" tabindex="0" aria-checked="false" role="radio" aria-label="<%=ans.val %> stars" aria-describedby="acs_label<%= qobj.id %>">
+                <input name="sr_<%= qobj.id %>" id="sr_<%= qobj.id %>_<%= ans.id %>" alt="<%=ans.val %> stars" value="<%= ans.id %>" questionid="<%= qobj.id %>"
+                  tabindex="-1" type="radio" class="star-rating__star fsrVisible" value="<%= ans.val %>" />
+              </label>
+            <% } %>
+          </fieldset>
+        <% } %>
+        <% if (qobj.qt == '2') { %>
+          <div class="acs-feedback__control acs-feedback__select" questionid="<%= qobj.id %>">
+            <select name="select" id="<%= qobj.id %>" class="acs-feedback__selector acs-topic__selector fsrVisible" aria-required="true">
+              <option>
+                <%= ext.feedback_choose_topic_text %>
+              </option>
+              <% for (var atiq = 0; atiq < qobj.answers.length; atiq++) {
+      var ans = qobj.answers[atiq]; %>
+                <option value="<%= ans.id %>">
+                  <%= ans.lbl %>
+                </option>
+              <% } %>
+            </select>
+            <span alt "select-menu-arrow" aria-hidden="true" tabindex="-1"></span>
+          </div>
+        <% } %>
+      </div>
+    <% } %>
+  <% } %>
+  <!-- TOPICS BEGIN HERE -->
+  <% for (var tpi = 0; tpi < topics.length; tpi++) {
+    var topk = topics[tpi]; %>
+    <div class="acs-feedback__topic" id="topk_<%= topk.id %>">
+      <% for (var qi = 0; qi < topk.questions.length; qi++) {
+        var q = topk.questions[qi]; %>
+        <div class="acs-feedback__block <% if (q.qt == '4') {%>acs-starrating__block<% }%>" id="acsq_<%= q.id %>" questionid="<%= q.id %>"
+          data-question-type="<%= q.qt %>">
+          <label class="acs-feedback__label" id="acs_label<%= q.id %>" for="acs_obj<%= q.id %>" data-questiontype="_<%= q.qt %>" role="heading">
+            <%= q.txt %>
+            <% if (q.r === "1") { %>
+              <span class="acs-feedback__block--required">
+                &nbsp;&#42;
+              </span>
+            <% } else { %>
+              <span class="acs-feedback__block--optional">
+              </span>
+            <% } %>
+          </label>
+          <% if (q.qt == '5') { %>
+            <!-- Checkbox -->
+            <div class="acs-feedback__cb acs-feedback__cbox">
+              <% for (var ansi = 0; ansi < q.answers.length; ansi++) {
+                var ans = q.answers[ansi]; %>
+                <label role="checkbox" for="_<%= ans.id %>" tabindex="0"
+                  class="acs-feedback__control acs-feedback__cbradio"
+                  aria-required="<%= q.r === "1" ? 'true' : 'false' %>"
+                  aria-describedby="acs_label<%= q.id %>"
+                  aria-checked="false">
+                  <input type="checkbox" name="_<%= ans.id %>"
+                    value="<%= ans.val %>"
+                    questionid="<%= ans.id %>" id="_<%= ans.id %>"
+                    class="fsrVisible" aria-hidden="true"
+                  />
+                  <%= ans.lbl %>
+                </label>
+              <% } %>
+            </div>
+          <% } %>
+          <% if (q.qt == '3') { %>
+            <!-- Radio -->
+            <div class="acs-feedback__cb acs-feedback__radio">
+              <% for (var ansi = 0; ansi < q.answers.length; ansi++) {
+                var ans = q.answers[ansi]; %>
+                <label for="_<%= ans.id %>"
+                  class="acs-feedback__control acs-feedback__cbradio acs-feedback__cb-radio"
+                  role="radio" tabindex="0"
+                  aria-describedby="acs_label<%= q.id %>"
+                  aria-required="<%= q.r === "1" ? 'true' : 'false' %>">
+                  <input type="radio" name="acsrd_<%= q.id %>"
+                    value="<%= ans.id %>" label="<%= encodeURIComponent(ans.lbl) %>"
+                    id="_<%= ans.id %>" questionid="<%= q.id %>"
+                    class="fsrVisible" aria-hidden="true" />
+                  <%= ans.lbl %>
+                </label>
+              <% } %>
+            </div>
+          <% } %>
+          <% if (q.qt == '1' && q.dt == '1') { %>
+            <!-- Text input -->
+            <div class="acs-feedback__text">
+              <input id="acs_obj<%= q.id %>" class="acs-feedback__control acs-feedback__control--textinput fsrVisible" type="text" acsmaxlength="100" aria-required="<%= q.r === "1" ? 'true' : 'false' %>" tabindex="0"
+              />
+            </div>
+          <% } %>
+          <% if (q.qt == '1' && q.dt == '2') { %>
+            <!-- Text area -->
+            <div class="acs-feedback__textarea">
+              <textarea id="acs_obj<%= q.id %>" class="acs-feedback__control acs-feedback__control--textarea fsrVisible" acsmaxlength="1000" maxlength="1000" title="1000 characters remaining" aria-required="<%= q.r === "1" ? 'true' : 'false' %>" tabindex="0"></textarea>
+              <span class="acs-feedback__textarea--count" aria-hidden="true">1000</span>
+            </div>
+          <% } %>
+          <% if (q.qt == '2') { %>
+            <!-- Select box -->
+            <div class="acs-feedback__control acs-feedback__select" questionid="<%= q.id %>">
+              <select name="select" id="acs_obj<%= q.id %>" class="acs-feedback__selector fsrVisible" aria-required="<%= q.r === "1" ? 'true' : 'false' %>">
+                <option>
+                  <%= ext.feedback_default_dropdown_text %>
+                </option>
+                <% for (var ansi = 0; ansi < q.answers.length; ansi++) {
+                    var ans = q.answers[ansi]; %>
+                  <option value="<%= ans.id %>">
+                    <%= ans.lbl %>
+                  </option>
+                <% } %>
+              </select>
+              <span alt "select-menu-arrow" aria-hidden="true" tabindex="-1"></span>
+            </div>
+          <% } %>
+          <% if (q.qt == '4') { %>
+            <!-- Star rating -->
+            <fieldset class="star-rating" questionid="<%= q.id %>" role="radiogroup" id="star-rating-survey" aria-required="<%= q.r === "1" ? 'true' : 'false' %>">
+              <% for (var ansi2 = 0; ansi2 < q.answers.length; ansi2++) {
+var ans = q.answers[ansi2]; %>
+                <label for="sr_<%= q.id %>_<%= ans.id %>" alt="<%=ans.val %> stars" tabindex="0" aria-checked="false" role="radio" aria-label="<%=ans.val %> stars" aria-describedby="acs_label<%= q.id %>">
+                  <input name="sr_<%= q.id %>" id="sr_<%= q.id %>_<%= ans.id %>" alt="<%=ans.val %> stars" value="<%= ans.id %>" questionid="<%= q.id %>"
+                    tabindex="-1" type="radio" class="star-rating__star fsrVisible" value="<%= ans.val %>"
+                  />
+                </label>
+              <% } %>
+            </fieldset>
+          <% } %>
+        </div>
+      <% } %>
+    </div>
+  <% } %>
+  <div class="acs-feedback--center">
+    <span class="acs-validation-block">
+      <%= ext.feedback_required_field_error_text %>
+    </span>
+    <button class="acs-feedback__button acs-feedback__button--expand acs-submit-feedback__button" tabindex="0">
+      <%= meta.submittext %>
+    </button>
+  </div>
+  <div class="acs-footer">
+    <span class="acs-footer--left">
+      <h4 class="acs-required" aria-hidden="true">* Required</h4>
+      <a href="<%=meta.privacyurl%>" target="_blank" tabindex="0">
+        <%= meta.privacytext %>
+      </a>
+    </span>
+    <span class="acs-powered">
+      <a href="http://www.foresee.com/" target="_blank" tabindex="0">
+        <img src="<%= ansLogoSrc %>" alt="Powered by ForSee">
+      </a>
+    </span>
+  </div>
+  <div class="acs-clear"></div>
+</div>

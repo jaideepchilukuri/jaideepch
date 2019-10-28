@@ -1,0 +1,79 @@
+@import 'vars';
+#fsrQualifier {
+    body {
+        overflow: auto !important;
+    }
+    .__acs {
+        #fsrQualifierMain,
+        #fsrQualifierNoThanks {
+            h2 {
+                font-weight: bold;
+            }
+            h3 {
+                margin-top: $general-padding;
+            }
+            #qualButtonZone {
+                input[type=submit],
+                input[type=button] {
+                    border-radius: $general-borderradius;
+                    font-size: 100%;
+                    padding: $general-padding;
+                    padding-top: ($general-padding/2);
+                    padding-bottom: ($general-padding/2);
+                    cursor: pointer;
+                    background: #e2e2e2;
+                    /* Old browsers */
+                    background: -moz-linear-gradient(top, #e2e2e2 0%, #dbdbdb 50%, #d1d1d1 51%, #fefefe 100%);
+                    /* FF3.6-15 */
+                    background: -webkit-linear-gradient(top, #e2e2e2 0%, #dbdbdb 50%, #d1d1d1 51%, #fefefe 100%);
+                    /* Chrome10-25,Safari5.1-6 */
+                    background: linear-gradient(to bottom, #e2e2e2 0%, #dbdbdb 50%, #d1d1d1 51%, #fefefe 100%);
+                    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+                    border: 1px solid #cccccc;
+                    margin-right: $general-padding;
+                    &:hover {
+                        border-color: #000000;
+                    }
+                    &#qualSubmitButton {
+                        background: #d9f5cf;
+                        /* Old browsers */
+                        background: -moz-linear-gradient(top, #d9f5cf 0%, #dcf5d5 50%, #cdf8c0 51%, #c9fbb9 100%);
+                        /* FF3.6-15 */
+                        background: -webkit-linear-gradient(top, #d9f5cf 0%, #dcf5d5 50%, #cdf8c0 51%, #c9fbb9 100%);
+                        /* Chrome10-25,Safari5.1-6 */
+                        background: linear-gradient(to bottom, #d9f5cf 0%, #dcf5d5 50%, #cdf8c0 51%, #c9fbb9 100%);
+                        /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+                    }
+                }
+            }
+            .qualQuestion {
+                display: none;
+                margin-top: $general-padding;
+                &.activeQuestion {
+                    display: block;
+                }
+                .questionQ {
+                    color: #999999;
+                }
+                ul {
+                    margin-top: $general-padding;
+                    margin-left: $general-padding;
+                    li {
+                        label {
+                            color: #666666;
+                            cursor: pointer;
+                            font-size: 90%;
+                            line-height: 110%;
+                            &:hover {
+                                color: #000000;
+                            }
+                        }
+                    }
+                }
+            }
+            #qualButtonZone {
+                margin-top: $general-padding;
+            }
+        }
+    }
+}

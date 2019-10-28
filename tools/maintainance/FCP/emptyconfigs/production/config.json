@@ -1,0 +1,28 @@
+{
+	"record": {
+		"advancedSettings": { "useSessionStorage": false, "skipIframes": false }
+	},
+	"trigger": {
+		"surveydefs": [{ "name": "", "cxRecord": false }],
+		"config": {
+			"triggerDelay": 0,
+			"inviteDelay": 0,
+			"pageLoadUrlChangeBlackout": 0,
+			"centerTrackerPopup": false,
+			"onlyModernSurvey": false,
+			"ignoreNavigationEvents": false
+		}
+	},
+	"global": {
+		"adobeRsid": null,
+		"cookieDomain": null,
+		"deferredLoading": null,
+		"customerId": "FSRTESTINGCODECID12345==",
+		"replayId": "somesite",
+		"cookieSecure": false,
+		"products": { "trigger": true, "feedback": false, "record": false },
+		"alwaysOnLatest": 0,
+		"customerKey": 1,
+		"codeVer": "19.11.1"
+	}
+}

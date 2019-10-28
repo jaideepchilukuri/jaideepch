@@ -1,0 +1,63 @@
+.acsFrameContainer {
+  width: 700px;
+  height: 100%;
+  display: block;
+  position: fixed;
+  top: 0;
+  right: -700px;
+  background-color: $c-app-grey-90;
+  border: none;
+  padding: 0;
+  margin: 0;
+  z-index: 999999999;
+  transition: box-shadow 0.5s, right 0.5s;
+  @include mi;
+  &.acsVisibleFrame {
+    right: 0;
+    -webkit-box-shadow: -9px 2px 205px 103px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: -9px 2px 205px 103px rgba(0, 0, 0, 0.5);
+    box-shadow: -9px 2px 205px 103px rgba(0, 0, 0, 0.5);
+    .acsReportCloseBtn {
+      display: block;
+      box-sizing: content-box;
+      -moz-box-sizing: content-box;
+      -webkit-box-sizing: content-box;
+    }
+  }
+  -webkit-box-shadow: -9px 2px 205px 103px rgba(0, 0, 0, 0);
+  -moz-box-shadow: -9px 2px 205px 103px rgba(0, 0, 0, 0);
+  box-shadow: -9px 2px 205px 103px rgba(0, 0, 0, 0);
+  .acsReportFrame {
+    width: 700px;
+    height: 100%;
+    display: block;
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+  .acsReportCloseBtn {
+    position: absolute;
+    width: 18px;
+    left: -28px;
+    font-size: 20px !important;
+    text-decoration: none;
+    font-weight: normal;
+    top: 10px;
+    padding: 5px;
+    padding-left: 7px;
+    padding-right: 3px;
+    background-color: $c-app-grey-90;
+    color: #ffffff;
+    -webkit-border-top-left-radius: $border-radius;
+    -webkit-border-bottom-left-radius: $border-radius;
+    -moz-border-radius-topleft: $border-radius;
+    -moz-border-radius-bottomleft: $border-radius;
+    border-top-left-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+    cursor: pointer;
+    display: none;
+  }
+  .acsReportCloseBtn:hover {
+    color: #cccccc;
+  }
+}
