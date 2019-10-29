@@ -173,7 +173,7 @@ program.parse(process.argv);
 async function listCommands(sitekeys, cmd) {
 	let questions = listQuestions;
 	let valsToPass = {};
-	if (sitekeys) {
+	if (sitekeys && sitekeys != "") {
 		valsToPass.sitekeys = "";
 		for (sitekey in sitekeys) {
 			valsToPass.sitekeys += sitekeys[sitekey] + " ";
