@@ -34,7 +34,7 @@ async function listCommands(questions, testing, passedVals) {
 	//}
 	//answers.deploytoother same thing
 	answers.commands = answers.commands.split(" ");
-	console.log(answers.commands);
+	console.log("Going to run commands:", JSON.stringify(answers.commands));
 	for (command in answers.commands) {
 		switch (answers.commands[command]) {
 			case "summon":
