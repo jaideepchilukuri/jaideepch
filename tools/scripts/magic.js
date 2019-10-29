@@ -10,12 +10,14 @@ const path =
 		: `${process.cwd()}/tools/clientconfigs/`;
 
 async function listCommands(questions, testing, passedVals) {
-	console.log(passedVals);
 	let answers;
 	if (testing) {
 		answers = passedVals;
 	} else {
 		answers = await other.askQuestion(questions);
+		if (passedVals.sitekeys == "") {
+			delete passedVals.sitekeys;
+		}
 		for (val in passedVals) {
 			answers[val] = passedVals[val];
 		}
@@ -31,9 +33,10 @@ async function listCommands(questions, testing, passedVals) {
 	//  answers.fcpcontainers = answers.fcpcontainers.concat(answers.fcpothercontainers));
 	//}
 	//answers.deploytoother same thing
-	console.log(typeof answers.commands);
+	answers.commands = answers.commands.split(" ");
+	console.log("Going to run commands:", JSON.stringify(answers.commands));
 	for (command in answers.commands) {
-		switch (command) {
+		switch (answers.commands[command]) {
 			case "summon":
 				await getSitekey(answers.sitekeys, answers.fcpcontainers);
 				break;
@@ -65,7 +68,7 @@ async function listCommands(questions, testing, passedVals) {
 				await remove(answers.sitekeys);
 				break;
 			default:
-				console.log(command + " isn't a scroll command we have logic written to handle");
+				console.log(answers.commands[command] + " isn't a scroll command we have logic written to handle");
 		}
 	}
 }

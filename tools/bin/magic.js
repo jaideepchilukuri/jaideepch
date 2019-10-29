@@ -173,12 +173,13 @@ program.parse(process.argv);
 async function listCommands(sitekeys, cmd) {
 	let questions = listQuestions;
 	let valsToPass = {};
-	if (sitekeys) {
+	if (sitekeys && sitekeys != "") {
 		valsToPass.sitekeys = "";
 		for (sitekey in sitekeys) {
 			valsToPass.sitekeys += sitekeys[sitekey] + " ";
 		}
 		valsToPass.sitekeys = valsToPass.sitekeys.slice(0, -1);
+		questions.splice(1, 2);
 	}
 	if (
 		cmd &&
@@ -194,6 +195,9 @@ async function listCommands(sitekeys, cmd) {
 			cmd[scrollCommands[9]])
 	) {
 		questions = [];
+		if (!valsToPass.sitekeys) {
+			questions.push(sitekeysQuestion);
+		}
 		if (cmd.summon) {
 			questions.push(summonQuestionWithoutWhen);
 		}
@@ -206,12 +210,13 @@ async function listCommands(sitekeys, cmd) {
 		if (cmd.trick) {
 			questions.push(trickQuestionWithoutWhen);
 		}
-		valsToPass.commands = {};
+		valsToPass.commands = "";
 		for (option in scrollCommands) {
 			if (cmd[scrollCommands[option]]) {
-				valsToPass.commands[scrollCommands[option]] = true;
+				valsToPass.commands += scrollCommands[option] + " ";
 			}
 		}
+		valsToPass.commands = valsToPass.commands.slice(0, -1);
 	}
 	await magic.listCommands(questions, false, valsToPass);
 }
