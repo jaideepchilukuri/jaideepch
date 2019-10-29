@@ -228,86 +228,91 @@ async function checkUID(path) {
 }
 
 async function checkLegacyDisplay(path) {
-	await checkCodeVersion(path);
-	//console.log("Checking Displays For Legacy..");
+	// await checkCodeVersion(path.substring(0, path.lastIndexOf("/config.json")));
 	let jconfig = await filesystem.readFileToObjectIfExists(path);
-	let codeVersion = jconfig.global.codeVer;
-	return new Promise(function(resolve, reject) {
-		if (fcp.legacyDesktopVersions.includes(codeVersion)) {
-			if (jconfig && jconfig.trigger && jconfig.trigger.surveydefs) {
-				for (var def of jconfig.trigger.surveydefs) {
-					if (def.criteria.supportsDesktop) {
-						if (!def.display) {
-							def.display = {};
-						}
-						if (!def.display.desktop) {
-							def.display.desktop = [];
-						}
-						if (!def.display.desktop[0]) {
-							def.display.desktop[0] = {};
-						}
-						if (!def.display.desktop[0].displayname) {
-							def.display.desktop[0].displayname = fcp.legacyDesktopDefaults.displayname;
-						}
-						if (!def.display.desktop[0].template) {
-							def.display.desktop[0].template = fcp.legacyDesktopDefaults.template;
-						}
-						if (!def.display.desktop[0].vendorTitleText) {
-							def.display.desktop[0].vendorTitleText = fcp.legacyDesktopDefaults.vendorTitleText;
-						}
-						if (!def.display.desktop[0].vendorAltText) {
-							def.display.desktop[0].vendorAltText = fcp.legacyDesktopDefaults.vendorAltText;
-						}
-						if (!def.display.desktop[0].hideForeSeeLogoDesktop) {
-							def.display.desktop[0].hideForeSeeLogoDesktop = fcp.legacyDesktopDefaults.hideForeSeeLogoDesktop;
-						}
-						if (!def.display.desktop[0].dialog) {
-							def.display.desktop[0].dialog = {};
-						}
-						if (!def.display.desktop[0].dialog.blurb) {
-							def.display.desktop[0].dialog.blurb = fcp.legacyDesktopDefaults.blurb;
-						}
-						if (!def.display.desktop[0].dialog.noticeAboutSurvey) {
-							def.display.desktop[0].dialog.noticeAboutSurvey = fcp.legacyDesktopDefaults.noticeAboutSurvey;
-						}
-						if (!def.display.desktop[0].dialog.attribution) {
-							def.display.desktop[0].dialog.attribution = fcp.legacyDesktopDefaults.attribution;
-						}
-						if (!def.display.desktop[0].dialog.trackerTitle) {
-							def.display.desktop[0].dialog.trackerTitle = fcp.legacyDesktopDefaults.trackerTitle;
-						}
-						if (!def.display.desktop[0].dialog.trackerClickToView) {
-							def.display.desktop[0].dialog.trackerClickToView = fcp.legacyDesktopDefaults.trackerClickToView;
-						}
-						if (!def.display.desktop[0].dialog.trackerPlsLeaveOpen) {
-							def.display.desktop[0].dialog.trackerPlsLeaveOpen = fcp.legacyDesktopDefaults.trackerPlsLeaveOpen;
-						}
-						if (!def.display.desktop[0].dialog.trackerAtEnd) {
-							def.display.desktop[0].dialog.trackerAtEnd = fcp.legacyDesktopDefaults.trackerAtEnd;
-						}
-						if (!def.display.desktop[0].dialog.trackerDesc1) {
-							def.display.desktop[0].dialog.trackerDesc1 = fcp.legacyDesktopDefaults.trackerDesc1;
-						}
-						if (!def.display.desktop[0].dialog.trackerDesc2) {
-							def.display.desktop[0].dialog.trackerDesc2 = fcp.legacyDesktopDefaults.trackerDesc2;
-						}
-						if (!def.display.desktop[0].dialog.trackerDesc3) {
-							def.display.desktop[0].dialog.trackerDesc3 = fcp.legacyDesktopDefaults.trackerDesc3;
-						}
-						if (!def.display.desktop[0].dialog.trackerCorp) {
-							def.display.desktop[0].dialog.trackerCorp = fcp.legacyDesktopDefaults.trackerCorp;
-						}
-						if (!def.display.desktop[0].dialog.trackerPrivacy) {
-							def.display.desktop[0].dialog.trackerPrivacy = fcp.legacyDesktopDefaults.trackerPrivacy;
+	let codeVersion = null;
+	if (jconfig && jconfig.global && jconfig.global.codeVer) {
+		codeVersion = jconfig.global.codeVer;
+		//console.log("Checking Displays For Legacy..");
+		return new Promise(function(resolve, reject) {
+			if (fcp.legacyDesktopVersions.includes(codeVersion)) {
+				if (jconfig && jconfig.trigger && jconfig.trigger.surveydefs) {
+					for (var def of jconfig.trigger.surveydefs) {
+						if (def.criteria.supportsDesktop) {
+							if (!def.display) {
+								def.display = {};
+							}
+							if (!def.display.desktop) {
+								def.display.desktop = [];
+							}
+							if (!def.display.desktop[0]) {
+								def.display.desktop[0] = {};
+							}
+							if (!def.display.desktop[0].displayname) {
+								def.display.desktop[0].displayname = fcp.legacyDesktopDefaults.displayname;
+							}
+							if (!def.display.desktop[0].template) {
+								def.display.desktop[0].template = fcp.legacyDesktopDefaults.template;
+							}
+							if (!def.display.desktop[0].vendorTitleText) {
+								def.display.desktop[0].vendorTitleText = fcp.legacyDesktopDefaults.vendorTitleText;
+							}
+							if (!def.display.desktop[0].vendorAltText) {
+								def.display.desktop[0].vendorAltText = fcp.legacyDesktopDefaults.vendorAltText;
+							}
+							if (!def.display.desktop[0].hideForeSeeLogoDesktop) {
+								def.display.desktop[0].hideForeSeeLogoDesktop = fcp.legacyDesktopDefaults.hideForeSeeLogoDesktop;
+							}
+							if (!def.display.desktop[0].dialog) {
+								def.display.desktop[0].dialog = {};
+							}
+							if (!def.display.desktop[0].dialog.blurb) {
+								def.display.desktop[0].dialog.blurb = fcp.legacyDesktopDefaults.blurb;
+							}
+							if (!def.display.desktop[0].dialog.noticeAboutSurvey) {
+								def.display.desktop[0].dialog.noticeAboutSurvey = fcp.legacyDesktopDefaults.noticeAboutSurvey;
+							}
+							if (!def.display.desktop[0].dialog.attribution) {
+								def.display.desktop[0].dialog.attribution = fcp.legacyDesktopDefaults.attribution;
+							}
+							if (!def.display.desktop[0].dialog.trackerTitle) {
+								def.display.desktop[0].dialog.trackerTitle = fcp.legacyDesktopDefaults.trackerTitle;
+							}
+							if (!def.display.desktop[0].dialog.trackerClickToView) {
+								def.display.desktop[0].dialog.trackerClickToView = fcp.legacyDesktopDefaults.trackerClickToView;
+							}
+							if (!def.display.desktop[0].dialog.trackerPlsLeaveOpen) {
+								def.display.desktop[0].dialog.trackerPlsLeaveOpen = fcp.legacyDesktopDefaults.trackerPlsLeaveOpen;
+							}
+							if (!def.display.desktop[0].dialog.trackerAtEnd) {
+								def.display.desktop[0].dialog.trackerAtEnd = fcp.legacyDesktopDefaults.trackerAtEnd;
+							}
+							if (!def.display.desktop[0].dialog.trackerDesc1) {
+								def.display.desktop[0].dialog.trackerDesc1 = fcp.legacyDesktopDefaults.trackerDesc1;
+							}
+							if (!def.display.desktop[0].dialog.trackerDesc2) {
+								def.display.desktop[0].dialog.trackerDesc2 = fcp.legacyDesktopDefaults.trackerDesc2;
+							}
+							if (!def.display.desktop[0].dialog.trackerDesc3) {
+								def.display.desktop[0].dialog.trackerDesc3 = fcp.legacyDesktopDefaults.trackerDesc3;
+							}
+							if (!def.display.desktop[0].dialog.trackerCorp) {
+								def.display.desktop[0].dialog.trackerCorp = fcp.legacyDesktopDefaults.trackerCorp;
+							}
+							if (!def.display.desktop[0].dialog.trackerPrivacy) {
+								def.display.desktop[0].dialog.trackerPrivacy = fcp.legacyDesktopDefaults.trackerPrivacy;
+							}
 						}
 					}
+					jconfig = JSON.stringify(jconfig);
+					filesystem.writeToFile(path, jconfig);
 				}
-				jconfig = JSON.stringify(jconfig);
-				filesystem.writeToFile(path, jconfig);
 			}
-		}
-		return resolve(jconfig);
-	});
+			return resolve(jconfig);
+		});
+	} else {
+		console.log("Code version not defined in config.json. Legacy Desktop Display Template check failed!");
+	}
 	return;
 }
 
