@@ -341,7 +341,7 @@ async function ccCopy(path) {
 	let copied = await filesystem.copyFrom2ToIfFromExists(
 		`${cctpath}/${codeVersion}`,
 		`${path}/CC`,
-		`Have client code template for ${codeVersion} stashed, coping it over...`
+		`Have client code template for ${codeVersion} stashed, copying it over...`
 	);
 	if (!copied) {
 		let repoUrl = "https://github.com/foreseecode/client_code.git";

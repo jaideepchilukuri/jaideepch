@@ -9,12 +9,16 @@ const path =
 		? `${process.cwd()}/clientconfigs/`
 		: `${process.cwd()}/tools/clientconfigs/`;
 
-async function listCommands(questions, testing, testvals) {
+async function listCommands(questions, testing, passedVals) {
+	console.log(passedVals);
 	let answers;
 	if (testing) {
-		answers = testvals;
+		answers = passedVals;
 	} else {
 		answers = await other.askQuestion(questions);
+		for (val in passedVals) {
+			answers[val] = passedVals[val];
+		}
 	}
 	if (answers.sitekey) {
 		answers.sitekeys = [answers.sitekey];
@@ -27,39 +31,42 @@ async function listCommands(questions, testing, testvals) {
 	//  answers.fcpcontainers = answers.fcpcontainers.concat(answers.fcpothercontainers));
 	//}
 	//answers.deploytoother same thing
-	switch (answers.commands) {
-		case "summon":
-			await getSitekey(answers.sitekeys, answers.fcpcontainers);
-			break;
-		case "enchant":
-			await build(answers.sitekeys, answers.codeversion, answers.localhost);
-			break;
-		case "conjure":
-			await test(answers.sitekeys);
-			break;
-		case "transfigure":
-			await helpertasks.copyCustom(path, answers.sitekeys, answers.fcpcontainers);
-			break;
-		case "reanimate":
-			await rebulidConfig(answers.sitekeys);
-			break;
-		case "facelift":
-			await modernize(answers.sitekeys);
-			break;
-		case "purge":
-			await turnOff(answers.sitekeys);
-			break;
-		case "illusion":
-			await onPrem(answers.sitekeys);
-			break;
-		case "trick":
-			await deploy(answers.sitekeys, answers.deployto);
-			break;
-		case "vanquish":
-			await remove(answers.sitekeys);
-			break;
-		default:
-			console.log(answers.commands + " isn't a scroll command we have logic written to handle");
+	console.log(typeof answers.commands);
+	for (command in answers.commands) {
+		switch (command) {
+			case "summon":
+				await getSitekey(answers.sitekeys, answers.fcpcontainers);
+				break;
+			case "enchant":
+				await build(answers.sitekeys, answers.codeversion, answers.localhost);
+				break;
+			case "conjure":
+				await test(answers.sitekeys);
+				break;
+			case "mutate":
+				await helpertasks.copyCustom(path, answers.sitekeys, answers.fcpcontainers);
+				break;
+			case "reanimate":
+				await rebulidConfig(answers.sitekeys);
+				break;
+			case "facelift":
+				await modernize(answers.sitekeys);
+				break;
+			case "purge":
+				await turnOff(answers.sitekeys);
+				break;
+			case "illusion":
+				await onPrem(answers.sitekeys);
+				break;
+			case "trick":
+				await deploy(answers.sitekeys, answers.deployto);
+				break;
+			case "vanquish":
+				await remove(answers.sitekeys);
+				break;
+			default:
+				console.log(command + " isn't a scroll command we have logic written to handle");
+		}
 	}
 }
 

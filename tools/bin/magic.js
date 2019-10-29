@@ -8,7 +8,7 @@ const scrollCommands = [
 	"summon",
 	"enchant",
 	"conjure",
-	"transfigure",
+	"mutate",
 	"reanimate",
 	"facelift",
 	"purge",
@@ -20,7 +20,7 @@ const scrollCommandDesc = {
 	summon: "Check out existing config for sitekey(s)",
 	enchant: "Build client code package for sitekey(s)",
 	conjure: "Start localhost test for a sitekey",
-	transfigure: "Set config equal to fcp config for sitekey(s)",
+	mutate: "Set config equal to fcp config for sitekey(s)",
 	reanimate: "Rebuild config files and assets for sitekey(s)",
 	facelift: "Move all desktop invites to modern for sitekey(s)",
 	purge: "Stop all invites for sitekey(s)",
@@ -33,7 +33,7 @@ const wheretodeploy = [
 	{ name: "Github", checked: true },
 	{ name: "Development", checked: true },
 	{ name: "Staging" },
-	{ name: "Prouction" },
+	{ name: "Production" },
 	//"Other",
 ];
 
@@ -79,6 +79,7 @@ const summonQuestion = {
 	message: "What container(s) would you like to grab the currently deployed fcp configs for?",
 	choices: fcpcontainers,
 };
+const summonQuestionWithoutWhen = (({ when, ...others }) => ({ ...others }))(summonQuestion);
 const summonContainers = {
 	when: function(answers) {
 		if (answers.fcpcontainers == "Other") {
@@ -100,9 +101,10 @@ const enchantQuestion = {
 	name: "codeversion",
 	message: "What code version would you like to build this package for? (Leave blank to not change)",
 };
-const transfigureQuestion = {
+const enchantQuestionWithoutWhen = (({ when, ...others }) => ({ ...others }))(enchantQuestion);
+const mutateQuestion = {
 	when: function(answers) {
-		if (answers.commands == "transfigure") {
+		if (answers.commands == "mutate") {
 			return true;
 		}
 	},
@@ -111,6 +113,7 @@ const transfigureQuestion = {
 	message: "What container would you like to set the config to?",
 	choices: fcpcontainers,
 };
+const mutateQuestionWithoutWhen = (({ when, ...others }) => ({ ...others }))(mutateQuestion);
 const trickQuestion = {
 	when: function(answers) {
 		if (answers.commands == "trick") {
@@ -122,6 +125,7 @@ const trickQuestion = {
 	message: "Where would you like to deploy this sitekey's config to?",
 	choices: wheretodeploy,
 };
+const trickQuestionWithoutWhen = (({ when, ...others }) => ({ ...others }))(trickQuestion);
 const trickContainers = {
 	when: function(answers) {
 		if (answers.deployto == "Other") {
@@ -134,26 +138,80 @@ const trickContainers = {
 		"What other fcp container(s) would you like to deploy this sitekey's config to? (Format: container1 container2 container3 etc)",
 };
 
+const listQuestions = [
+	scrollQuestion,
+	sitekeyQuestion,
+	sitekeysQuestion,
+	summonQuestion,
+	//summonContainers,
+	enchantQuestion,
+	mutateQuestion,
+	trickQuestion,
+	//trickContainers,
+];
+
 program
-	.command("scroll")
+	.command("scroll [sitekeys...]")
 	.alias("m")
 	.description(
 		"Also known as Bill Vargo's Unfurling Scroll. This will provide a list of everything you can do, automagically..."
 	)
-	.action(function() {
-		wrap(
-			magic.listCommands([
-				scrollQuestion,
-				sitekeyQuestion,
-				sitekeysQuestion,
-				summonQuestion,
-				//summonContainers,
-				enchantQuestion,
-				transfigureQuestion,
-				trickQuestion,
-				//trickContainers,
-			])
-		);
-	});
+	.option(`-${scrollCommands[0].substring(0, 1)}, --${scrollCommands[0]}`, `${scrollCommandDesc[scrollCommands[0]]}`)
+	.option(`-${scrollCommands[1].substring(0, 1)}, --${scrollCommands[1]}`, `${scrollCommandDesc[scrollCommands[1]]}`)
+	.option(`-${scrollCommands[2].substring(0, 1)}, --${scrollCommands[2]}`, `${scrollCommandDesc[scrollCommands[2]]}`)
+	.option(`-${scrollCommands[3].substring(0, 1)}, --${scrollCommands[3]}`, `${scrollCommandDesc[scrollCommands[3]]}`)
+	.option(`-${scrollCommands[4].substring(0, 1)}, --${scrollCommands[4]}`, `${scrollCommandDesc[scrollCommands[4]]}`)
+	.option(`-${scrollCommands[5].substring(0, 1)}, --${scrollCommands[5]}`, `${scrollCommandDesc[scrollCommands[5]]}`)
+	.option(`-${scrollCommands[6].substring(0, 1)}, --${scrollCommands[6]}`, `${scrollCommandDesc[scrollCommands[6]]}`)
+	.option(`-${scrollCommands[7].substring(0, 1)}, --${scrollCommands[7]}`, `${scrollCommandDesc[scrollCommands[7]]}`)
+	.option(`-${scrollCommands[8].substring(0, 1)}, --${scrollCommands[8]}`, `${scrollCommandDesc[scrollCommands[8]]}`)
+	.option(`-${scrollCommands[9].substring(0, 1)}, --${scrollCommands[9]}`, `${scrollCommandDesc[scrollCommands[9]]}`)
+	.action(wrap(listCommands));
 
 program.parse(process.argv);
+
+async function listCommands(sitekeys, cmd) {
+	let questions = listQuestions;
+	let valsToPass = {};
+	if (sitekeys) {
+		valsToPass.sitekeys = "";
+		for (sitekey in sitekeys) {
+			valsToPass.sitekeys += sitekeys[sitekey] + " ";
+		}
+		valsToPass.sitekeys = valsToPass.sitekeys.slice(0, -1);
+	}
+	if (
+		cmd &&
+		(cmd[scrollCommands[0]] ||
+			cmd[scrollCommands[1]] ||
+			cmd[scrollCommands[2]] ||
+			cmd[scrollCommands[3]] ||
+			cmd[scrollCommands[4]] ||
+			cmd[scrollCommands[5]] ||
+			cmd[scrollCommands[6]] ||
+			cmd[scrollCommands[7]] ||
+			cmd[scrollCommands[8]] ||
+			cmd[scrollCommands[9]])
+	) {
+		questions = [];
+		if (cmd.summon) {
+			questions.push(summonQuestionWithoutWhen);
+		}
+		if (cmd.enchant) {
+			questions.push(enchantQuestionWithoutWhen);
+		}
+		if (cmd.mutate) {
+			questions.push(mutateQuestionWithoutWhen);
+		}
+		if (cmd.trick) {
+			questions.push(trickQuestionWithoutWhen);
+		}
+		valsToPass.commands = {};
+		for (option in scrollCommands) {
+			if (cmd[scrollCommands[option]]) {
+				valsToPass.commands[scrollCommands[option]] = true;
+			}
+		}
+	}
+	await magic.listCommands(questions, false, valsToPass);
+}
