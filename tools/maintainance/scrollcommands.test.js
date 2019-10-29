@@ -10,7 +10,7 @@ const magicCommands = [
 	"summon",
 	"enchant",
 	// "conjure", //not sure how to test this one... maybe send a get request to the localhost address and see what response is returned?? also not sure how to make it stop the localhost
-	"transfigure",
+	"mutate",
 	"reanimate",
 	"facelift",
 	"purge",
@@ -18,7 +18,7 @@ const magicCommands = [
 	//"trick", //not sure how to test this one... would have to hardcode credentials to push back to github and/or fcp? also, not sure if we want to push
 	"vanquish",
 ];
-// which fcp containers to pull from for summon command and transfigure command - transfigure can only take one but summon can take multiple
+// which fcp containers to pull from for summon command and mutate command - mutate can only take one but summon can take multiple
 const fcpContainersToPullFrom = [/* "Development", "Staging", */ "Production"];
 // where to deploy to for trick command - can be github or any fcp container
 const whereToDeploy = ["Github", "Development" /* , "Staging", "Prouction" */];
@@ -35,7 +35,7 @@ describe.each(sitekeys)("Checking Magic Scroll Commands For Sitekey: %s", siteke
 			testvals.commands = magicCommand;
 			testvals.codeversion = codeVersionToTest;
 			testvals.fcpcontainers = fcpContainersToPullFrom;
-			if (magicCommand == "transfigure") {
+			if (magicCommand == "mutate") {
 				testvals.fcpcontainers = fcpContainersToPullFrom[0];
 			}
 			testvals.deployto = whereToDeploy;
@@ -133,7 +133,7 @@ describe.each(sitekeys)("Checking Magic Scroll Commands For Sitekey: %s", siteke
 				break;
 			case "conjure": //come back to this one
 				break;
-			case "transfigure":
+			case "mutate":
 				it("Matches: config.json fcp container vs main", async () => {
 					let matching = await scthf.compareConfigAgainstContainer(sitekey, fcpContainersToPullFrom[0]);
 					expect(matching).toBe(true);
