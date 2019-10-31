@@ -37,6 +37,7 @@ export const SETTINGS_CONFIGSWAP_TOGGLE = "SETTINGS_CONFIGSWAP_TOGGLE";
 export const CONFIG_MENU = [
   { value: "production", display: "Production" },
   { value: "staging", display: "Staging" },
+  { value: "development", display: "Development" },
 ];
 
 //INJECTION CONSTANTS
