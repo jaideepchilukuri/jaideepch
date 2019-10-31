@@ -3,9 +3,9 @@ const fs = require("fs");
 const filesystem = require("../scripts/filesystem");
 
 const path =
-	process.cwd().substr(process.cwd().length - 6, 6) == "\\tools" // "/tools" doesn't work, tried it, so I hope this doesn't cause an error on mac
+	process.cwd().substr(process.cwd().length - 15, 15) == "\\websdk-builder" // "/websdk-builder" doesn't work, tried it, so I hope this doesn't cause an error on mac
 		? `${process.cwd()}/tests`
-		: `${process.cwd()}/tools/tests`;
+		: `${process.cwd()}/websdk-builder/tests`;
 
 test("Check non-existant file", async () => {
 	let testLoc = `${path}/emptycheck0.js`;

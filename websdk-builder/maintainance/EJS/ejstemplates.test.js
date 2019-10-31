@@ -1,4 +1,4 @@
-// to run these tests, cd tools if you aren't already in the tools folder
+// to run these tests, cd websdk-builder if you aren't already in the websdk-builder folder
 // then run this command: npm test maintainance/EJS/ejstemplates.test.js
 // note: you may also have to change this value:
 const codeVersionToTest = "19.11.1";
@@ -16,7 +16,7 @@ const filestocheck = [
 ];
 // whether or not to overwrite the config.json files in the clientconfig/sitekey folder if they exist already
 const overwriteSitekeysConfigJSONifExists = true;
-// whether or not to delete the test config folders from tools/clientconfigs after running the tests
+// whether or not to delete the test config folders from websdk-builder/clientconfigs after running the tests
 const deleteSitekeysWhenFinished = true;
 
 const etthf = require("./ejstemplatetesthelperfunctions");

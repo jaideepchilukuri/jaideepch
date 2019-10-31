@@ -1,4 +1,4 @@
-// to run these tests, cd tools if you aren't already in the tools folder
+// to run these tests, cd websdk-builder if you aren't already in the websdk-builder folder
 // then run this command: npm test maintainance/scrollcommands.test.js
 // note: you may also have to change this value:
 const codeVersionToTest = "19.11.1";
