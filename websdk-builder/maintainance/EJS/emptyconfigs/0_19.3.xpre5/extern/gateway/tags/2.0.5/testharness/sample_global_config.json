@@ -1,0 +1,9 @@
+{
+  "codeVer": "19.3.0",
+  "products": {
+    "replay": true,
+    "trigger": true,
+    "feedback": true
+  },
+  defferedLoading: false
+}

@@ -1,0 +1,18 @@
+
+@mixin rightBadgeMixin {
+  margin-right: $page_margin;
+  left: auto !important;
+  right: 0px !important;
+}
+
+@mixin leftBadgeMixin {
+  right: auto !important;
+  margin-left: $page_margin;
+}
+
+@mixin badge-position($scaleX:"1", $scaleY:"1", $rotate:"0deg", $translateX:"0%", $translateY:"0%") {
+  -webkit-transform: rotate(#{$rotate}) translate(#{$translateX}, #{$translateY}) scale(#{$scaleX}, #{$scaleY});
+  -ms-transform: rotate(#{$rotate}) translate(#{$translateX}, #{$translateY}) scale(#{$scaleX}, #{$scaleY});
+  -moz-transform: rotate(#{$rotate}) translate(#{$translateX}, #{$translateY}) scale(#{$scaleX}, #{$scaleY});
+  transform: rotate(#{$rotate}) translate(#{$translateX}, #{$translateY}) scale(#{$scaleX}, #{$scaleY});
+}

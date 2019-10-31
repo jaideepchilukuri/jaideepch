@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Page 1</title>
+    <script type="text/javascript">
+      // Instructions: please embed this snippet directly into every page in your website template.
+      // For optimal performance, this must be embedded directly into the template, not referenced
+      // as an external file.
+
+      // ForeSee Embed Script v2.00
+      // DO NOT MODIFY BELOW THIS LINE *****************************************
+      ;(function (g) {
+        var d = document, am = d.createElement('script'), h = d.head || d.getElementsByTagName("head")[0], fsr = 'fsReady',
+          aex = {
+            "src": "/gateway.js",
+            "type": "text/javascript",
+            "async": "true",
+            "data-vendor": "fs",
+            "data-role": "gateway"
+          };
+        for (var attr in aex){am.setAttribute(attr, aex[attr]);}h.appendChild(am);g[fsr] = function () {var aT = '__' + fsr + '_stk__';g[aT] = g[aT] || [];g[aT].push(arguments);};
+      })(window);
+      // DO NOT MODIFY ABOVE THIS LINE *****************************************
+
+        function showInvite() {
+            FSR.showInvite();
+            return false;
+        }
+
+        function showState(msg) {
+            msg = msg || 'state';
+            console.log(msg + ': ' + document.readyState);
+        }
+
+        showState("INLINE PAGE");
+
+        var dready = function (a, b, c) {
+            b = document, c = 'addEventListener';
+            b[c] ? b[c]('DOMContentLoaded', a) : window.attachEvent('onload', a)
+        };
+        dready(function () {
+            showState("domeady");
+        });
+
+        function setup() {
+            showState('In ONLOAD');
+            setTimeout(function () {
+                showState('WAY AFTER ONLOAD');
+            }, 500);
+            $("a#dch").click(function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                var dvs = $("div");
+                dvs[2].innerHTML = "<div class=\"dfsd\">yess</div>";
+                dvs[0].setAttribute("id", "yui_33283287777");
+                dvs[1].setAttribute("id", "abb_33283287777");
+            });
+        }
+
+        function removeEm() {
+            $(".removeIt").remove();
+            return false;
+        }
+
+        function changeInner() {
+            document.getElementById('childNs').innerHTML = "Hello I think some <span>party</span> is in <span>or<span>der</span></span>";
+            return false;
+        }
+        function simpleAd() {
+            var dc = document.createElement("div");
+            dc.innerHTML = "dsfjhksdjfh <span>sdfasdf</span> sdfsdf";
+            document.getElementById('adder').appendChild(dc);
+            var tn = document.createTextNode("some text here!!!");
+            document.getElementById('adder').appendChild(tn);
+            return false;
+        }
+        function nav() {
+            var stateObj = {foo: "bar"};
+            history.pushState(stateObj, "page 2", "bar.html");
+            return false;
+        }
+        function additem() {
+            var cnt = document.getElementById('somecontainer'),
+                    tb = document.getElementById('mytb');
+            var dv = document.createElement('div');
+            dv.innerHTML = "Hello World";
+            cnt.appendChild(dv);
+            tb.value = "TESTO";
+            return false;
+        }
+        // TRIGGER-809 - adding some test Events API calls
+        /*acsReady(function () {
+            FSR.Event.addEvent({
+                name: 'test_event1',
+                metrics: {
+                    cart_value: 179.95,
+                    tax_value: 15.60
+                },
+                properties: {
+                    fs_pageUrl: [location.href]
+                }
+            });
+
+            FSR.Event.setKey('userProfile', {
+                age: 40,
+                gender: 'male'
+            });
+        });*/
+    </script>
+    <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+</head>
+<body onload="setup()">
+<h1>hello world.</h1>
+<h2>Page 1</h2>
+<p>Click here for page 1.</p>
+<!--<img src="https://dl.dropboxusercontent.com/u/549704/29623847063_7e60d7a29b_o.jpg" style="width: 100%">-->
+<img src="http://animal-dream.com/data_images/whale/whale4.jpg">
+<p><select>
+    <option value="21">Hello world, I really think red is the best color because it reminds me of apples</option>
+    <option value="22">blue</option>
+    <option value="84">coolio</option>
+    <option value="guns">some young gun</option>
+</select></p>
+<p><select class="fsrVisible">
+    <option value="thisopt">this is an option</option>
+    <option value="anotheropt">another option</option>
+    <option value="bb">black and blue</option>
+</select></p>
+<p><a href="javascript:FSR.clearState()">Clear State.</a></p>
+<p><a class="fsrCancel">links-cancel button</a></p>
+<p><a class="fsrTracker">links-tracker button</a></p>
+<p><a href="test2.html">Click here for page 2.</a></p>
+<p><a href="tc/browse.html">True Conversion Test Page: Browse</a></p>
+<p><a href="mobile1.html">Click here for MOBILE page 1.</a></p>
+<iframe src="emptyframe.html" width="100" height="100"></iframe>
+<p>Some links: <a href="#" onclick="return additem()">TB Work</a> | <a href="#" onclick="return nav()">Nav</a> | <a
+        href="#" onclick="return simpleAd()">Simple add</a> | <a href="#" onclick="return changeInner()">Clear innerHTML
+    contents</a> | <a href="#" onclick="return removeEm()">Remove nodes</a> | <a href="#" onclick="return showInvite()">Show
+    Invite</a> | <a href="http://livehelp.com/cancelit/" target="_blank">Cancel</a>, <a
+        href="http://livehelp.com/go_pop/" target="_blank">Pop</a>, <a href="http://livehelp.com/attach_me/"
+                                                                       target="_blank">Attach</a> | <a href="#"
+                                                                                                       id="dch">Complex
+    DOM Changes</a></p>
+<div>
+    <div>Hellow</div>
+    <div>More stuff</div>
+</div>
+<p id="somecontainer">hello world <input type="text" id="mytb" class="fsrVisible"></p>
+<p class="removeIt">REMOVE ME Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis
+    vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu
+    ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at
+    elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim
+    sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p class="keepIt">KEEP Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae
+    eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum
+    tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit
+    vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien
+    a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>KEEP Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat
+    vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod
+    eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio
+    ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa
+    feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p class="removeIt">REMOVE ME Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis
+    vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu
+    ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at
+    elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim
+    sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>KEEP Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat
+    vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod
+    eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio
+    ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa
+    feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p id="childNs">Lorem ipsum <span id="hello1">dolor</span> sit <span class="dsfdsf">amet</span>, consectetur adipiscing
+    elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit
+    nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed
+    ipsum sed, scelerisque tempor orci. Cras at elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac
+    fringilla ex feugiat suscipit. Fusce dignissim sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra
+    fringilla id non sapien.</p>
+<p id="adder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a,
+    feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt
+    euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio
+    ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa
+    feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p><!-- fsrHiddenBlockStart -->Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis
+    vitae eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu
+    ipsum tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at
+    elit vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim
+    sapien a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.
+    <!-- fsrHiddenBlockEnd --></p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat
+    vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod
+    eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio
+    ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa
+    feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p class="fsrObscure">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae
+    eros a, feugiat vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum
+    tincidunt euismod eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit
+    vitae odio ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien
+    a massa feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat
+    vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod
+    eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio
+    ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa
+    feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat
+    vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod
+    eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio
+    ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa
+    feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat
+    vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod
+    eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio
+    ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa
+    feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat
+    vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod
+    eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio
+    ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa
+    feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat
+    vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod
+    eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio
+    ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa
+    feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat
+    vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod
+    eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio
+    ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa
+    feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat
+    vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod
+    eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio
+    ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa
+    feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat
+    vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod
+    eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio
+    ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa
+    feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat
+    vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod
+    eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio
+    ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa
+    feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien dolor, venenatis vitae eros a, feugiat
+    vehicula nisi. Nunc faucibus mi sapien, eget blandit nulla sodales vitae. Morbi id metus eu ipsum tincidunt euismod
+    eget eu enim. Donec arcu tellus, scelerisque sed ipsum sed, scelerisque tempor orci. Cras at elit vitae odio
+    ullamcorper dapibus. Donec pretium massa ligula, ac fringilla ex feugiat suscipit. Fusce dignissim sapien a massa
+    feugiat lacinia. Nunc sed urna sed nulla viverra fringilla id non sapien.</p>
+</body>
+</html>

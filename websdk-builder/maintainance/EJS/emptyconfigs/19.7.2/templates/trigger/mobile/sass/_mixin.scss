@@ -1,0 +1,28 @@
+// Include this mixin and pass-in css to override for the element in landscape mode.
+@mixin landscape {
+  @media all and (min-device-width: 480px) and (max-device-width: 768px) and (min-device-height: 320px) and (max-device-height: 504px) and (min-aspect-ratio: 13/9),
+    all and (min-device-width: 800px) and (max-device-width: 1440px) and (min-device-height: 480px) and (max-device-height: 1024px) and (min-aspect-ratio: 13/9) {
+    @content;
+  }
+  @media all and (min-width: 480px) and (max-width: 768px) and (min-height: 320px) and (max-height: 504px) and (min-aspect-ratio: 13/9),
+    all and (min-width: 800px) and (max-width: 1440px) and (min-height: 480px) and (max-height: 1024px) and (min-aspect-ratio: 13/9) {
+    @content;
+  }
+}
+
+// Include this mixin and pass-in css to override for the element in portrait mode.
+@mixin portrait {
+  @media all and (orientation:portrait) {
+    @content;
+  }
+}
+
+// Include this mixin and pass-in css to override for the element on Tablets.
+@mixin tablet-landscape {
+  @media (min-width:961px) {
+    @content;
+  }
+@media (min-device-width:961px) {
+    @content;
+  }
+}

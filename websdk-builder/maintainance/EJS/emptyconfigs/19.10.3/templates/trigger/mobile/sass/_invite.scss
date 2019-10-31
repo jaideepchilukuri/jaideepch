@@ -1,0 +1,584 @@
+@import 'reset';
+@import 'animation';
+@import 'mixin';
+.__acs {
+    @include __reset;
+    bottom: 0;
+    color: $invite-text-color;
+    font-family: $general-font-family; // Jank Handlers.
+    will-change: transform;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    @include __slide-up("0.5s", "ease-out");
+    font-size: 10px !important;
+    &.fsrLargeFont {
+        font-size: 25px !important;
+        line-height: 1;
+        @include landscape {
+            font-size: 15px !important;
+        }
+        @include tablet-landscape {
+            font-size: 15px !important;
+        }
+    }
+    line-height: normal;
+    left: 0;
+    padding: 0;
+    position: fixed;
+    width: 100%;
+    z-index: 2147483647; // Fade the content away...
+    &--complete {
+        // Jank Handlers.
+        will-change: transform;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        @include __slide-down;
+    }
+    .acsCloseButton {
+        &--container {
+            font-weight: bold;
+            background-color: transparent;
+            cursor: pointer;
+            text-align: right;
+            padding-bottom: 1em !important;
+            color: $close-btn-text-color;
+        }
+        &--link {
+            // Reset anchor styles.
+            color: inherit;
+            text-decoration: inherit;
+            background-color: $close-btn-color;
+            max-width: 2.5em;
+            max-height: 2.5em;
+            font-size: 150%;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            padding-top: 0.3em;
+            padding-bottom: 0.3em;
+            padding-left: 0.53em;
+            padding-right: 0.53em;
+            margin-right: 0.7em;
+            border-radius: 50%;
+        }
+    }
+    .acsNoDisplay {
+        display: none !important;
+    }
+    .acsClassicInvite {
+        &--placeholder {
+            position: absolute;
+            margin-top: 0.5em !important;
+            left: 0;
+            z-index: 9999;
+            color: $invite-text-color;
+            &__clicked {
+                margin-top: -1em !important;
+                -webkit-transition: font 0.3s ease, margin-top 0.3s ease;
+                transition: font 0.3s ease, margin-top 0.3s ease;
+                font-size: 75%;
+                position: relative;
+                line-height: 1;
+            }
+        }
+        &--input-container {
+            position: relative;
+            height: 2em;
+            text-align: left;
+        }
+        &--fullscreen {
+            // Jank Handlers.
+            will-change: transform;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            @include __slide-up("0.5s");
+        }
+        &--fullscreen,
+        &--fullscreen__thankyou {
+            height: 100%; // margin: 0;
+            background-color: $fullscreen-background;
+            box-shadow: 0 1px 10px 0 $fullscreen-shadow; // Blur the background
+            -webkit-backdrop-filter: blur(3px);
+            backdrop-filter: blur(3px);
+            clear: none !important;
+            &__container {
+                opacity: 0;
+                @include __fade-in;
+                overflow: hidden;
+                margin-left: 0.9em !important;
+                margin-right: 0.9em !important;
+                margin-top: 25% !important;
+                font-size: 200%;
+                width: auto !important; // Jank Handlers.
+                will-change: margin-top;
+                -webkit-transform: translateZ(0);
+                transform: translateZ(0);
+                @include landscape {
+                    margin-top: 5%;
+                    width: 50%;
+                    margin-left: 25%;
+                }
+            }
+            &__input-clicked {
+                margin-top: 10%;
+                -webkit-transition: margin-top 0.3s ease;
+                transition: margin-top 0.3s ease;
+                @include landscape {
+                    margin-top: 0%; // To accommodate small screens, small padding at the top.
+                    padding-top: 0.5em;
+                    width: 95% !important;
+                    margin-left: 1em;
+                    position: absolute;
+                    margin-top: 10% !important;
+                    .acsClassicInner__flex--landscape {
+                        display: -webkit-flex !important;
+                        display: -ms-flex !important;
+                        display: flex !important; // Align the button neatly to the bottom line of the input.
+                        -webkit-align-items: flex-end;
+                        align-items: flex-end;
+                        flex-direction: column;
+                        width: 100%;
+                    }
+                    -webkit-transition: margin-top 0.3s ease,
+                    padding-top 0.3s ease;
+                    transition: margin-top 0.3s ease,
+                    padding-top 0.3s ease;
+                }
+                .acsClassicInvite--input-container {
+                    padding-top: 1em !important;
+                    width: 100%;
+                }
+            }
+        }
+        &--fullscreen__thankyou {
+            .acsLogoContainer {
+                padding-top: 0em;
+            }
+            .acsClassicInner__center--large.acsLogoContainer {
+                padding-top: 0em;
+                @include landscape {
+                    padding-top: 2em;
+                }
+            }
+            .acsVendorLogoSVG {
+                background-size: 100% 100%;
+                background-image: $svglogo;
+                height: 3.3em;
+                @include landscape {
+                    display: none;
+                }
+            }
+            .acsVendorLogoContainer {
+                margin-top: 14.7vw;
+            }
+        }
+        &--input-container {
+            position: relative;
+            -webkit-box-sizing: content-box;
+            box-sizing: content-box;
+        }
+        &__input {
+            width: 100%; // Container is at 200% -> 20px, 1.25em scales to 25px
+            // important is needed for Dick's Sporting Goods
+            font-family: inherit;
+            font-size: 1.25em !important;
+            font-weight: 200;
+            padding: 0.2em;
+            border-radius: 0em;
+            border: none;
+            border-bottom: solid 2px $invite-text-color;
+            background-color: transparent;
+            color: $invite-text-color;
+            padding-left: 0em;
+            z-index: 10000;
+            position: absolute;
+            margin-bottom: 0;
+            height: auto;
+            &--invalid {
+                border-color: $invalid-text-color;
+            }
+            &--spaced {
+                letter-spacing: 0.1em;
+            }
+        }
+        &__input:focus {
+            border: none; // Verizon needs important
+            color: $invite-text-color !important;
+            background-color: transparent !important;
+            box-shadow: none;
+            outline-style: none;
+            border-bottom: solid 2px $invite-text-color;
+            margin-bottom: 0; // Needed to override for inputs on Nordstrom
+            padding: 0.2em;
+            padding-left: 0em;
+        }
+        background-color: transparent;
+        position: relative;
+        border-radius: $general-borderradius;
+        .acsLogoContainer {
+            width: 20%;
+            max-width: em(50);
+        }
+        .acsClassicInner {
+            box-shadow: 0 -2px 10px 0 $box-shadow-color;
+            @include landscape {
+                display: -webkit-flex !important;
+                display: -ms-flex !important;
+                display: flex !important;
+                padding-top: 0em;
+            }
+            background-color: $invite-background;
+            /*text-align: center;*/
+            font-family: $general-font-family;
+            padding-left: 2em !important;
+            padding-top: 2em !important;
+            padding-right: 2em !important;
+            width: auto !important;
+            .acsNoDisplay {
+                display: none;
+            }
+            .acsSiteLogo {
+                max-height: em(50);
+                width: 100%;
+                margin-bottom: 0em;
+            }
+            .acsSiteLogoSVG {
+                background-size: 100% 100%;
+            }
+            &--zoom-out {
+                opacity: 0;
+                @include __zoom-out;
+                padding-top: 16vw !important;
+                @include landscape {
+                    padding-top: 0%;
+                }
+            }
+            &__flex {
+                display: -webkit-fle !important;
+                display: -ms-flex !important;
+                display: flex !important;
+                @include landscape {
+                    max-width: 50%;
+                    padding-bottom: 1.25em !important;
+                    padding-top: 1.25em !important; // Make sure the items are center aligned.
+                    -webkit-align-items: center;
+                    align-items: center;
+                }
+                &--right {
+                    padding-left: 1.5em;
+                    max-width: 80%;
+                    text-align: left;
+                    @include landscape {
+                        max-width: 78%;
+                        padding-right: 1.5em;
+                    }
+                }
+                &--left {
+                    vertical-align: top;
+                    @include landscape {
+                        max-width: 5em;
+                    }
+                }
+            }
+            &__center {
+                text-align: center;
+                padding-bottom: 1.25em !important;
+                padding-top: 1.25em !important;
+                width: 100%;
+                &--flex {
+                    display: -webkit-flex !important;
+                    display: -ms-flex !important;
+                    display: flex !important;
+                    @include landscape {
+                        max-width: 50%; // Make sure the items are center aligned.
+                        -webkit-align-items: center;
+                        align-items: center;
+                    }
+                }
+                &--large {
+                    height: 10em;
+                    max-width: none;
+                    margin: 0 auto;
+                    @include landscape {
+                        max-height: 25%;
+                    }
+                    &.acsLogoContainer {
+                        margin-top: 0em;
+                        width: auto;
+                        @include landscape {
+                            width: 20%;
+                        }
+                    }
+                    .acsSiteLogo {
+                        height: 100%;
+                        margin: auto;
+                        display: block;
+                    }
+                    .acsSiteLogoSVG {
+                        background-size: 100% 100%;
+                    }
+                }
+            }
+            &--btn {
+                font-size: 150%;
+                font-weight: bold;
+                width: 100%;
+                line-height: 3.333em;
+                border-radius: 0.333em;
+                background-color: $btn-background;
+                color: $btn-text-color;
+                box-shadow: 0 2px 4px 0 $btn-shadow;
+                z-index: 10001; // Align the content center
+                -webkit-align-items: center;
+                align-items: center;
+                justify-content: center;
+                display: flex;
+                &__left {
+                    width: 48% !important;
+                    margin-right: 2% !important;
+                    max-height: 4em;
+                }
+                &__right {
+                    width: 48% !important;
+                    margin-left: 2% !important;
+                    max-height: 4em;
+                }
+                span {
+                    line-height: normal;
+                    padding-top: 1em;
+                    padding-bottom: 1em;
+                }
+                a {
+                    line-height: normal;
+                    text-decoration: none;
+                    color: inherit;
+                    font: inherit;
+                    text-transform: none;
+                }
+                &__grey {
+                    background-color: $btn-disabled-background;
+                    box-shadow: none;
+                }
+            }
+            &--description {
+                font-weight: normal;
+                font-style: normal;
+                font-stretch: normal;
+                text-align: center;
+                color: $invite-text-color;
+                &__heading {
+                    background-color: transparent;
+                    padding-top: 3vw !important;
+                    font-size: 360% !important;
+                    font-weight: bold !important;
+                    font-style: normal;
+                    font-stretch: normal;
+                    letter-spacing: initial;
+                    line-height: 1.03 !important;
+                    text-align: center;
+                    color: $invite-text-color !important;
+                }
+                &__subheading {
+                    font-size: 220%;
+                    font-weight: normal;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: 1.68;
+                    text-align: center;
+                    color: $invite-text-color;
+                    padding-left: 1em !important;
+                    padding-right: 1em !important;
+                    padding-top: 1.19vw !important;
+                    width: auto !important;
+                }
+                &__timer {
+                    height: 1.154em;
+                    opacity: 0.5;
+                    font-size: 130%;
+                    font-weight: normal;
+                    font-style: normal;
+                    font-stretch: normal;
+                    text-align: center;
+                    color: $invite-text-color;
+                    padding-top: 3.14vw;
+                }
+            }
+            p,
+            h1 {
+                color: $invite-text-color;
+                font-family: $general-font-family;
+            }
+            h1 {
+                font-weight: bold;
+                font-size: 180%;
+                font-style: normal;
+                font-stretch: normal;
+                padding-bottom: 0.2em;
+                background-color: transparent;
+            }
+            p {
+                font-weight: normal;
+                font-style: normal;
+                font-stretch: normal;
+                font-size: 140%;
+            }
+            p:last-child {
+                margin-bottom: 0em;
+            }
+            &--footer {
+                // This is inside a container that has 200% font.
+                opacity: 0.9;
+                font-size: 60%;
+                padding-top: 0 !important;
+                &__link {
+                    font-weight: normal;
+                    font-style: normal;
+                    font-stretch: normal;
+                    text-align: center;
+                    color: $invite-text-color;
+                    padding-top: 0em;
+                    padding-bottom: 0em;
+                }
+                &__right {
+                    width: 50%;
+                    text-align: left;
+                }
+                &__left {
+                    width: 50%;
+                    text-align: right;
+                    padding-right: 0.9em;
+                }
+                .acsClassicInner--description {
+                    padding-top: 0 !important;
+                    padding-bottom: 0;
+                    text-align: center;
+                }
+            }
+        }
+        .__acs--privacy {
+            font-size: 120%;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            padding-top: 0.667em;
+            padding-bottom: 0.667em;
+            padding-left: 1.667em;
+            -webkit-align-items: center;
+            align-items: center;
+            background-color: $pp-background-color;
+            color: $invite-text-color;
+        }
+        .__acs--privacy>span {
+            padding-right: 1.167em;
+        }
+    }
+    a {
+        text-decoration: underline;
+        color: $invite-text-color;
+    }
+    &.acsFullScreen {
+        height: 100%;
+        margin: 0;
+        font-family: $general-font-family;
+        width: 100%;
+        position: fixed;
+        .acsCloseButton {
+            &--container {
+                box-shadow: none;
+                opacity: 0;
+                @include __fade-in;
+                float: right !important;
+                position: relative;
+                padding-top: 2em !important;
+                z-index: 100001;
+                background: none;
+                .__acs--privacy {
+                    display: none;
+                }
+                color: $close-btn-text-color-fullscreen;
+            }
+            &--link {
+                border-radius: 50%;
+                padding-top: 0.3em;
+                padding-bottom: 0.3em;
+                padding-left: 0.53em;
+                padding-right: 0.53em;
+                font-size: 150%;
+                background-color: $close-btn-color-fullscreen;
+            }
+        }
+        .acsLogoContainer {
+            background: none;
+            padding-top: 2em;
+            box-shadow: none;
+        }
+        .acsClassicInvite .acsClassicInner .acsSiteLogo {
+            width: auto;
+            max-width: none;
+        }
+        .acsClassicInner {
+            &--btn {
+                width: 100%; // The container has 200% (20px), scale it down to 16px
+                font-size: 80%;
+            }
+            &__center {
+                padding-bottom: 1em;
+                padding-top: 1.5em;
+                &.acsClassicInner--footer {
+                    padding-top: 0em;
+                    padding-bottom: 0em;
+                }
+            }
+        }
+    }
+    #acsInvalidInput {
+        margin-top: 4.2em;
+        font-size: 60%;
+        color: $invalid-text-color;
+        @include landscape {
+            width: 90vw;
+        }
+    }
+    &__input-clicked {
+        & .acsLogoContainer {
+            @include landscape {
+                display: none !important;
+            }
+        }
+        & .acsClassicInvite--input-container {
+            @include landscape {
+                width: 60%;
+                margin-right: 2%;
+            }
+        }
+        &.__acs.acsFullScreen .acsClassicInner__center {
+            @include landscape {
+                padding-top: 0em;
+                padding-bottom: 0em;
+                width: 40%;
+            }
+        }
+        &.__acs.acsFullScreen .acsClassicInner__center.acsClassicInner--footer {
+            text-align: center;
+            @include landscape {
+                .acsClassicInner--description {
+                    width: 90%;
+                    padding-bottom: 0.66em;
+                }
+                width: 100%; // Need to accommodate the error msg.
+                padding-top: 1.5em;
+            }
+        }
+    }
+}
+
+.acsFullScreen {
+    // Disable scrolling.
+    overflow: hidden;
+    height: 100%;
+}
+
+html._fsrclientInvokedHide .__acs {
+    display: none !important;
+    visibility: hidden !important;
+}

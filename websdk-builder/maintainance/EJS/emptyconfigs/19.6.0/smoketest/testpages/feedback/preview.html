@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Survey Preview</title>
+  <script src="https://code.jquery.com/jquery-2.1.3.min.js" type="text/javascript"></script>
+  <script>
+    function setFrameMode(md) {
+      var mid = "zAF2iRgLIKLN3UAaosab27GM5rNzt2kH",
+        template = 'default',
+        version = '1',
+        datauri = encodeURIComponent("https://survey-qa.foreseeresults.com/survey/display/json-view"),
+        surveytype = (md === "desktop") ? 'modal' : 'popup',
+        newurl = '/preview/previewframe.html?rnd=' + Math.random() + '#fscommand=feedbackpreview&previewmode=';
+      switch (md) {
+        case "desktop":
+          newurl += md + '&mid=' + mid + '&datauri=' + datauri + '&template=' + template + '&surveytype=' + surveytype + '&namespace=preview';
+          $("#prevFrame").css({
+            'width': 800
+          }).attr({
+            'src': newurl
+          });
+          break;
+        case "tablet":
+          newurl += md + '&mid=' + mid + '&datauri=' + datauri + '&template=' + template + '&surveytype=' + surveytype + '&namespace=preview';
+          $("#prevFrame").css({
+            'width': 600
+          }).attr({
+            'src': newurl
+          });
+          break;
+        case "phone":
+          newurl += md + '&mid=' + mid + '&datauri=' + datauri + '&template=' + template + '&surveytype=' + surveytype + '&namespace=preview';
+          $("#prevFrame").css({
+            'width': 330
+          }).attr({
+            'src': newurl
+          });
+          break;
+      }
+      console.log("Preview url:", newurl);
+      return false;
+    }
+  </script>
+</head>
+<body>
+  <h1>Survey Preview Holder</h1>
+  <p>
+    <a href="#" onclick="return setFrameMode('desktop');">Desktop</a> |
+    <a href="#" onclick="return setFrameMode('tablet');">Tablet</a> |
+    <a href="#" onclick="return setFrameMode('phone');">Phone</a>
+  </p>
+  <p>
+    <iframe id="prevFrame" src="about:blank" style="width:600px; height:500px;"></iframe>
+  </p>
+  <script>
+    $(document).ready(function () {
+      setFrameMode('desktop');
+    });
+  </script>
+</body>
+</html>

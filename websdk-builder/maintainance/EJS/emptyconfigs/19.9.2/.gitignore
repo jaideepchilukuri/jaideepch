@@ -1,0 +1,17 @@
+.idea
+.DS_Store
+.vscode
+.vscode
+.project
+.settings
+.DS_Store
+*.log
+
+/build.bat
+/build.properties
+/dist
+/local.properties
+/node_modules
+/cov
+/yarn.lock
+/package-lock.json

@@ -1,0 +1,1 @@
+__fsJSONPCB({"filename":"templates_trigger_desktopredesign_qualifier.html","contents":""});

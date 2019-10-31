@@ -1,0 +1,38 @@
+// Font
+$basefont: 10;
+$general-font-family: Arial, Helvetica, sans-serif !important;
+
+// Pass in negative or positive values with no units.
+@function em($val, $ctx:$basefont) {
+  @return #{$val/$ctx}em;
+}
+
+// Padding, margin & borders
+$general-padding: 0.75em;
+$general-borderradius: 0em;
+$general-bigpadding: 1.5em;
+
+// Tracker Logo props;
+$svglogo: url('https://static.foresee.com/logos/foresee/white/foresee.svg');
+
+// Colors..
+// Dark template..
+// Invite..
+$invite-background: #3a475b;
+$close-btn-color: #222b3c;
+$box-shadow-color: darken($close-btn-color, 20%);
+$pp-background-color: #2f3a4d;
+$invite-text-color: #ffffff;
+$close-btn-text-color: #ffffff;
+$close-btn-color-fullscreen: $close-btn-color;
+$close-btn-text-color-fullscreen: #ffffff;
+// red is too low of contrast ratio, bright red is pink, this looks better
+$invalid-text-color: #ffdebd;
+$fullscreen-background: rgba(58, 71, 91, 0.9);
+$fullscreen-shadow: #627085;
+
+// Button..
+$btn-background: #ffffff;
+$btn-shadow: rgba(0, 0, 0, 0.5);
+$btn-disabled-background: #627085;
+$btn-text-color: #3a475b;

@@ -1,0 +1,255 @@
+module.exports = {
+  /**
+   * The name of the definition
+   */
+  name: "<%=surveydef.name%>",
+  
+  /**
+   * The site (optional)
+   */
+   <% if (surveydef.site==null) { %> // <% } %> site: "<%=surveydef.site%>",
+
+   /**
+   * Unique identifier must be a string unique beyond all survey definitions
+   * Recommended GUID standard: https://duckduckgo.com/?q=uuid
+   */
+  uid: <% if (surveydef.uid==null) { %> null <% } else { %>  "<%=surveydef.uid%>" <% } %>, 
+
+   /**
+   * The section (optional)
+   */
+  <% if (surveydef.section==null) { %> // <% } %> section: "<%=surveydef.section%>",
+
+  /**
+   * The locale of this definition
+   */
+  language: <%-JSON.stringify(surveydef.language)%>,
+
+  /**
+   * Are we recording users for this surveydef?
+   */
+  cxRecord: <%=surveydef.cxRecord%>,
+
+  /**
+   * MouseOff configs -- trigger an invite when the user mouses off at top of of window
+   */
+  mouseoff: {
+    /**
+     * (Required) options:
+     * off
+     * multitab - The invite is possible when there are multiple tabs open
+     * lasttab - The invite is possible when there is only tab of the site open
+     * (lasttab is not supported in IE or Edge. multitab will be used instead)
+     */
+    mode: "<%=surveydef.mouseoff.mode%>",
+
+    // (Optional to omit one of these), if both are undefined, no mouseout invite will occur
+    // A mouseout invite is possible when minSiteTime or minPageTime (in milliseconds) has passed (whichever comes first)
+    minSiteTime: <%=surveydef.mouseoff.minSiteTime%>,
+    minPageTime: <%=surveydef.mouseoff.minPageTime%>,
+
+    // (Optional to omit) these will override what is in criteria if set
+    sp: {
+      reg: <%=surveydef.mouseoff.sp.reg%>,
+      outreplaypool: <%=surveydef.mouseoff.sp.outreplaypool%>,
+    },
+    lf: <%=surveydef.mouseoff.lf%>,
+  },
+
+  /**
+   * The criteria that needs to be met
+   */
+  criteria: {
+    /**
+     * The sampling percentage. Random dice throw between 0 and 100 that occurs on each page AFTER someone
+     * has met the loyalty factor.
+     * reg : regular sampling percentage (0-100)
+     * outreplaypool: (optional) when the user is out of the replay pool (0-100)
+     */
+    sp: {
+      reg: <%=surveydef.criteria.sp.reg%>,
+      outreplaypool: <%=surveydef.criteria.sp.outreplaypool%>,
+    },
+
+    /**
+     * The loyalty factor. This is the minimum number of pages a user must visit before we start rolling
+     * the dice (the SP or sampling percentage).
+     */
+    lf: <%=surveydef.criteria.lf%>,
+
+    /**
+     * Will this measure work on mobile phones?
+     */
+    supportsSmartPhones: <%=surveydef.criteria.supportsSmartPhones%>,
+
+    /**
+     * Will it work on tablets?
+     */
+    supportsTablets: <%=surveydef.criteria.supportsTablets%>,
+
+    /**
+     * Will this measure work on desktop?
+     */
+    supportsDesktop: <%=surveydef.criteria.supportsDesktop%>,
+  },
+
+  <% if(surveydef.repeatDays) { %> 
+    repeatDays: {
+      decline: <%=surveydef.repeatDays.decline%>,
+      accept: <%=surveydef.repeatDays.accept%>,
+    },
+  <% } %>
+
+
+  /**
+   * These items whitelist triggering on a page.
+   * If ANY of these criteria are met, we proceed unless we have been excluded.
+   */
+  include: {
+    urls: <%-JSON.stringify(surveydef.include.urls)%>,
+    referrers: <%-JSON.stringify(surveydef.include.referrers)%>,
+    userAgents: <%-JSON.stringify(surveydef.include.userAgents)%>,
+    browsers: <%-JSON.stringify(surveydef.include.browsers)%>,
+    cookies: <%-JSON.stringify(surveydef.include.cookies)%>,
+    variables: <%-JSON.stringify(surveydef.include.variables)%>,
+  },
+
+  /**
+   * If any of these are matched, we will not show the invite on this page
+   */
+  inviteExclude: {
+    urls: <%-JSON.stringify(surveydef.inviteExclude.urls)%>,
+    referrers: <%-JSON.stringify(surveydef.inviteExclude.referrers)%>,
+    userAgents: <%-JSON.stringify(surveydef.inviteExclude.userAgents)%>,
+    browsers: <%-JSON.stringify(surveydef.inviteExclude.browsers)%>,
+    cookies: <%-JSON.stringify(surveydef.inviteExclude.cookies)%>,
+    variables: <%-JSON.stringify(surveydef.inviteExclude.variables)%>,
+  },
+
+  /**
+   * What CPP to set the 'pattern' value to, which gets passed on to the survey. Can be any CPP.
+   * Possible options: url (the last URL visited)
+   * pv (the page view count)
+   */
+  pattern: "<%=surveydef.pattern%>",
+
+  /**
+   * The technique used to choose a particular surveydef. Options:
+   * 'default': The criteria are evaluated on every page. The selected surveydef can change at any time.
+   * 'pin': Once a user has been invited, we stick with that surveydef unless a higher priority one is selected.
+   * 'lock': Once a user has been invited, we stick with that surveydef and do not change it.
+   */
+  selectMode: "<%=surveydef.selectMode%>",
+
+  /**
+   * Bind on-page elements to actions. See http://bit.ly/1NKPZy6 for details. Overview:
+   *
+   * cancel: Closes the tracker if open
+   * survey: Pops survey or qualifier. This can be done after the tracker window is launched as well.
+   * tracker: Launches the tracker window right away. The delay feature is no longer supported due to
+   *          changes in browser security making this impossible.
+   *
+   * NOTE: Unlike 18.x code, you specify a CSS selector instead of a tag type. You can achieve the same effect
+   * with more flexibility. Also, you need not include attribute or patterns.
+   *
+   * preventDefault specifies whether to allow the default behavior of the button or suppress it.
+   * This is optional (default is false).
+   *
+   * patterns are not case sensitive.
+   */
+  links: {
+    cancel: <%-JSON.stringify(surveydef.links.cancel)%>,
+    survey: <%-JSON.stringify(surveydef.links.survey)%>,
+    tracker: <%-JSON.stringify(surveydef.links.tracker)%>,
+  },
+
+  /**
+   * These are our display values. This is how you set up A/B tests or define what happens on mobile vs desktop.
+   * NOTE: you don't need to respecify all the properties in each display definition. They are copied over
+   * from the one before it automatically if you don't specify anything. As long as the first definition
+   * in each of desktop[] and mobile[] have all the properties, you can be terse in subsequent ones, only
+   * specifying things that have changed.
+   */
+  display: <%-JSON.stringify(surveydef.display)%>,
+  /**
+   * Specifies whether or not to use a qualifier survey.
+   *
+   * Note: Qualifier renders in legacy format only.
+   * Modern looking qualifier can be built within survey
+   * application
+   */
+  qualifier: {
+    /**
+     * Do we actually use a qualifier here?
+     */
+    useQualifier: <%=surveydef.qualifier.useQualifier%>,
+
+    /**
+     * If so, here is the survey
+     */
+
+    survey: {
+      topSection: "<%=surveydef.qualifier.survey.topSection%>",
+      noThanksTopSection: "<%=surveydef.qualifier.survey.noThanksTopSection%>",
+      noThanksBottomSection: "<%=surveydef.qualifier.survey.noThanksBottomSection%>",
+      validationFailedMsg: "<%=surveydef.qualifier.survey.validationFailedMsg%>",
+      continueLabel: "<%=surveydef.qualifier.survey.continueLabel%>",
+      noLabel: "<%=surveydef.qualifier.survey.noLabel%>",
+      closeLabel: "<%=surveydef.qualifier.survey.closeLabel%>",
+      questions: <%-JSON.stringify(surveydef.qualifier.survey.questions)%>,
+      <% if(surveydef.qualifier.survey.locales) { %>
+        locales: <%-JSON.stringify(surveydef.qualifier.survey.locales)%>
+      <% } %>
+      // Add different locales:
+      /*
+       , locales: {
+         "fr": {
+         topSection: "Je ne sais pas!",
+         noThanksTopSection: "Je ne sais pas! Je ne sais pas!.",
+         noThanksBottomSection: "Je Je Je Je!.",
+         validationFailedMsg: "Je Je Je Je! Je Je Je Je! Oui.",
+         continueLabel: "Continuer",
+         noLabel: "Non merci",
+         closeLabel: "Je Je Je Je!",
+           questions: [{
+             text: "Please specify your age:",
+             // The type of question. Valid options are: "RADIO" (no more at the moment).
+             questionType: "RADIO",
+             choices: [{
+             text: "Prefer not to say",
+             qualifies: false
+             }, {
+             text: "8 or under",
+             qualifies: "preteen",
+             cpps: [{"Age": "8 or under"}]
+             }, {
+             text: "65+",
+             qualifies: "qual1",
+             cpps: [{"Age": "65+"}]
+             }]
+            }]
+         }
+       } */
+    }
+  },
+  reminder: {
+    useReminder: <%=surveydef.reminder.useReminder%>,
+    display: {
+      headerSection: "<%=surveydef.reminder.display.headerSection%>",
+      bodySection: "<%=surveydef.reminder.display.bodySection%>",
+      buttonText: "<%=surveydef.reminder.display.buttonText%>",
+      <% if(surveydef.reminder.display.locales) { %>
+        locales: <%-JSON.stringify(surveydef.reminder.display.locales)%>
+      <% } %>
+
+      // different language option
+      // locales: {
+      //    "fr": {
+      //    headerSection: "Je ne sais pas!",
+      //    bodySection: "Je n'ai pas!",
+      //    buttonText: "Je Je Je Je!"
+      //    }
+      //  }
+    },
+  },
+};

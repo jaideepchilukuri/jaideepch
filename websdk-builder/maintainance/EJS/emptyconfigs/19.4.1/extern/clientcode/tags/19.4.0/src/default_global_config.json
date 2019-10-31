@@ -1,0 +1,11 @@
+{
+  "codeVer": "${latestVer}",
+  "products": {},
+  "storage": "COOKIE",
+  "brainUrl": "${brainUrl}",
+  "recUrl": "${recUrl}",
+  "surveyUrl": "${surveyUrl}",
+  "analyticsUrl": "${analyticsUrl}",
+  "staticUrl": "${staticUrl}",
+  "deferredLoading": false
+}

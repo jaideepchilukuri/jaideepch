@@ -1,0 +1,17 @@
+#!/usr/bin/env node --no-warnings
+/* eslint-env node */
+
+// commander has zero dependencies, unlike gulp
+const program = require("commander");
+const pjson = require("./package.json");
+const { deploy } = require("./scripts/deploy");
+
+program.version(pjson.version);
+
+program
+  .command("deploy <env>")
+  .description("Deploy code to <env> (dev, nightly, qa, rc, prod)")
+  .option("-r, --redo", "Don't bump version, redeploy current version")
+  .action(deploy);
+
+program.parse(process.argv);

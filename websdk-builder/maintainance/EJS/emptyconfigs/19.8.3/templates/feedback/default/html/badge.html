@@ -1,0 +1,27 @@
+<% if ( !btncfg.counterLocale ) { %>
+  <% if(btncfg.fbcolor && btncfg.fbcolor.length > 0) { %>
+  <div style="display:block; overflow: hidden; background-color:<%= btncfg.fbcolor %>;" class="<%= btncfg.btnClass %>" tabindex="0" role="button" aria-label="Feedback, opens dialog">
+  <% } else { %>
+  <div style="display:block; overflow: hidden;" class="<%= btncfg.btnClass %>" tabindex="0" role="button" aria-label="Feedback, opens dialog">
+  <% } %>
+    <% if (btncfg.icon.indexOf("chat") > -1) {%>
+      <svg xmlns="http://www.w3.org/2000/svg" class="_acsBadgeImg _acsBadgeImg__chat _acsBadgeImg__chat--<%= btncfg.fbsize %>" aria-hidden="true" viewBox="0 0 13 12.21"><title>Chat Icon</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path style="fill:<%= btncfg.fbcolortext %>;" d="M2.59,12.21a.65.65,0,0,1-.31-.08.66.66,0,0,1-.35-.58V9.87H1.37A1.37,1.37,0,0,1,0,8.49V1.37A1.37,1.37,0,0,1,1.37,0H11.63A1.37,1.37,0,0,1,13,1.37V8.49a1.37,1.37,0,0,1-1.37,1.37H6.1L3,12.09A.7.7,0,0,1,2.59,12.21Z"/></g></g></svg>
+    <%} else if (btncfg.icon.indexOf("replay") > -1) {%>
+      <svg class="_acsBadgeImg _acsBadgeImg__replay _acsBadgeImg__replay--<%= btncfg.fbsize %>" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 11.6 13.3"><title>Replay Icon</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path style="fill:<%= btncfg.fbcolortext %>;" d="M9.6,13.3l-3.4-1.7H5.8C2.6,11.6,0,9,0,5.8S2.6,0,5.8,0s5.8,2.6,5.8,5.8c0,1.7-0.7,3.3-2,4.4L9.6,13.3z M6.4,10.6l2.2,1.1 v-2l0.2-0.1c2.1-1.6,2.5-4.6,0.9-6.7S5,0.3,2.9,1.9S0.4,6.6,2,8.7c0.9,1.2,2.3,1.9,3.7,1.9h0.4L6.4,10.6z M4.3,8.3v-5l4.3,2.5 L4.3,8.3z"/></g></g></svg>
+    <% } else { %>
+      <svg xmlns="http://www.w3.org/2000/svg" class="_acsBadgeImg _acsBadgeImg__aspark _acsBadgeImg__aspark--<%= btncfg.fbsize %>" aria-hidden="true" viewBox="0 0 12 14"><title>Play Icon</title><g id="Layer_2"><g id="Layer_1-2"><path style="fill:<%= btncfg.fbcolortext %>;" d="M0,0v14l12-7L0,0z"/></g></g></svg>
+    <% } %>
+    <span class="_acsBadgeLabel" style="color:<%= btncfg.fbcolortext %>"><%= btncfg.label %></span>
+  </div>
+<% } else { %>
+  <% if(btncfg.fbcolor && btncfg.fbcolor.length > 0) { %>
+  <div class="<%= btncfg.btnClass %>" style="background-color:<%= btncfg.fbcolor %>;" tabindex="0" role="button" aria-label="Feedback, opens dialog">
+  <% } else { %>
+  <div style="display:block; overflow: hidden;" class="<%= btncfg.btnClass %>" tabindex="0" role="button" aria-label="Feedback, opens dialog">
+  <% } %>
+    <span class="_acsCounter">
+      <span class="_acsCounterInner"><%= btncfg.counterLocale %></span>
+    </span>
+    <span class="_acsBadgeLabel" style="color:<%= btncfg.fbcolortext %>"><%= btncfg.label %></span>
+  </div>
+<% } %>

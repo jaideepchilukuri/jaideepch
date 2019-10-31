@@ -1,0 +1,7 @@
+**/*.html
+**/*.json
+/node_modules/**
+/.git/*
+/build/**
+/readmeImages/**
+README.md

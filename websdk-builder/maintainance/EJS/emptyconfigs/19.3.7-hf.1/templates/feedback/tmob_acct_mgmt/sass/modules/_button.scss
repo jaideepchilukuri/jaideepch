@@ -1,0 +1,11 @@
+.acs-feedback__button {
+  @include button-gen(1.4em);
+  height: em($button-height, $bodyfont);
+  width: 100%;
+  &--expand {
+    width:100%;
+  }
+  &--epilogue {
+    margin-top: 2.857em;
+  }
+}

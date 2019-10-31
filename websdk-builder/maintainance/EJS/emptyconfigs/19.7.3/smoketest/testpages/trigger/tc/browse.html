@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TRUE CONVERSION TEST PAGE: BROWSE</title>
+    <script type="text/javascript">
+        // Instructions: please embed this snippet directly into every page in your website template.
+        // For optimal performance, this must be embedded directly into the template, not referenced
+        // as an external file.
+
+        // Answers Cloud Services Embed Script v1.02
+        // DO NOT MODIFY BELOW THIS LINE *****************************************
+        ;(function (g) {
+            var d = document, i, am = d.createElement('script'), h = d.head || d.getElementsByTagName("head")[0],
+                    aex = {
+                        "src": "//" + (window.location.toString().indexOf('localhost') ? "127.0.0.1:" + window.location.port + "/gateway.js" : "localhost:" + window.location.port + "/gateway.js"),
+                        "type": "text/javascript",
+                        "async": "true",
+                        "data-vendor": "acs",
+                        "data-role": "gateway"
+                    };
+            for (var attr in aex) { am.setAttribute(attr,aex[attr]); }
+            h.appendChild(am);
+            g['acsReady'] = function () {var aT = '__acsReady__', args = Array.prototype.slice.call(arguments, 0),k = setInterval(function () {if (typeof g[aT] === 'function') {clearInterval(k);for (i = 0; i < args.length; i++) {g[aT].call(g, function(fn) { return function() { setTimeout(fn, 1) };}(args[i]));}}}, 50);};
+        })(window);
+        // DO NOT MODIFY ABOVE THIS LINE *****************************************
+
+    </script>
+    <style>
+        .prodbox {
+            width: 200px;
+            height: 300px;
+            border: 1px dotted #666;
+            padding: 15px;
+            margin-right: 15px;
+            float: left;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<h1>TRUE CONVERSION TEST PAGE</h1>
+<h2>Browse</h2>
+<p>This is a fake store page. You are currently browsing fake products.</p>
+<div class="prodbox">
+    <h3>Toaster Oven</h3>
+    <p>Price: $49.95</p>
+    <p>This is a good oven. You should buy it.</p>
+    <p><a href="checkout.html">Buy This Product</a></p>
+</div>
+<div class="prodbox">
+    <h3>Paddleboard</h3>
+    <p>Price: $599.95</p>
+    <p>You'll look awfully stupid this summer without a paddleboard. Of course, you'll use it exactly once, do a broad circle in front of the dock, and then realize how boring it is.</p>
+    <p><a href="checkout.html">Buy This Product</a></p>
+</div>
+<br clear="both">
+</body>
+</html>

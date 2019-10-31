@@ -1,0 +1,121 @@
+@mixin _acspositioning() {
+  font-size: 80%;
+  &._acsbottomright {
+    @include rightBadgeMixin;
+    top: auto;
+    bottom: $page_margin;
+    ._acsBadgeLabel {
+      padding-right: $general_padding;
+    }
+    &._acsVertical_right {
+      @include badge-position(1, 1, "90deg");
+      -webkit-transform-origin: 100% 0%;
+      -moz-transform-origin: 100% 0%;
+      -ms-transform-origin: 100% 0%;
+      transform-origin: 100% 0%;
+      margin-bottom: -2.5em;
+      &._acsHover {
+        @include badge-position($acsBadgeMagnifier, $acsBadgeMagnifier, "90deg");
+      }
+    }
+  }
+
+  &._acsbottomleft {
+    @include leftBadgeMixin;
+    top: auto;
+    bottom: ($page_margin * 2);
+    _bottom: ($page_margin * 2);
+    ._acsBadgeLabel {
+      padding-right: $general_padding;
+    }
+    &._acsVertical_left {
+      @include badge-position(1, 1, "-90deg");
+      -webkit-transform-origin: 0% 0%;
+      -moz-transform-origin: 0% 0%;
+      -ms-transform-origin: 0% 0%;
+      transform-origin: 0% 0%;
+      margin-bottom: -2.5em;
+      &._acsHover {
+        @include badge-position($acsBadgeMagnifier, $acsBadgeMagnifier, "-90deg");
+      }
+    }
+  }
+
+  &._acstopright {
+    @include rightBadgeMixin;
+    top: $page_margin;
+    bottom: auto;
+    ._acsBadgeLabel {
+      padding-right: $general_padding;
+    }
+    &._acsVertical_right {
+      @include badge-position(1, 1, "-90deg");
+      -webkit-transform-origin: 100% 100%;
+      -moz-transform-origin: 100% 100%;
+      -ms-transform-origin: 100% 100%;
+      transform-origin: 100% 100%;
+      margin-top: -2.5em;
+      &._acsHover {
+        @include badge-position($acsBadgeMagnifier, $acsBadgeMagnifier, "-90deg");
+      }
+    }
+  }
+
+  &._acstopleft {
+    @include leftBadgeMixin;
+    top: $page_margin;
+    bottom: auto;
+    ._acsBadgeLabel {
+      padding-right: $general_padding;
+    }
+    &._acsVertical_left {
+      @include badge-position(1, 1, "90deg");
+      -webkit-transform-origin: 0% 100%;
+      -moz-transform-origin: 0% 100%;
+      -ms-transform-origin: 0% 100%;
+      transform-origin: 0% 100%;
+      margin-top: -2.5em;
+      &._acsHover {
+        @include badge-position($acsBadgeMagnifier, $acsBadgeMagnifier, "90deg");
+      }
+    }
+  }
+
+  &._acsmiddleleft {
+    @include leftBadgeMixin;
+    top: 48% !important;
+    ._acsBadgeLabel {
+      padding-right: $general_padding;
+    }
+    &._acsVertical_left {
+      @include badge-position(1, 1, "-90deg", "-50%", "0%");
+      -webkit-transform-origin: 0% 0%;
+      -moz-transform-origin: 0% 0%;
+      -ms-transform-origin: 0% 0%;
+      transform-origin: 0% 0%;
+      top: 50% !important;
+      &._acsHover {
+        @include badge-position($acsBadgeMagnifier, $acsBadgeMagnifier, "-90deg", "-50%", "0%");
+      }
+    }
+  }
+
+  &._acsmiddleright {
+    @include rightBadgeMixin;
+    top: 48% !important;
+    ._acsBadgeLabel {
+      padding-right: $general_padding;
+    }
+    &._acsVertical_right {
+      @include badge-position(1, 1, "-90deg", "0%", "0%");
+      -webkit-transform-origin: 100% 100%;
+      -moz-transform-origin: 100% 100%;
+      -ms-transform-origin: 100% 100%;
+      transform-origin: 100% 100%;
+      top: 30% !important;
+      &._acsHover {
+        @include badge-position($acsBadgeMagnifier, $acsBadgeMagnifier, "-90deg", "0%", "0%");
+      }
+    }
+  }
+}

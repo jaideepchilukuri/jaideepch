@@ -1,0 +1,162 @@
+@import 'vars';
+.__acs {
+    //We need this for mozilla focus and accessibility
+     :-moz-focusring {
+        outline: 2px solid #5B9DD9;
+    }
+    &.fsrbottomright {
+        .acsClassicInvite {
+            -webkit-transform: none;
+            -ms-transform: none;
+            transform: none;
+            top: auto;
+            bottom: 1.5em;
+            right: 1.5em;
+            position: absolute;
+        }
+    }
+    .acsCloseButton {
+        font-size: 89%;
+        padding-left: 0.2em;
+        padding-right: 0.2em;
+        display: block;
+        position: absolute;
+        border: 2px solid $closebtnbordercolor;
+        color: $closebtncolor;
+        text-decoration: none;
+        top: 1.1em;
+        right: 1.1em;
+        -webkit-border-radius: $general-borderradius;
+        -moz-border-radius: $general-borderradius;
+        border-radius: $general-borderradius;
+        line-height: 1em;
+        &:hover {
+            background-color: $closebtnhoverbgcolor;
+        }
+    }
+    .acsClassicInvite {
+        padding: $general-padding;
+        background-color: $borderbgcolorfallback;
+        background-color: $borderbgcolor;
+        position: relative;
+        display: inline-block;
+        max-width: 27em;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-border-radius: $general-borderradius;
+        -moz-border-radius: $general-borderradius;
+        border-radius: $general-borderradius;
+        float: none;
+        .acsLogoSpacer {
+            height: 3em;
+        }
+        .acsTrusteseal {
+            height: 2em;
+            float: right;
+            margin-top: $general-padding;
+        }
+        .acsTrustesealSVG {
+            background-image: $svgtrustlogo;
+            background-size: 100% 100%;
+            width: 6em;
+            height: 2em;
+            float: right;
+            margin-top: $general-padding;
+        }
+        .acsClassicInner {
+            background-color: $bgcolor;
+            display: inline-block;
+            padding: $general-padding;
+            text-align: left;
+            font-family: $general-font-family;
+            .acsNoDisplay {
+                display: none;
+            }
+            .acsSiteLogo,
+            .acsVendorLogo,
+            .acsVendorLogoSVG {
+                height: 3em !important;
+                width: auto;
+                float: left;
+            }
+            .acsVendorLogoSVG {
+                background-image: $svglogo;
+                background-size: 100% 100%;
+                width: 6em;
+            }
+            .acsVendorLogo,
+            .acsVendorLogoSVG {
+                float: right;
+            }
+            p,
+            h1 {
+                font-family: $general-font-family;
+                float: none;
+                margin-top: 0.5em;
+                margin-bottom: 0.5em;
+            }
+            h1 {
+                font-weight: bold;
+                font-size: 1.2em !important;
+                color: $txtcolor;
+            }
+            p {
+                font-weight: lighter;
+                font-size: 0.77em !important;
+                line-height: 1.5em;
+                color: $txtcolor;
+                width: auto !important;
+                &.acsNoticeAboutSurvey {
+                    font-weight: bold;
+                }
+                &.acsAttribution {
+                    font-size: 0.6em;
+                    color: #666;
+                }
+            }
+            p:last-child {
+                margin-bottom: 0;
+            }
+            #acsEmailSMSInput {
+                border: 0.25em solid $inputbordercolor;
+                width: 100%;
+                font-size: 1.2em;
+                padding: 0.3em;
+                color: $txtcolor;
+                box-sizing: border-box;
+            }
+            #acsInvalidInput {
+                color: $invalidtxtcolor;
+                font-size: 0.8em;
+            }
+            .acsInviteButton {
+                display: inline-block;
+                width: 48.5%;
+                line-height: 2.5em;
+                text-align: center;
+                border: 1px solid $btnbordercolor;
+                -webkit-border-radius: $general-borderradius;
+                -moz-border-radius: $general-borderradius;
+                border-radius: $general-borderradius;
+                text-decoration: none;
+                color: $btntxtcolor;
+                font-size: 90%;
+                font-weight: bold;
+                box-shadow: 0 2px 4px 0 $btnboxshadow;
+                background-color: $btnbgcolor;
+                &:hover {
+                    background-color: $leftbtnhoverbg;
+                }
+                &.acsRightButton {
+                    float: right;
+                    background-color: $rightbtnbgcolor;
+                    &:hover {
+                        background-color: $rightbtnhoverbg;
+                    }
+                }
+            }
+        }
+    }
+}

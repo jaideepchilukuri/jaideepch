@@ -1,0 +1,342 @@
+@import "config";
+@import "mixins";
+@import "top";
+@import "vendors/material-icons/material-icons";
+// Badge stuff...
+@import "badge";
+
+// Common modal mixin...
+@import "modal";
+// Survey Validation stuff...
+@import "validation";
+// New-tab, fullpage surveys stuff...
+@import "loader";
+// Service Unavailable stuff...
+@import "serviceunavailable";
+
+// In-page reporting stuff...
+@import "reportframe";
+
+%acsModal {
+  @include nested-reset;
+  @import "modules/base";
+  .acs-feedback {
+    // The master font-size
+    font-size: 10px;
+    padding-left: em($gutter);
+    padding-right: em($gutter);
+    line-height: $base-lineheight;
+    font-family: $f-app-font-family;
+    text-align: left;
+    color: $c-app-grey-95;
+    @include desktop {
+      text-align: left;
+    }
+    .acs-feedback__heading {
+      font-weight: bold;
+      margin: 0;
+      line-height: 1;
+      font-weight: bold;
+      font-style: normal;
+      font-stretch: normal;
+      text-align: center;
+      &--h1 {
+        padding-top: 0.938em;
+        font-size: 1.6em;
+      }
+      &--h2 {
+        font-size: 2.4em;
+      }
+    }
+    .acs-feedback__block {
+      padding-top: 1.5em;
+      // &.acs-starrating__block.acs-persistent__block {
+      //   padding-top: 0em;
+      // }
+      &--confirmation {
+        text-align: center;
+      }
+      &--hidden {
+        display:none;
+      }
+      &--epilogue {
+        & .acs-feedback__heading--h1 {
+          padding-top: em(0);
+        }
+        p {
+          padding-top: em(10);
+        }
+      }
+    }
+    .acs-persistent__block {
+      padding-top: .5em;
+    }
+    .acs-starrating__block.acs-persistent__block {
+      padding-top: 1.5em;
+      .acs-feedback__label {
+        font-style: normal;
+        font-stretch: normal;
+        text-align: center;
+        padding-bottom: 0.5em;
+      }
+      .star-rating {
+        text-align: center;
+      }
+    }
+    .acs-feedback--keyline {
+      padding-top: 0em;
+    }
+    .acs-feedback__block--epilogue {
+      padding-top: em(40);
+    }
+    .acs-feedback__label {
+      font-size: 120%;
+      padding-bottom: 1.25em;
+      font-weight: bold;
+      font-style: normal;
+      font-stretch: normal;
+      color: inherit;
+      display: block;
+      text-align: left;
+      p {
+        margin: 0;
+        padding: 0;
+      }
+      &--sublabel {
+        font-weight: normal;
+      }
+    }
+    p {
+      font-size: 1.2em;
+      line-height: 1.2;
+      margin: 0;
+    }
+    em {
+      font-style: italic;
+    }
+    a:link {
+      color: $c-app-blue-green;
+      text-decoration: underline;
+    }
+    a:hover {
+      color: $c-app-blue-40;
+    }
+    a:visited {
+      color: $c-app-blue-85;
+    }
+    .acs-feedback--l-align {
+      float: left;
+    }
+    .acs-feedback--r-align {
+      float: right;
+    }
+    &--center {
+      padding-top: em($grid-padding, $basefont);
+    }
+    .acs-feedback--keyline {
+      text-align: center;
+      font-weight: bold;
+      // Immediate children that have no content..
+      & > *:empty {
+        display: none;
+      }
+      .acs-feedback__logo {
+        max-height: 8em;
+        max-width: 16em;
+        margin-right: auto;
+        margin-left: auto;
+        display: block;
+        padding-top: 3.9em;
+      }
+      p {
+        font-size: 1.4em;
+        padding-top: 1.071em;
+        line-height: 1;
+        color: inherit;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        text-align: center;
+        display: block;
+      }
+    }
+    .acs-feedback__control {
+      position: relative;
+      border: 1px solid $c-app-grey-40;
+      border-radius: em($question-border-radius);
+      background: #fff;
+      width: 100% !important;
+      font-size: 140%;
+      resize: none;
+      box-sizing: border-box;
+      text-align: left;
+      -webkit-appearance: none;
+      &.input--focus,
+      &:active,
+      &:focus {
+        outline: none;
+      }
+      &:hover {
+        border: 1px solid $c-app-grey-67;
+        z-index: 2000;
+      }
+      &--textarea {
+        height: 7em;
+        padding: em(5, $basefont);
+        border: 1px solid $c-app-grey-40;
+        color: $c-app-grey-67;
+        margin: 0;
+      }
+      &--textinput {
+        height: 2.571em;
+        padding-left: em(5, $basefont);
+        padding-right: em(5, $basefont);
+      }
+    }
+    .acs-feedback__textarea {
+      position: relative;
+      text-align: center;
+      line-height: 1;
+      &--count {
+        display: block;
+        text-align: right;
+        float: right;
+      }
+    }
+    .acs-feedback__select {
+      .acs-feedback__select-button {
+        padding-top:5px;
+        padding-left:10px;
+      }
+      color: $c-app-black;
+      max-width: none;
+      padding-top: 0px;
+      height: em($question-option-height, $bodyfont);
+      &:after {
+        position: absolute;
+        @include mi;
+        content: $mi-arrow_drop_down;
+        top: 10%;
+        right: 0.1em;
+        color: inherit;
+        font-size: 2em;
+      }
+      &--opened:after {
+        content: $mi-arrow_drop_up;
+      }
+      .acs-feedback__selector {
+        max-width: none;
+        position: absolute;
+        left: 0;
+        top: 0 !important;
+        z-index: 1000;
+        width: 100%;
+        text-transform: none;
+        -webkit-appearance: none;
+        border-radius: em($question-border-radius);
+        cursor: pointer;
+        font-size: em($basefont);
+        height: em($question-option-height, $basefont);
+        color: $c-app-grey-67;
+      }
+    }
+
+    .acs-footer {
+      display: block;
+      padding-top: em($footer-padding, $basefont);
+      padding-bottom: em($footer-padding, $basefont);
+      .acs-powered {
+        img {
+          margin-top: -5px;
+          height: em(20, $basefont);
+          float: right;
+        }
+      }
+
+      .acs-footer--left {
+        float:left;
+        padding-bottom: em($footer-padding, $basefont);
+        a, a:hover, a:active {
+          color: #464C55;
+          text-decoration: none;
+        }
+        .acs-required {
+          color: $c-app-red;
+          margin-left:0;
+          text-align: left;
+          display: none;
+        }
+      }
+    }
+    &__topic {
+      display: none;
+      &.acs-visible__topic {
+        display: block;
+      }
+    }
+  }
+
+  div.acs-feedback-banner-img-container {
+    overflow: hidden;
+    max-height: 9.375em;
+    position:relative;
+    img.acs-feedback-banner-img {
+      width:100%;
+    }
+  }
+  .acs-clear {
+    clear: both;
+  }
+}
+
+%acsModalContainer {
+  @extend %acsModal;
+  .acs-loader {
+    @include acsLoaderMixin();
+  }
+  @include acsValidationMixin();
+  @include serviceUnavailableMixin();
+  @include modalMixin();
+  @include checkboxIE10Mixin();
+}
+
+%acsMainContainerMobile {
+  @extend %acsModal;
+  div.acs-feedback-banner-img-container {
+    padding-left: em($gutter);
+    padding-right: em($gutter);
+  }
+  max-width: 34em;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0;
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+  &.acsVisible {
+    opacity: 1;
+  }
+  .acs-loader {
+    @include acsLoaderMixin();
+  }
+  @include acsValidationMixin();
+  @include serviceUnavailableMobileMixin();
+  @include checkboxIE10Mixin();
+}
+
+%acsMainContainerFullPage {
+  .acsModalCloseButton {
+    transition: 0.5s;
+    width: em($close-button-size) !important;
+    height: em($close-button-size) !important;
+    float: right;
+    opacity: 0.5;
+    margin-top:-1.5em;
+  }
+  .acsModalCloseButton:hover {
+    cursor: pointer;
+    opacity: 1;
+  }
+  @extend %acsMainContainerMobile;
+  // If anything specific is needed for fullpage version, it goes here..
+  margin-top: 2em;
+}
