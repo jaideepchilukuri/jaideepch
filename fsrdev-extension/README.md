@@ -16,7 +16,7 @@ To update the Chrome Extension in the chrome store you will have to take the fol
 
 
 
-## Download and build
+## Download and build - the url below is outdated since being included in https://github.com/foreseecode/websdk-config-tools
 Begin by downloading the .zip of this repo, or cloning it to a local directory:
 `git clone https://github.com/foreseecode/FSRChromeDevExtension`
 
@@ -51,7 +51,7 @@ Localhost can be used only when running a local test debug server.  But this can
 
 ![Redirect Tool](/readmeImages/redirector.png)
 
-Separate settings will allow you to change the version of the client's config file that is loaded (3), forcing the SDK to run either the production or staging config file.
+Separate settings will allow you to change the version of the client's config file that is loaded (3), forcing the SDK to run a config file from a different container.
 
 **This can be used in combination with the Asset Redirection tool, running in Localhost, Development, or Production Setup.  It can also be used while redirecting to an alternate Web SDK version #**
 
@@ -59,7 +59,7 @@ Separate settings will allow you to change the version of the client's config fi
 
 The Inject tool allows you to insert the Web SDK on any page that you visit in your browser.  A separate setting is also available to suppress the loading of any native Web SDK implementations on the site (1).  This SDK suppression **will not** disable SDK's that have been injected using this extension.  This allows the injection of new code on sites that already have an SDK deployment.  Suppression will block native legacy, hosted, and on-prem implementations.
 
-To inject a new SDK Simply select either the staging or production instance, and enter a valid site key.  Reload the target page to run injection.  Injection happens at page load, so be sure to refresh in your browser when injecting in single page applications.
+To inject a new SDK Simply select the container, and enter a valid site key.  Reload the target page to run injection.  Injection happens at page load, so be sure to refresh in your browser when injecting in single page applications.
 
 Injection can be used in combination with the Redirect tools as well, if modifications are needed to the injected SDK.
 
