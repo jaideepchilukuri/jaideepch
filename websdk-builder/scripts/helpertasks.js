@@ -578,36 +578,7 @@ async function commitAndPushToGithub(path, loginFile) {
   if (committed == null) {
     console.log("Committed changes on " + sitekey + " back to repo");
   }*/
-	let savedLogins = await filesystem.readFileToObjectIfExists(loginFile);
-	if (savedLogins == undefined) {
-		savedLogins = {};
-	}
-	let un = savedLogins.GH_USERNAME;
-	let unpw = await other.askQuestion([
-		{
-			type: "input",
-			name: "un",
-			message: "What is your username for github?",
-			default: function() {
-				if (un) {
-					return un;
-				}
-				return;
-			},
-		},
-		{ type: "password", name: "pw", message: "What is your password for github?", mask: "*" },
-	]);
-	if (!un) {
-		un = unpw.un;
-		savedLogins.GH_USERNAME = un;
-		await filesystem.writeToFile(loginFile, savedLogins);
-		await other.spawnProcess("npx", [`prettier --write env.json`], {
-			cwd: loginFile.substring(0, loginFile.length - "env.json".length),
-			stdio: "inherit",
-			shell: true,
-		});
-	}
-	unpw = un + ":" + unpw.pw;
+	let unpw = await other.returnGithubCredentials(loginFile);
 	let committed = await other.spawnProcess(
 		"git",
 		[`push https://${unpw}@github.com/foreseecode/websdk-client-configs.git/`],
