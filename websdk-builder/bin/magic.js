@@ -168,6 +168,8 @@ program
 	.option(`-${scrollCommands[9].substring(0, 1)}, --${scrollCommands[9]}`, `${scrollCommandDesc[scrollCommands[9]]}`)
 	.action(wrap(listCommands));
 
+// program.command("hidden").action(wrap(require("../scripts/allTheSitekeysInfo").checkAllTheSitekeys));
+
 program.parse(process.argv);
 
 async function listCommands(sitekeys, cmd) {
