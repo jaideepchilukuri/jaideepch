@@ -134,7 +134,7 @@ async function unzipAssets(path) {
 				entry.path.substr(0, 18) !== "trigger/templates/"
 			) {
 				if (entry.type == "Directory") {
-					await makeDirIfMissing(`${path}/${entry.path}`);
+					makeDirIfMissing(`${path}/${entry.path}`);
 				} else {
 					entry.pipe(fs.createWriteStream(`${path}/${entry.path.substr(8)}`));
 				}
