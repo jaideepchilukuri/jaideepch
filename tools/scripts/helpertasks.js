@@ -517,13 +517,15 @@ async function pushCxSuiteConfigsToDevContainer(path, loginFile) {
 		});
 	}
 	unpw = un + "@aws.foreseeresults.com:" + unpw.pw;
-	await other.multipartPost(
+	let posted = await other.multipartPost(
 		`https://${unpw}@fcp.foresee.com/sites/${jconfig.global.siteKey}/containers/development/configs`,
 		`Pushing cxSuite global config values to container development of sitekey ${jconfig.global.siteKey} for testing`,
 		`${clientconfigspath}_globalconfigs/${jconfig.global.siteKey}.js`
 	);
 	await filesystem.deleteFileOrDirIfExists(`${clientconfigspath}_globalconfigs/${jconfig.global.siteKey}.js`);
-	console.log(`Pushed globalconfigs to container development of sitekey ${jconfig.global.siteKey}`);
+	if (posted) {
+		console.log(`Pushed globalconfigs to container development of sitekey ${jconfig.global.siteKey}`);
+	}
 	return true;
 }
 

@@ -1,7 +1,7 @@
 const spawn = require("child_process").spawn,
 	simplegit = require("simple-git/promise")(),
 	syncrequest = require("sync-request"),
-	request = require("request"),
+	request = require("request-promise"),
 	inquirer = require("inquirer"),
 	atob = require("atob");
 const filesystem = require("./filesystem");
@@ -90,21 +90,86 @@ async function httpRequest(type, url, options) {
 }
 
 async function multipartPost(url, notes, fileLoc) {
-	let formdata = { notes: notes, config: await filesystem.readFileToReadStream(fileLoc) };
-	request.post(
-		{
-			url: url,
-			formData: formdata,
-		},
+	let fileStream = await filesystem.readFileToReadStream(fileLoc);
+	let formdata = { notes: notes, config: fileStream };
+	let req;
+	try {
+		req = await request.post(
+			{
+				url: url,
+				formData: formdata,
+			} /* ,
 		function optionalCallback(err, httpResponse, body) {
 			if (err) {
 				return console.error("upload failed:", err);
 			}
 			console.log("Contact successful... Server responded with:", body);
-		}
-	);
-	await filesystem.deleteFileOrDirIfExists(fileLoc);
-	return true;
+		} */
+		);
+		console.log("Contact successful... Server responded with:", req);
+		await filesystem.deleteFileOrDirIfExists(fileLoc);
+		return true;
+	} catch (err) {
+		return console.error("Upload failed:", err);
+	}
+	return false;
+
+	/* let req = request.post(url);
+	let form = req.form();
+	form.append("notes", notes);
+	form.append("config", await filesystem.readFileToReadStream(fileLoc));
+	await req
+		.then(function(body) {
+			console.log("Contact successful... Server responded with:", body);
+		})
+		.catch(function(err) {
+			return console.error("upload failed:", err);
+		});
+	return true; */
+
+	// let fileObject = await filesystem.readFileToObjectIfExists(fileLoc);
+	// let formdata = {
+	// 	notes: notes,
+	// 	config: rest.data("config.js", "application/javascript", new Buffer(JSON.stringify(fileObject))),
+	// };
+	// let fileStream = await filesystem.readFileToReadStream(fileLoc);
+	// return new Promise(function(resolve, reject) {
+	// let formdata = { notes: notes, config: new Buffer(JSON.stringify(fileObject)) }; //fileStream };
+	// request.post(
+	// 	{
+	// 		url: url,
+	// 		formData: formdata,
+	// 	},
+	// 	function optionalCallback(err, httpResponse, body) {
+	// 		if (err) {
+	// 			console.log("upload failed:", err);
+	// 		}
+	// 		console.log("Contact successful... Server responded with:", body);
+	// 	}
+	// );
+	// let formdata = new syncrequest.FormData();
+	// formdata.append("notes", notes);
+	// formdata.append("config", fileStream);
+	// return await syncrequest("POST", url, {
+	// 	headers: {
+	// 		"content-type": "application/x-www-form-urlencoded",
+	// 	},
+	// 	formData: { notes: notes },
+	// });
+	// return resolve();
+	// });
+	// await filesystem.deleteFileOrDirIfExists(fileLoc);
+	// rest
+	// 	.post(url, {
+	// 		multipart: true,
+	// 		username: un,
+	// 		password: pw,
+	// 		data: formdata,
+	// 	})
+	// 	.on("complete", function(data) {
+	// 		console.log(data);
+	// 	});
+	// return await syncrequest("POST", url, formdata);
 }
 
 async function askQuestion(questions) {

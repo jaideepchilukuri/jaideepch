@@ -219,6 +219,11 @@ async function deploy(sitekey, wheretopush) {
 				console.log("Pushed to staging on sitekey " + sitekey);
 			}
 		} else {
+			let pusheddev = await other.spawnProcess("gulp", ["push_products"], {
+				cwd: path + sitekey + "/CC/",
+				stdio: "inherit",
+				shell: true,
+			});
 			let pusheddevconfig;
 			if (wheretopush[place] == "Development") {
 				pusheddevconfig = await helpertasks.pushCxSuiteConfigsToDevContainer(path + sitekey, loginFile);
@@ -228,11 +233,6 @@ async function deploy(sitekey, wheretopush) {
 					shell: true,
 				});
 			}
-			let pusheddev = await other.spawnProcess("gulp", ["push_products"], {
-				cwd: path + sitekey + "/CC/",
-				stdio: "inherit",
-				shell: true,
-			});
 			if (pusheddevconfig && pusheddev) {
 				console.log("Pushed to development on sitekey " + sitekey);
 			} else if (pusheddev) {
