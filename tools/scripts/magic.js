@@ -1,6 +1,7 @@
 const helpertasks = require("./helpertasks"),
 	spotcheck = require("./spotcheck"),
 	filesystem = require("./filesystem"),
+	fcp = require("./FCPvals"),
 	other = require("./other");
 const loginFile = require("./FCPvals").loginFile;
 
@@ -219,11 +220,57 @@ async function deploy(sitekey, wheretopush) {
 				console.log("Pushed to staging on sitekey " + sitekey);
 			}
 		} else {
-			let pusheddev = await other.spawnProcess("gulp", ["push_products"], {
-				cwd: path + sitekey + "/CC/",
-				stdio: "inherit",
-				shell: true,
-			});
+			let containerexists = await other.httpRequest(
+				"GET",
+				`https://fcp.foresee.com/sites/${sitekey}/containers/${wheretopush[place]}`,
+				{
+					headers: { authorization: fcp.fcpROCreds },
+				}
+			);
+			if (containerexists.statusCode == 404) {
+				//try to create the container because it probably didn't exist - should also check that message == "Container not found" but it's being difficult letting me see the body so that's for later
+				let savedLogins = await filesystem.readFileToObjectIfExists(loginFile);
+				if (savedLogins == undefined) {
+					savedLogins = {};
+				}
+				let un = savedLogins.FCP_USERNAME;
+				let unpw = await other.askQuestion([
+					{
+						type: "input",
+						name: "un",
+						message: "What is your username for fcp(aws)?",
+						default: function() {
+							if (un) {
+								return un;
+							}
+							return;
+						},
+					},
+					{ type: "password", name: "pw", message: "What is your password for fcp(aws)?", mask: "*" },
+				]);
+				if (!un) {
+					un = unpw.un;
+					savedLogins.FCP_USERNAME = un;
+					await filesystem.writeToFile(loginFile, savedLogins);
+					await other.spawnProcess("npx", [`prettier --write env.json`], {
+						cwd: loginFile.substring(0, loginFile.length - "env.json".length),
+						stdio: "inherit",
+						shell: true,
+					});
+				}
+				unpw = un + "@aws.foreseeresults.com:" + unpw.pw;
+				let createdcontainer = await other.httpRequest(
+					"POST",
+					`https://${unpw}@fcp.foresee.com/sites/${sitekey}/containers`,
+					{
+						json: { name: wheretopush[place].toLowerCase(), notes: "Creating a new container" },
+					}
+				);
+				console.log(
+					`Created new container ${wheretopush[place]}? If it's a 200 you did...`,
+					createdcontainer.statusCode
+				);
+			}
 			let pusheddevconfig;
 			if (wheretopush[place] == "Development") {
 				pusheddevconfig = await helpertasks.pushCxSuiteConfigsToDevContainer(path + sitekey, loginFile);
@@ -233,6 +280,11 @@ async function deploy(sitekey, wheretopush) {
 					shell: true,
 				});
 			}
+			let pusheddev = await other.spawnProcess("gulp", ["push_products"], {
+				cwd: path + sitekey + "/CC/",
+				stdio: "inherit",
+				shell: true,
+			});
 			if (pusheddevconfig && pusheddev) {
 				console.log("Pushed to development on sitekey " + sitekey);
 			} else if (pusheddev) {
