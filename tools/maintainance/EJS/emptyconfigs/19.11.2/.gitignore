@@ -1,0 +1,11 @@
+.idea
+.vscode
+.project
+.settings
+.DS_Store
+*.log
+
+/dist
+/node_modules
+/cov
+/yarn.lock

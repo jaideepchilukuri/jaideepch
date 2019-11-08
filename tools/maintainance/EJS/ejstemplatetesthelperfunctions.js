@@ -193,13 +193,16 @@ async function fixExpectedForMe(filename, sitekey, codeVersionToTest, expected) 
 						if (expected.module.exports.client.adobersid == null) {
 							delete expected.module.exports.client.adobersid;
 						}
+						if (expected.module.exports.client.cookieExpiration == null) {
+							delete expected.module.exports.client.cookieExpiration;
+						}
 						if (expected.module.exports.client.integrityHashLocation == null) {
 							delete expected.module.exports.client.integrityHashLocation;
 						}
 					}
 					break;
 				case "productconfig/record/product_config":
-					if (JSON.stringify(expected.module.exports.whitelist) == `{"text":[],"variables":[],"cookies":[]}`) {
+					if (JSON.stringify(expected.module.exports.whitelist) == `{"text":[],"variables":[],"cookies":[]}`||`{"text":[],"variables":[],"cookies":[],"cpps":[]}`) {
 						delete expected.module.exports.whitelist;
 					}
 					if (expected.module.exports.advancedSettings) {

@@ -1,7 +1,7 @@
 // to run these tests, cd tools if you aren't already in the tools folder
 // then run this command: npm test maintainance/EJS/ejstemplates.test.js
 // note: you may also have to change this value:
-const codeVersionToTest = "19.11.1";
+const codeVersionToTest = "19.11.2";
 // other values you may want to change:
 // the list of maintainance->EJS local folders/sitekeys to test
 const sitekeys = ["emptyconfigs", "fullcustomeverythingconfigs"];

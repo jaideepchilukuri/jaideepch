@@ -321,6 +321,12 @@
               "name": "custom_includevariablename",
               "value": "custom_includevariablevalue"
             }
+          ],
+          "cpps": [
+            {
+              "name": "custom_includecppname",
+              "value": "custom_includecppvalue"
+            }
           ]
         },
         "inviteExclude": {
@@ -343,6 +349,12 @@
             {
               "name": "custom_defexcludevariablename",
               "value": "custom_defexcludevariablevalue"
+            }
+          ],
+          "cpps": [
+            {
+              "name": "custom_defexcludecppname",
+              "value": "custom_defexcludecppvalue"
             }
           ]
         },
@@ -509,6 +521,12 @@
             "name": "custom_globalexcludevariablename",
             "value": "custom_globalexcludevariablevalue"
           }
+        ],
+        "cpps": [
+          {
+            "name": "custom_globalexcludecppname",
+            "value": "custom_globalexcludecppvalue"
+          }
         ]
       },
       "inviteExclude": {
@@ -531,6 +549,12 @@
           {
             "name": "custom_inviteexcludevariablename",
             "value": "custom_inviteexcludevariablevalue"
+          }
+        ],
+        "cpps": [
+          {
+            "name": "custom_inviteexcludecppname",
+            "value": "custom_inviteexcludecppvalue"
           }
         ]
       },
@@ -612,6 +636,7 @@
         "domain": "custom_cookieDomaindomain"
       }
     ],
+    "cookieExpiration": 1,
     "mobileOnExitUrl": "custom_mobileOnExitUrl",
     "customerId": "custom_customerid",
     "siteKey": "fullcustomeverythingconfigs",
@@ -636,6 +661,12 @@
           "name": "custom_blacklistcookiename",
           "value": "custom_blacklistcookievalue"
         }
+      ],
+      "cpps": [
+        {
+          "name": "custom_blacklistcppname",
+          "value": "custom_blacklistcppvalue"
+        }
       ]
     },
     "whitelist": {
@@ -651,6 +682,12 @@
         {
           "name": "custom_whitelistcookiename",
           "value": "custom_whitelistcookievalue"
+        }
+      ],
+      "cpps": [
+        {
+          "name": "custom_whitelistcppname",
+          "value": "custom_whitelistcppvalue"
         }
       ]
     },
