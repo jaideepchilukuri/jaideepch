@@ -1,3 +1,0 @@
-# ForeSee Gateway Bootloader
-
-rm

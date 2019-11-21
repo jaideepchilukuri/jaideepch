@@ -1,9 +1,0 @@
-/.idea
-/build.bat
-/build.properties
-/dist
-/local.properties
-/node_modules
-src/.idea
-.DS_Store
-.vscode

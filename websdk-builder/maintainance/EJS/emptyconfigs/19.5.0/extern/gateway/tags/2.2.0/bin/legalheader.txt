@@ -1,6 +1,0 @@
-/**
-* @preserve
-* ForeSee Gateway Script v[$VER]. [$DATE]
-* (c) Copyright 2016, ForeSee. http://www.foresee.com
-* Patents pending.
-**/
