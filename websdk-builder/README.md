@@ -5,6 +5,13 @@ Setup instructions:
 - Run 'npm install -g'
 - Open a new terminal, all the magic can be used now
 
+Update instructions:
+- Open a terminal
+- In terminal, make sure you're in the websdk-builder folder (can use 'cd websdk-builder' to get there from websdk-config-tools)
+- Run 'npm uninstall -g magic --save'
+- Run 'npm install -g'
+- Open a new terminal, all the magic can be used now
+
 Usage instructions:
 - Type 'magic --help' for a list of commands and their descriptions
 - Type 'magic command' to run a command, or 'magic command --option' or 'magic command -o' to use an option
