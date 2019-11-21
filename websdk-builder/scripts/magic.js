@@ -198,28 +198,40 @@ async function deploy(sitekey, wheretopush) {
 		console.log("Looks like you haven't built a client code template for this sitekey yet...");
 		await build(sitekey);
 	}
+	let commitmessage;
 	for (place in wheretopush) {
 		if (wheretopush[place] == "Github") {
-			await helpertasks.commitAndPushToGithub(path + sitekey, loginFile);
+			commitmessage = await other.askQuestion([
+				{ type: "input", name: "commitmessage", message: "What changes are you committing?" },
+			]);
+			commitmessage = commitmessage.commitmessage;
+			commitmessage = await helpertasks.commitAndPushToGithub(path + sitekey, loginFile, commitmessage);
+			console.log("finished github", commitmessage);
 		} else if (wheretopush[place] == "Production") {
+			await other.returnFCPCredentials(loginFile, commitmessage);
 			let pushedprod = await other.spawnProcess("gulp", ["push_prod"], {
 				cwd: path + sitekey + "/CC/",
 				stdio: "inherit",
 				shell: true,
 			});
+			await other.clearFCPCredentials(loginFile);
 			if (pushedprod) {
 				console.log("Pushed to production on sitekey " + sitekey);
 			}
 		} else if (wheretopush[place] == "Staging") {
+			await other.returnFCPCredentials(loginFile, commitmessage);
 			let pushedstg = await other.spawnProcess("gulp", ["push_stg"], {
 				cwd: path + sitekey + "/CC/",
 				stdio: "inherit",
 				shell: true,
 			});
+			await other.clearFCPCredentials(loginFile);
 			if (pushedstg) {
 				console.log("Pushed to staging on sitekey " + sitekey);
 			}
 		} else {
+			console.log("starting fcp dev", commitmessage);
+			let unpw = await other.returnFCPCredentials(loginFile, commitmessage);
 			let containerexists = await other.httpRequest(
 				"GET",
 				`https://fcp.foresee.com/sites/${sitekey}/containers/${wheretopush[place]}`,
@@ -229,36 +241,6 @@ async function deploy(sitekey, wheretopush) {
 			);
 			if (containerexists.statusCode == 404) {
 				//try to create the container because it probably didn't exist - should also check that message == "Container not found" but it's being difficult letting me see the body so that's for later
-				let savedLogins = await filesystem.readFileToObjectIfExists(loginFile);
-				if (savedLogins == undefined) {
-					savedLogins = {};
-				}
-				let un = savedLogins.FCP_USERNAME;
-				let unpw = await other.askQuestion([
-					{
-						type: "input",
-						name: "un",
-						message: "What is your username for fcp(aws)?",
-						default: function() {
-							if (un) {
-								return un;
-							}
-							return;
-						},
-					},
-					{ type: "password", name: "pw", message: "What is your password for fcp(aws)?", mask: "*" },
-				]);
-				if (!un) {
-					un = unpw.un;
-					savedLogins.FCP_USERNAME = un;
-					await filesystem.writeToFile(loginFile, savedLogins);
-					await other.spawnProcess("npx", [`prettier --write env.json`], {
-						cwd: loginFile.substring(0, loginFile.length - "env.json".length),
-						stdio: "inherit",
-						shell: true,
-					});
-				}
-				unpw = un + "@aws.foreseeresults.com:" + unpw.pw;
 				let createdcontainer = await other.httpRequest(
 					"POST",
 					`https://${unpw}@fcp.foresee.com/sites/${sitekey}/containers`,
@@ -285,6 +267,7 @@ async function deploy(sitekey, wheretopush) {
 				stdio: "inherit",
 				shell: true,
 			});
+			await other.clearFCPCredentials(loginFile);
 			if (pusheddevconfig && pusheddev) {
 				console.log("Pushed to development on sitekey " + sitekey);
 			} else if (pusheddev) {

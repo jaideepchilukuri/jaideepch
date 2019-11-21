@@ -487,43 +487,16 @@ async function pushCxSuiteConfigsToDevContainer(path, loginFile) {
 	await filesystem.makeDirIfMissing(clientconfigspath);
 	await filesystem.makeDirIfMissing(`${clientconfigspath}_globalconfigs`);
 	await filesystem.writeToFile(`${clientconfigspath}_globalconfigs/${jconfig.global.siteKey}.js`, cxsConfig);
-	let savedLogins = await filesystem.readFileToObjectIfExists(loginFile);
-	if (savedLogins == undefined) {
-		savedLogins = {};
-	}
-	let un = savedLogins.FCP_USERNAME;
-	let unpw = await other.askQuestion([
-		{
-			type: "input",
-			name: "un",
-			message: "What is your username for fcp(aws)?",
-			default: function() {
-				if (un) {
-					return un;
-				}
-				return;
-			},
-		},
-		{ type: "password", name: "pw", message: "What is your password for fcp(aws)?", mask: "*" },
-	]);
-	if (!un) {
-		un = unpw.un;
-		savedLogins.FCP_USERNAME = un;
-		await filesystem.writeToFile(loginFile, savedLogins);
-		await other.spawnProcess("npx", [`prettier --write env.json`], {
-			cwd: loginFile.substring(0, loginFile.length - "env.json".length),
-			stdio: "inherit",
-			shell: true,
-		});
-	}
-	unpw = un + "@aws.foreseeresults.com:" + unpw.pw;
-	await other.multipartPost(
+	let unpw = await other.returnFCPCredentials(loginFile);
+	let posted = await other.multipartPost(
 		`https://${unpw}@fcp.foresee.com/sites/${jconfig.global.siteKey}/containers/development/configs`,
 		`Pushing cxSuite global config values to container development of sitekey ${jconfig.global.siteKey} for testing`,
 		`${clientconfigspath}_globalconfigs/${jconfig.global.siteKey}.js`
 	);
 	await filesystem.deleteFileOrDirIfExists(`${clientconfigspath}_globalconfigs/${jconfig.global.siteKey}.js`);
-	console.log(`Pushed globalconfigs to container development of sitekey ${jconfig.global.siteKey}`);
+	if (posted) {
+		console.log(`Pushed globalconfigs to container development of sitekey ${jconfig.global.siteKey}`);
+	}
 	return true;
 }
 
@@ -551,7 +524,7 @@ async function prettifyCC(path) {
 	});
 }
 
-async function commitAndPushToGithub(path, loginFile) {
+async function commitAndPushToGithub(path, loginFile, commitmessage) {
 	let sitekey = path.split("/");
 	sitekey = sitekey[sitekey.length - 1];
 	//await other.doAGit([`--git-dir=${path}/.git`, "add", "."]);
@@ -560,10 +533,6 @@ async function commitAndPushToGithub(path, loginFile) {
 		stdio: "inherit",
 		shell: true,
 	});
-	let commitmessage = await other.askQuestion([
-		{ type: "input", name: "commitmessage", message: "What changes are you committing?" },
-	]);
-	commitmessage = commitmessage.commitmessage;
 	// await other.doAGit([`--git-dir=${path}/.git`, "commit", "-m", `${commitmessage}`]);
 	await other.spawnProcess("git", [`commit -m ${commitmessage}`], {
 		cwd: path,
@@ -603,10 +572,8 @@ async function commitAndPushToGithub(path, loginFile) {
 		]);
 		ticketnum = ticketnum.ticketnum;
 	}
-	console.log(
-		`Pushed ${sitekey} to github. Please paste this in as your fcp push comment: SF Ticket#: ${ticketnum}  Git Commit: ${commitnum}`
-	);
-	return true;
+	console.log(`Pushed ${sitekey} to github.`);
+	return `SF Ticket#: ${ticketnum}  Git Commit: ${commitnum}`;
 }
 
 module.exports = {

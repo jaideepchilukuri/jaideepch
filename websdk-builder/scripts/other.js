@@ -1,7 +1,7 @@
 const spawn = require("child_process").spawn,
 	simplegit = require("simple-git/promise")(),
 	syncrequest = require("sync-request"),
-	request = require("request"),
+	request = require("request-promise"),
 	inquirer = require("inquirer"),
 	atob = require("atob"),
 	btoa = require("btoa");
@@ -32,6 +32,88 @@ async function spawnProcess(command, args, options) {
 			return reject(err);
 		});
 	});
+}
+
+async function returnFCPCredentials(loginFile, commitmessage) {
+	let savedLogins = await filesystem.readFileToObjectIfExists(loginFile);
+	if (savedLogins == undefined) {
+		savedLogins = {};
+	}
+	if (commitmessage) {
+		savedLogins.FCP_NOTES = commitmessage;
+	}
+	savedLogins.FCP_ENVIRONMENT = 4;
+	let un = savedLogins.FCP_USERNAME;
+	let pw = savedLogins.FCP_PERMANENT_PASSWORD;
+	if (pw) {
+		pw = await aTob(pw);
+	}
+	if (!un) {
+		un = await askQuestion([
+			{
+				type: "input",
+				name: "un",
+				message: "What is your username for fcp(aws)?",
+				default: function() {
+					if (un) {
+						return un;
+					}
+					return;
+				},
+			},
+		]);
+		un = un.un;
+	}
+	if (!pw) {
+		pw = await askQuestion([
+			{
+				type: "password",
+				name: "pw",
+				message: "What is your password for fcp(aws)?",
+				mask: "*",
+				default: function() {
+					if (pw) {
+						return pw;
+					}
+					return;
+				},
+			},
+		]);
+		pw = pw.pw;
+	}
+	savedLogins.FCP_USERNAME = un;
+	savedLogins.FCP_PERMANENT_PASSWORD = await bToa(pw);
+	savedLogins.FCP_PASSWORD = pw;
+	await filesystem.writeToFile(loginFile, savedLogins);
+	await spawnProcess("npx", [`prettier --write env.json`], {
+		cwd: loginFile.substring(0, loginFile.length - "env.json".length),
+		stdio: "inherit",
+		shell: true,
+	});
+	return un + "@aws.foreseeresults.com:" + pw;
+}
+
+async function clearFCPCredentials(loginFile) {
+	let savedLogins = await filesystem.readFileToObjectIfExists(loginFile);
+	if (savedLogins == undefined) {
+		savedLogins = {};
+	}
+	if (savedLogins.FCP_PASSWORD) {
+		delete savedLogins.FCP_PASSWORD;
+	}
+	if (savedLogins.FCP_NOTES) {
+		delete savedLogins.FCP_NOTES;
+	}
+	if (savedLogins.FCP_ENVIRONMENT) {
+		delete savedLogins.FCP_ENVIRONMENT;
+	}
+	await filesystem.writeToFile(loginFile, savedLogins);
+	await spawnProcess("npx", [`prettier --write env.json`], {
+		cwd: loginFile.substring(0, loginFile.length - "env.json".length),
+		stdio: "inherit",
+		shell: true,
+	});
+	return true;
 }
 
 async function returnGithubCredentials(loginFile) {
@@ -123,21 +205,28 @@ async function httpRequest(type, url, options) {
 }
 
 async function multipartPost(url, notes, fileLoc) {
-	let formdata = { notes: notes, config: await filesystem.readFileToReadStream(fileLoc) };
-	request.post(
-		{
-			url: url,
-			formData: formdata,
-		},
+	let fileStream = await filesystem.readFileToReadStream(fileLoc);
+	let formdata = { notes: notes, config: fileStream };
+	let req;
+	try {
+		req = await request.post(
+			{
+				url: url,
+				formData: formdata,
+			} /* ,
 		function optionalCallback(err, httpResponse, body) {
 			if (err) {
 				return console.error("upload failed:", err);
 			}
 			console.log("Contact successful... Server responded with:", body);
-		}
-	);
-	await filesystem.deleteFileOrDirIfExists(fileLoc);
-	return true;
+		} */
+		);
+		console.log("Contact successful... Server responded with:", req);
+		await filesystem.deleteFileOrDirIfExists(fileLoc);
+		return true;
+	} catch (err) {
+		return console.error("Upload failed:", err);
+	}
 }
 
 async function askQuestion(questions) {
@@ -181,6 +270,8 @@ async function stringifyCompare(firstThing, secondThing, whatsNotMatching) {
 module.exports = {
 	wrap,
 	spawnProcess,
+	returnFCPCredentials,
+	clearFCPCredentials,
 	returnGithubCredentials,
 	doAGit,
 	httpRequest,
