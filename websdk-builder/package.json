@@ -12,6 +12,7 @@
 		"copy-dir": "^1.1.0",
 		"ejs": "^2.6.2",
 		"fs": "0.0.1-security",
+		"inquirer": "^7.0.1",
 		"prettier": "^1.17.1",
 		"request": "^2.88.0",
 		"request-promise": "^4.2.5",
