@@ -20,7 +20,7 @@ To update the Chrome Extension in the chrome store you will have to take the fol
 Begin by downloading the .zip of this repo, or cloning it to a local directory:
 `git clone https://github.com/foreseecode/FSRChromeDevExtension`
 
-The code for this extension must be compiled before installation, however each version is committed with the most up to date version of the extension in the `/build` directory of the project.  If for some reason you need to run the build task again, change to the project directory and run `gulp` at the command line.
+The code for this extension must be compiled before installation, however each version is committed with the most up to date version of the extension in the `/build` directory of the project.  If for some reason you need to run the build task again, change to the project directory and make sure you have the node modules folder (or run `npm install` in the command line to get it) and then run `gulp` at the command line.
 
 ## Installation
 Chrome extensions that are not approved for sale in the Chrome Store must be installed in developer mode.  To activate, go to Chrome's extension manager, and activate developer mode with the checkbox in the upper right corner (1).  Next press the button "Load Unpacked Extension", and navigate to the project directory on your local machine.  Select only the `build` directory of the project (2).
