@@ -152,10 +152,11 @@ const listQuestions = [
 
 program
 	.command("scroll [sitekeys...]")
-	.alias("m")
+	.alias("l")
 	.description(
 		"Also known as Bill Vargo's Unfurling Scroll. This will provide a list of everything you can do, automagically..."
 	)
+	.option('-h, --hidden','This is a secret option that calls a function to parse all sitekeys for information.')
 	.option(`-${scrollCommands[0].substring(0, 1)}, --${scrollCommands[0]}`, `${scrollCommandDesc[scrollCommands[0]]}`)
 	.option(`-${scrollCommands[1].substring(0, 1)}, --${scrollCommands[1]}`, `${scrollCommandDesc[scrollCommands[1]]}`)
 	.option(`-${scrollCommands[2].substring(0, 1)}, --${scrollCommands[2]}`, `${scrollCommandDesc[scrollCommands[2]]}`)
@@ -173,52 +174,58 @@ program
 program.parse(process.argv);
 
 async function listCommands(sitekeys, cmd) {
-	let questions = listQuestions;
-	let valsToPass = {};
-	if (sitekeys && sitekeys != "") {
-		valsToPass.sitekeys = "";
-		for (sitekey in sitekeys) {
-			valsToPass.sitekeys += sitekeys[sitekey] + " ";
-		}
-		valsToPass.sitekeys = valsToPass.sitekeys.slice(0, -1);
-		questions.splice(1, 2);
+	if(cmd.hidden) {
+		const checkEmAll = require("../scripts/allTheSitekeysInfo").checkAllTheSitekeys;
+		await checkEmAll();
 	}
-	if (
-		cmd &&
-		(cmd[scrollCommands[0]] ||
-			cmd[scrollCommands[1]] ||
-			cmd[scrollCommands[2]] ||
-			cmd[scrollCommands[3]] ||
-			cmd[scrollCommands[4]] ||
-			cmd[scrollCommands[5]] ||
-			cmd[scrollCommands[6]] ||
-			cmd[scrollCommands[7]] ||
-			cmd[scrollCommands[8]] ||
-			cmd[scrollCommands[9]])
-	) {
-		questions = [];
-		if (!valsToPass.sitekeys) {
-			questions.push(sitekeysQuestion);
-		}
-		if (cmd.summon) {
-			questions.push(summonQuestionWithoutWhen);
-		}
-		if (cmd.enchant) {
-			questions.push(enchantQuestionWithoutWhen);
-		}
-		if (cmd.mutate) {
-			questions.push(mutateQuestionWithoutWhen);
-		}
-		if (cmd.trick) {
-			questions.push(trickQuestionWithoutWhen);
-		}
-		valsToPass.commands = "";
-		for (option in scrollCommands) {
-			if (cmd[scrollCommands[option]]) {
-				valsToPass.commands += scrollCommands[option] + " ";
+	else {
+		let questions = listQuestions;
+		let valsToPass = {};
+		if (sitekeys && sitekeys != "") {
+			valsToPass.sitekeys = "";
+			for (sitekey in sitekeys) {
+				valsToPass.sitekeys += sitekeys[sitekey] + " ";
 			}
+			valsToPass.sitekeys = valsToPass.sitekeys.slice(0, -1);
+			questions.splice(1, 2);
 		}
-		valsToPass.commands = valsToPass.commands.slice(0, -1);
+		if (
+			cmd &&
+			(cmd[scrollCommands[0]] ||
+				cmd[scrollCommands[1]] ||
+				cmd[scrollCommands[2]] ||
+				cmd[scrollCommands[3]] ||
+				cmd[scrollCommands[4]] ||
+				cmd[scrollCommands[5]] ||
+				cmd[scrollCommands[6]] ||
+				cmd[scrollCommands[7]] ||
+				cmd[scrollCommands[8]] ||
+				cmd[scrollCommands[9]])
+		) {
+			questions = [];
+			if (!valsToPass.sitekeys) {
+				questions.push(sitekeysQuestion);
+			}
+			if (cmd.summon) {
+				questions.push(summonQuestionWithoutWhen);
+			}
+			if (cmd.enchant) {
+				questions.push(enchantQuestionWithoutWhen);
+			}
+			if (cmd.mutate) {
+				questions.push(mutateQuestionWithoutWhen);
+			}
+			if (cmd.trick) {
+				questions.push(trickQuestionWithoutWhen);
+			}
+			valsToPass.commands = "";
+			for (option in scrollCommands) {
+				if (cmd[scrollCommands[option]]) {
+					valsToPass.commands += scrollCommands[option] + " ";
+				}
+			}
+			valsToPass.commands = valsToPass.commands.slice(0, -1);
+		}
+		await magic.listCommands(questions, false, valsToPass);
 	}
-	await magic.listCommands(questions, false, valsToPass);
 }
