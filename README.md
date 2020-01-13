@@ -1,16 +1,9 @@
 # websdk-config-tools
 
-Download this tool and install it to your path
-
-On Windows:
-
-Open a command prompt/bash window, navigate to System Properties > Environment Variables
-
-Under 'System Variables', select 'Path', edit, and add a new environment variable containing the path to \websdk-config-tools\tools\bin
-(i.e. C:\Users\firstname.lastname\Documents\websdk-config-tools\tools\bin)
-
-Open a command prompt and cd to ~\websdk-config-tools\tools, run npm install -g 
-
-Now you can start a new git bash window, cd to ~\websdk-config-tools and use 'magic' commands. 
-
-Type 'magic --help' for a list of commands and their descriptions 
+To Get Set Up:
+- Go to https://github.com/foreseecode/websdk-config-tools and click 'Clone or download' button, copy url
+- In github desktop, in top left click 'Current Repository' > Add > Clone repository...
+- Switch to that repository, click 'Open in Visual Studio Code' button
+- Right click in whitespace on left side, then choose 'Open in Terminal'
+- In terminal, type 'cd tools', then run 'npm install -g'
+- Open a new terminal, can use all the magic here
