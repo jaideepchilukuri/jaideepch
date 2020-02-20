@@ -3,7 +3,7 @@ const fs = require("fs");
 const filesystem = require("../scripts/filesystem");
 
 const path =
-	process.cwd().substr(process.cwd().length - 15, 15) == "\\websdk-builder" // "/websdk-builder" doesn't work, tried it, so I hope this doesn't cause an error on mac
+	process.cwd().substr(process.cwd().length - 15, 15) == "\\websdk-builder" || "/websdk-builder"
 		? `${process.cwd()}/tests`
 		: `${process.cwd()}/websdk-builder/tests`;
 

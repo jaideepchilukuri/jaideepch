@@ -6,7 +6,7 @@ const helpertasks = require("./helpertasks"),
 const loginFile = require("./FCPvals").loginFile;
 
 const path =
-	process.cwd().substr(process.cwd().length - 15, 15) == "\\websdk-builder" // "/websdk-builder" doesn't work, tried it, so I hope this doesn't cause an error on mac
+	process.cwd().substr(process.cwd().length - 15, 15) == "\\websdk-builder" || "/websdk-builder"
 		? `${process.cwd()}/clientconfigs/`
 		: `${process.cwd()}/websdk-builder/clientconfigs/`;
 

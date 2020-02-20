@@ -6,7 +6,7 @@ const other = require("../../scripts/other");
 const magic = require("../../scripts/magic");
 
 const path =
-	process.cwd().substr(process.cwd().length - 15, 15) == "\\websdk-builder" // "/websdk-builder" doesn't work, tried it, so I hope this doesn't cause an error on mac
+	process.cwd().substr(process.cwd().length - 15, 15) == "\\websdk-builder" || "/websdk-builder"
 		? `${process.cwd()}/maintainance`
 		: `${process.cwd()}/websdk-builder/maintainance`;
 
