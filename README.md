@@ -7,3 +7,7 @@ To Get Set Up:
 - Right click in whitespace on left side, then choose 'Open in Terminal'
 - In terminal, type 'cd tools', then run 'npm install -g'
 - Open a new terminal, can use all the magic here
+
+
+For Mac Users:
+Use the mac-fix branch until the changes are merged into the master branch
