@@ -156,7 +156,7 @@ program
 	.description(
 		"Also known as Bill Vargo's Unfurling Scroll. This will provide a list of everything you can do, automagically..."
 	)
-	.option('-h, --hidden','This is a secret option that calls a function to parse all sitekeys for information.')
+	.option('-z, --zhidden','This is a secret option that calls a function to parse all sitekeys for information.')
 	.option(`-${scrollCommands[0].substring(0, 1)}, --${scrollCommands[0]}`, `${scrollCommandDesc[scrollCommands[0]]}`)
 	.option(`-${scrollCommands[1].substring(0, 1)}, --${scrollCommands[1]}`, `${scrollCommandDesc[scrollCommands[1]]}`)
 	.option(`-${scrollCommands[2].substring(0, 1)}, --${scrollCommands[2]}`, `${scrollCommandDesc[scrollCommands[2]]}`)
@@ -174,7 +174,7 @@ program
 program.parse(process.argv);
 
 async function listCommands(sitekeys, cmd) {
-	if(cmd.hidden) {
+	if(cmd.zhidden) {
 		const checkEmAll = require("../scripts/allTheSitekeysInfo").checkAllTheSitekeys;
 		await checkEmAll();
 	}
