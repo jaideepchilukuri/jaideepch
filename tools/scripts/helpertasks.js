@@ -639,6 +639,7 @@ async function commitAndPushToGithub(path, loginFile) {
 }
 
 module.exports = {
+	unbaseDefs,
 	upgradeChecks,
 	installNPM,
 	returnCodeVersion,

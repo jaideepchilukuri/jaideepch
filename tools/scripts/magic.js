@@ -5,7 +5,7 @@ const helpertasks = require("./helpertasks"),
 const loginFile = require("./FCPvals").loginFile;
 
 const path =
-	process.cwd().substr(process.cwd().length - 6, 6) == "\\tools" // "/tools" doesn't work, tried it, so I hope this doesn't cause an error on mac
+	process.cwd().substr(process.cwd().length - 6, 6) == "\\tools" || "/tools" 
 		? `${process.cwd()}/clientconfigs/`
 		: `${process.cwd()}/tools/clientconfigs/`;
 

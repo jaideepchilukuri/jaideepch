@@ -1,8 +1,7 @@
 const ejs = require("ejs"),
 	unzip = require("unzip-stream"),
 	rimraf = require("rimraf"),
-	copydir = require("copy-dir"),
-	fs = require("fs");
+	fs = require("fs-extra");
 
 async function checkIfFileOrDirExists(path, consoleMsg) {
 	if (fs.existsSync(path)) {
@@ -34,7 +33,7 @@ async function deleteFileOrDirIfExists(path, consoleMsg) {
 		if (consoleMsg) {
 			console.log(consoleMsg);
 		}
-		rimraf.sync(path + "/");
+		fs.removeSync(path)
 		return true;
 	}
 	return false;
@@ -46,11 +45,7 @@ async function copyFrom2ToIfFromExists(from, to, consoleMsg) {
 			console.log(consoleMsg);
 		}
 		await deleteFileOrDirIfExists(to /*, "deleted a folder to copy " + from + " to " + to*/);
-		copydir.sync(from, to, {
-			utimes: true,
-			mode: true,
-			cover: true,
-		});
+		fs.copySync(from,to);
 		return true;
 	}
 	return false;
@@ -61,11 +56,7 @@ async function copyFrom2ToIfToMissing(from, to, consoleMsg) {
 		if (consoleMsg) {
 			console.log(consoleMsg);
 		}
-		copydir.sync(from, to, {
-			utimes: false,
-			mode: false,
-			cover: false,
-		});
+		fs.copySync(from,to);
 		return true;
 	}
 	return false;
@@ -87,7 +78,7 @@ async function readFileToObjectIfExists(path, consoleMsg) {
 	if (string) {
 		return JSON.parse(string);
 	}
-	//console.log("Got an undefined string in readFileToObjectIfExists", path);
+	// console.log("Got an undefined string in readFileToObjectIfExists", path);
 	return undefined;
 }
 
@@ -134,7 +125,7 @@ async function unzipAssets(path) {
 				entry.path.substr(0, 18) !== "trigger/templates/"
 			) {
 				if (entry.type == "Directory") {
-					filesystem.makeDirIfMissing(`${path}/${entry.path}`);
+					makeDirIfMissing(`${path}/${entry.path}`);
 				} else {
 					entry.pipe(fs.createWriteStream(`${path}/${entry.path.substr(8)}`));
 				}

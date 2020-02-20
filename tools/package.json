@@ -5,12 +5,14 @@
 		"magic": "./bin/magic.js"
 	},
 	"dependencies": {
+		"@babel/plugin-proposal-optional-chaining": "^7.8.3",
 		"atob": "^2.1.2",
 		"await-spawn": "*",
 		"commander": "^2.15.1",
-		"copy-dir": "^1.1.0",
 		"ejs": "^2.6.2",
 		"fs": "0.0.1-security",
+		"fs-extra": "^8.1.0",
+		"inquirer": "^7.0.4",
 		"prettier": "^1.17.1",
 		"request": "^2.88.0",
 		"rimraf": "^3.0.0",
