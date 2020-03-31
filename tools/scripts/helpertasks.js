@@ -434,6 +434,14 @@ async function configRebuild(path) {
 			})
 		);
 	}
+	if (await filesystem.checkIfFileOrDirExists(`${ejspath}/${codeVersion}/fbmods_productconfig.ejs`)) {
+		await filesystem.writeToFile(
+			path + "/CC/clientconfig/productconfig/fbmods/product_config.js",
+			await filesystem.buildFileContentsFromTemplateFile(`${ejspath}/${codeVersion}/fbmods_productconfig.ejs`, {
+				fbmods: combinedconfig.fbmods,
+			})
+		);
+	}
 	await filesystem.copyFrom2ToIfFromExists(`${fcppath}/${codeVersion}/gulpfile.js`, path + `/CC/gulpfile.js`);
 	await filesystem.copyFrom2ToIfFromExists(`${fcppath}/${codeVersion}/FCP.js`, path + `/CC/scripts/FCP.js`);
 	return "done";
