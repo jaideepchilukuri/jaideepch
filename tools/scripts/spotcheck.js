@@ -125,9 +125,10 @@ async function checkCodeVersion(path) {
 			}
 			jconfig.global.codeVer = cVer;
 		}
+		const codeVersion = jconfig.global.codeVer;
 		jconfig = JSON.stringify(jconfig);
 		filesystem.writeToFile(`${path}/config.json`, jconfig);
-		return resolve();
+		return resolve(codeVersion);
 	});
 }
 

@@ -9,6 +9,7 @@
 		"atob": "^2.1.2",
 		"await-spawn": "*",
 		"commander": "^2.15.1",
+		"compare-versions": "^3.6.0",
 		"ejs": "^2.6.2",
 		"fs": "0.0.1-security",
 		"fs-extra": "^8.1.0",

@@ -1,4 +1,5 @@
-const helpertasks = require("./helpertasks"),
+const compareVersions = require('compare-versions'),
+ 	helpertasks = require("./helpertasks"),
 	spotcheck = require("./spotcheck"),
 	filesystem = require("./filesystem"),
 	other = require("./other");
@@ -8,6 +9,16 @@ const path =
 	process.cwd().substr(process.cwd().length - 6, 6) == "\\tools" || "/tools" 
 		? `${process.cwd()}/clientconfigs/`
 		: `${process.cwd()}/tools/clientconfigs/`;
+
+const runValidations = async (codeVer, sitekey) => {
+	if (compareVersions.compare(codeVer, '19.12.2', ">=")) {
+		await other.spawnProcess("./run", ["validate-configs", "all"], {
+			cwd: path + sitekey + "/CC/",
+			stdio: "inherit",
+			shell: true,
+		});
+	}
+}
 
 async function listCommands(questions, testing, passedVals) {
 	let answers;
@@ -93,7 +104,7 @@ async function build(sitekeys, codeversion, localhost) {
 				await helpertasks.upgradeChecks(path + sitekeys[counter]);
 				await helpertasks.updateCodeVersion(path + sitekeys[counter], codeversion);
 			}
-			await spotcheck.checkCodeVersion(path + sitekeys[counter]);
+			const codeVer = await spotcheck.checkCodeVersion(path + sitekeys[counter]);
 			await other.spawnProcess("npx", [`prettier --write config.json`], {
 				cwd: path + sitekeys[counter],
 				stdio: "inherit",
@@ -104,6 +115,8 @@ async function build(sitekeys, codeversion, localhost) {
 			await helpertasks.assetsCopy(path + sitekeys[counter]);
 			await helpertasks.configRebuild(path + sitekeys[counter]);
 			await helpertasks.installNPM(path + sitekeys[counter]);
+			await runValidations(codeVer, sitekeys[counter]);
+
 			console.log("Done building client code package");
 		}
 		if (localhost) {
@@ -126,8 +139,10 @@ async function rebulidConfig(sitekeys, codeversion) {
 			packagejson.version == config.global.codeVer &&
 			(!codeversion || codeversion == config.global.codeVer)
 		) {
+			const codeVer = await spotcheck.checkCodeVersion(path + sitekeys[counter]);
 			await helpertasks.assetsCopy(path + sitekeys[counter]);
 			await helpertasks.configRebuild(path + sitekeys[counter]);
+			await runValidations(codeVer, sitekeys[counter]);
 		} else {
 			console.log("Code version is not built! Building client code package from scratch");
 			await build([sitekeys[counter]], codeversion);
