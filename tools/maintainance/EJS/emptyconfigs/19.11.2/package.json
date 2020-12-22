@@ -104,7 +104,7 @@
     "lint-staged": "^8.1.0",
     "lodash.template": "~4.4.0",
     "mv": "^2.1.1",
-    "node-notifier": "^5.1.2",
+    "node-notifier": "^8.0.1",
     "nodemailer": "^4.0.1",
     "nodemailer-smtp-transport": "^2.7.4",
     "prettier": "~1.17.1",
