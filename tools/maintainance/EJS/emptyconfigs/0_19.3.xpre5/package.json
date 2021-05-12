@@ -85,7 +85,7 @@
     "node-notifier": "~5.1.2",
     "node-optimize": "~1.2.2",
     "node-svnsync": "~0.1.4",
-    "nodemailer": "~4.0.1",
+    "nodemailer": "~6.4.16",
     "nodemailer-smtp-transport": "~2.7.4",
     "prompt": "~1.0.0",
     "restler": "~3.4.0",
