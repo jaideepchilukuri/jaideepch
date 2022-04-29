@@ -41,7 +41,7 @@
   "dependencies": {
     "amd-wrap": "~1.1.0",
     "archiver": "~1.3.0",
-    "async": "~2.4.1",
+    "async": "~2.6.4",
     "bity-promise": "~0.0.6",
     "btoa": "~1.1.2",
     "colors": "~1.1.2",
