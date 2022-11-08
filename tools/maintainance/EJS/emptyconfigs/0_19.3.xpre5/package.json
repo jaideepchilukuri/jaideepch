@@ -50,7 +50,7 @@
     "email-validator": "^1.0.7",
     "extend": "~3.0.1",
     "fcp-client": "foreseecode/fcp-client",
-    "gulp": "~3.9.1",
+    "gulp": "~4.0.2",
     "gulp-bufferize": "~1.0.2",
     "gulp-callback": "~0.0.3",
     "gulp-concat": "~2.6.1",
