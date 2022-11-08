@@ -88,7 +88,7 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^22.2.2",
     "fcp-client": "git+https://6e4a48bb784a816412d43fe1bc3e0f28a02f54ad:x-oauth-basic@github.com/foreseecode/fcp-client.git",
-    "gulp": "~3.9.1",
+    "gulp": "~4.0.2",
     "gulp-cssmin": "~0.2.0",
     "gulp-htmlmin": "~3.0.0",
     "gulp-if": "~2.0.2",
